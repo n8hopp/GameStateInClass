@@ -52,7 +52,7 @@ public class UnoMainActivity extends GameMainActivity {
             }
         });
 
-        GameConfig defaultConfig = new GameConfig(playerTypes, 2, 2, "Uno", PORT_NUMBER);
+        GameConfig defaultConfig = new GameConfig(playerTypes, 2, 4, "Uno", PORT_NUMBER);
 
         defaultConfig.addPlayer("Human", 0); //
         defaultConfig.addPlayer("Computer 1", 1); // dumb computer player
