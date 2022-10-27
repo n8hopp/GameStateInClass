@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
-import com.example.gamestateinclass.game.GameFramework.gameConfiguration.GameConfig;
-import com.example.gamestateinclass.game.GameFramework.gameConfiguration.GamePlayerType;
+import com.example.gamestateinclass.game.GameFramework.gameConfiguration.*;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
+import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.players.*;
 
 import java.util.ArrayList;
@@ -67,8 +67,7 @@ public class UnoMainActivity extends GameMainActivity {
     public LocalGame createLocalGame(GameState gameState){
         if(gameState == null)
             return new UnoLocalGame();
-        // return new UnoLocalGame((UnoState) gameState);
-        return new UnoLocalGame();
+        return new UnoLocalGame((UnoState) gameState);
     }
 
 }

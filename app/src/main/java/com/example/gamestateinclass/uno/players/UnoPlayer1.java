@@ -6,8 +6,6 @@ import android.view.View;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
-import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
-import com.example.gamestateinclass.uno.views.UnoSurfaceViewSouth;
 
 public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
 	private int layoutId;
