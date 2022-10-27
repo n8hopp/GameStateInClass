@@ -11,10 +11,8 @@ import java.util.Collections;
 import java.util.Random;
 
 public class UnoState extends GameState implements Serializable {
-
-    /* this is where we need to initialize the game, that being the deck
-    and player hands
-     */
+    // TAG for logging
+    private static final String TAG = "UnoState";
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
 
@@ -41,7 +39,7 @@ public class UnoState extends GameState implements Serializable {
     }
 
     // Copy Constructor
-    public UnoGameState(UnoGameState previous)
+    public UnoState(UnoState previous)
     {
         turn = previous.turn;
         direction = previous.direction;
