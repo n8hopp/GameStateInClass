@@ -39,7 +39,7 @@ public class UnoState extends GameState implements Serializable {
     }
 
     // Copy Constructor
-    public UnoGameState(UnoGameState previous)
+    public UnoState(UnoState previous)
     {
         turn = previous.turn;
         direction = previous.direction;
