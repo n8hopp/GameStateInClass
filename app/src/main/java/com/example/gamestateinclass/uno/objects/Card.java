@@ -180,4 +180,9 @@ public class Card {
 	{
 		return this.color;
 	}
+
+	public Face getFace()
+	{
+		return this.face;
+	}
 }

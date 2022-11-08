@@ -47,14 +47,14 @@ public class UnoState extends GameState implements Serializable {
         for(Card c : previous.drawDeck)
         {
             Card.Face face = c.getFace();
-            Card.Color color = c.getColor();
+            Card.CardColor color = c.getCardColor();
             drawDeck.add(new Card(color, face));
         }
         playedCards = new ArrayList<Card>();
         for(Card c : previous.playedCards)
         {
             Card.Face face = c.getFace();
-            Card.Color color = c.getColor();
+            Card.CardColor color = c.getCardColor();
             playedCards.add(new Card(color, face));
         }
         playerHands = new ArrayList<>();
@@ -70,7 +70,7 @@ public class UnoState extends GameState implements Serializable {
             for (Card c : newHand)
             {
                 Card.Face face = c.getFace();
-                Card.Color color = c.getColor();
+                Card.CardColor color = c.getCardColor();
 
                 playerHands.get(i).add(new Card(color, face));
             }
@@ -95,9 +95,9 @@ public class UnoState extends GameState implements Serializable {
     private ArrayList<Card> generateDeck()
     {
         ArrayList<Card> cards = new ArrayList<>();
-        for ( Card.Color c : Card.Color.values()){
+        for ( Card.CardColor c : Card.CardColor.values()){
             for ( Card.Face f : Card.Face.values()){
-                if (c == Card.Color.BLACK) {
+                if (c == Card.CardColor.BLACK) {
                     if(f == Card.Face.WILD || f == Card.Face.DRAWFOUR) {
                         for ( int i = 0; i < 4; i++) {
                             cards.add(new Card(c, f));
@@ -190,7 +190,7 @@ public class UnoState extends GameState implements Serializable {
             return false;
         }
         if (playedCardsTop.getFace() == card.getFace() ||
-                playedCardsTop.getColor() == card.getColor()) {
+                playedCardsTop.getCardColor() == card.getCardColor()) {
             return true;
         }
 
@@ -261,7 +261,7 @@ public class UnoState extends GameState implements Serializable {
                 break;
         }
 
-        Card.Color color = card.getColor(); // we don't get color until here (for latestAction print)
+        Card.CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
         // because it may have changed during special action execution
         playedCards.add(card);
         playerHands.get(playerID).remove(card);
