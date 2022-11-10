@@ -262,13 +262,13 @@ public class UnoState extends GameState implements Serializable {
                 drawCardFromDeck(playerHands.get(turn), 4);
 
                 // can change this based on demonstration
-                card.setColor(Card.Color.BLUE);
+                card.setColor(Card.CardColor.BLUE);
                 break;
 
             case WILD:
 
                 // same thing here
-                card.setColor(Card.Color.BLUE);
+                card.setColor(Card.CardColor.BLUE);
                 break;
         }
 

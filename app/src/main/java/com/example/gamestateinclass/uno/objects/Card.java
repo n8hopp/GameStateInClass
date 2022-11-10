@@ -79,6 +79,14 @@ public class Card {
 		*/
 		setPaintfromEnum(CardColor.RED);
 	}
+	// Basic constructor that takes a color and a face
+	public Card(CardColor _color, Face _face)
+	{
+		width = 200;
+		length = 300;
+		color = _color;
+		face = _face;
+	}
 
 	public Card(float _x, float _y, float _width, float _length, Card _card)
 	{
@@ -118,6 +126,10 @@ public class Card {
 	{
 		x = _x;
 		y = _y;
+	}
+
+	public void setColor(CardColor c){
+		color = c;
 	}
 
 	public void setFace(Face _face){
