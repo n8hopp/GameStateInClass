@@ -11,6 +11,15 @@ import java.util.Collections;
 import java.util.Random;
 
 public class UnoState extends GameState implements Serializable {
+    // in TTTState, there is:
+    // the 2 constructors
+    // getPiece and setPiece
+    // getWhoseMove and setWhoseMove
+
+    // In our UNOState then there should be:
+    // 2 constructors
+    // getTopCard and addTopCard
+    // getWhoseMove and setWhoseMove
     // TAG for logging
     private static final String TAG = "UnoState";
     private int turn; //index of player whose turn it is
@@ -286,5 +295,7 @@ public class UnoState extends GameState implements Serializable {
     {
         return turn % 4;
     }
+
+
 
 }

@@ -120,6 +120,10 @@ public class Card {
 		y = _y;
 	}
 
+	public void setFace(Face _face){
+		face = _face;
+	}
+
 	public void setPaintfromEnum(CardColor _cardColor)
 	{
 		color = _cardColor;
