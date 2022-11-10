@@ -155,15 +155,20 @@ public class Card {
 		switch(face) {
 
 			case SKIP:
+				canvas.drawText("SKIP", x, mainTextY, mainLabelPaint);
 				break;
 			case DRAWTWO:
+				canvas.drawText("+2", x, mainTextY, mainLabelPaint);
 				break;
 			case DRAWFOUR:
+				canvas.drawText("+4", x, mainTextY, mainLabelPaint);
 				break;
 			case WILD:
+				canvas.drawText("WILD", x, mainTextY, mainLabelPaint);
 				break;
 			case REVERSE:
-
+				canvas.drawText("REV", x, mainTextY, mainLabelPaint);
+				break;
 			default:
 				canvas.drawText(String.valueOf(face.faceID), x, mainTextY, mainLabelPaint);
 				canvas.drawText(String.valueOf(face.faceID), (float)(x-width*0.35), (float)(miniTextY-length*0.35), miniLabelPaint);
