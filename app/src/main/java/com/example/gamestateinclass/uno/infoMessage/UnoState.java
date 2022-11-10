@@ -127,6 +127,7 @@ public class UnoState extends GameState implements Serializable {
     // fromStack: the origin of the card that is moving
     // from: the card that is moving
     // to: the place the card is going to
+    // TODO: Remove Swapcards from State and put in LocalGame
     private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
     {
         to.add(from);
@@ -146,6 +147,7 @@ public class UnoState extends GameState implements Serializable {
         return false;
     }
 
+    // TODO: Remove checkvic functionality from State and put in LocalGame
     public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
         if (playerHands.size() == 0) {
             return true;
@@ -166,6 +168,7 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // TODO: Remove drawcard functionality from State and put in LocalGame
     private void drawCardFromDeck(ArrayList<Card> to, int n)
     {
         for (int i = 0; i < n; i++) {
@@ -186,6 +189,7 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // TODO: Remove validity functionality from State and put in LocalGame
     public boolean checkCardValidity(Card card) {
 
         if (card.getFace() == Card.Face.WILD || card.getFace() == Card.Face.DRAWFOUR) {
@@ -216,16 +220,14 @@ public class UnoState extends GameState implements Serializable {
      *
      * @return true if card is valid, false otherwise
      */
+    // TODO: Remove placecard functionality from State and put in LocalGame
     public boolean placeCard(int playerID, Card card)
     {
         boolean cardValidity = checkCardValidity(card);
         if (!cardValidity) {
-            latestAction = "Placed card was not valid!\n";
             return false;
             // ends function, rest of code doesn't run
         }
-
-
 
         int nextPlayerID;
         Card.Face face = card.getFace();
@@ -296,6 +298,9 @@ public class UnoState extends GameState implements Serializable {
         return turn % 4;
     }
 
-
+    public Card getTopCard()
+    {
+        return playedCards.get(0);
+    }
 
 }
