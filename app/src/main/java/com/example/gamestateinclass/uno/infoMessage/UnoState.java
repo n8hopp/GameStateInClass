@@ -182,7 +182,7 @@ public class UnoState extends GameState implements Serializable {
     {
         CW (1), CCW (-1);
 
-        private int value;
+        public int value;
 
         PlayDirection(int value) {
             this.value = value;
@@ -287,20 +287,55 @@ public class UnoState extends GameState implements Serializable {
         return true;
     }
 
-    public ArrayList<Card> fetchPlayerHand(int id)
-    {
+    public ArrayList<Card> fetchPlayerHand(int id) {
         ArrayList<Card> hand = playerHands.get(id);
         return hand;
     }
 
-    public int fetchCurrentPlayer()
-    {
+    public int fetchCurrentPlayer() {
         return turn % 4;
     }
 
-    public Card getTopCard()
-    {
+    public Card getTopCard() {
         return playedCards.get(0);
     }
+
+    public int getTurn() {
+        return turn;
+    }
+
+    public void setTurn(int _turn) {
+        turn = _turn;
+    }
+
+    public PlayDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(PlayDirection _direction) {
+        direction = _direction;
+    }
+
+    public int getHandsSize() {
+        return playerHands.size();
+    }
+
+
+    public void addCardsToPlayerHand(int playerIndex, ArrayList<Card> cards) {
+        playerHands.get(playerIndex).addAll(cards);
+    }
+
+
+    // this function REMOVES and RETURNS "n" amount of cards from the top of drawDeck
+    public ArrayList<Card> drawCardsFromDeck(int n) {
+
+        ArrayList<Card> cardsTaken = (ArrayList<Card>) drawDeck.subList(0, n);
+        drawDeck.subList(0, n).clear();
+
+        return cardsTaken;
+
+    }
+
+    public void
 
 }

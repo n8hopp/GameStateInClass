@@ -8,35 +8,33 @@ public class Card {
 
 	private CardColor color;
 	private Face face;
-
-	public Card()
-	{
+	private RenderCard render;
+	public Card() {
 		face = Face.ZERO;
 		color = CardColor.BLACK;
+		render = new RenderCard(face, color);
 	}
 	// Basic constructor that takes a color and a face
-	public Card(CardColor _color, Face _face)
-	{
+	public Card(CardColor _color, Face _face) {
 		color = _color;
 		face = _face;
+		render = new RenderCard(face, color);
 	}
 
-	public void setColor(CardColor c){
+	public void setColor(CardColor c) {
 		color = c;
 	}
 
-	public void setFace(Face _face){
+	public void setFace(Face _face) {
 		face = _face;
 	}
 
 
-	public CardColor getCardColor()
-	{
+	public CardColor getCardColor() {
 		return this.color;
 	}
 
-	public Face getFace()
-	{
+	public Face getFace() {
 		return this.face;
 	}
 }

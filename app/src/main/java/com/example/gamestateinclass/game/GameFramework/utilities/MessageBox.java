@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
-import edu.up.cs301.game.R;
+import com.example.gamestateinclass.R;
 
 /**
  * Helper-class for showing dialog boxes
