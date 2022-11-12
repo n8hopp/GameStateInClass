@@ -1,4 +1,4 @@
-package com.example.gamestateinclass.uno.unoActionMessage;
+package com.example.gamestateinclass.uno.actionMessage;
 
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;

@@ -1,15 +1,17 @@
 package com.example.gamestateinclass.uno;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
-import com.example.gamestateinclass.game.GameFramework.gameConfiguration.*;
+import com.example.gamestateinclass.game.GameFramework.gameConfiguration.GameConfig;
+import com.example.gamestateinclass.game.GameFramework.gameConfiguration.GamePlayerType;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
-import com.example.gamestateinclass.uno.players.*;
+import com.example.gamestateinclass.uno.players.UnoComputerPlayer2;
+import com.example.gamestateinclass.uno.players.UnoComputerPlayer3;
+import com.example.gamestateinclass.uno.players.UnoComputerPlayer4;
+import com.example.gamestateinclass.uno.players.UnoPlayer1;
 
 import java.util.ArrayList;
 

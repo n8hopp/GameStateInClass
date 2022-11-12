@@ -2,23 +2,14 @@ package com.example.gamestateinclass;
 
 import static org.junit.Assert.assertTrue;
 
-import android.view.MotionEvent;
-import android.view.View;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import com.example.gamestateinclass.game.GameFramework.actionMessage.MyNameIsAction;
-import com.example.gamestateinclass.game.GameFramework.actionMessage.ReadyAction;
-import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
-import com.example.gamestateinclass.R;
-import com.example.gamestateinclass.uno.UnoLocalGame;
 import com.example.gamestateinclass.uno.UnoMainActivity;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
-import com.example.gamestateinclass.uno.unoActionMessage.UnoMoveAction;
 
 @RunWith(RobolectricTestRunner.class)
 public class UnoTests {
