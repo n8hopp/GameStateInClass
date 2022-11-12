@@ -43,15 +43,19 @@ public class UnoLocalGame extends LocalGame {
 		super();
 		super.state = new UnoState(unoState);
 	}
+
+
 	@Override
 	protected void sendUpdatedStateTo(GamePlayer p) {
 
 	}
 
+
 	@Override
 	protected boolean canMove(int playerIdx) {
 		return playerIdx == ((UnoState)state).fetchCurrentPlayer();
 	}
+
 
 	public boolean checkCardValidity(Card card) {
 
@@ -59,23 +63,26 @@ public class UnoLocalGame extends LocalGame {
 			return true;
 		}
 
-		Card playedCardsTop = ((UnoState)state).getTopCard();
+		Card discardDeckTop = ((UnoState)state).getTopCard();
 
-		if (playedCardsTop == null)
+		if (discardDeckTop == null)
 		{
 			return false;
 		}
-		if (playedCardsTop.getFace() == card.getFace() ||
-				playedCardsTop.getCardColor() == card.getCardColor()) {
+		if (discardDeckTop.getFace() == card.getFace() ||
+				discardDeckTop.getCardColor() == card.getCardColor()) {
 			return true;
 		}
 
 		return false;
 	}
+
+
 	@Override
 	protected String checkIfGameOver() {
 		return null;
 	}
+
 
 	@Override
 	protected boolean makeMove(GameAction action) {
@@ -100,6 +107,7 @@ public class UnoLocalGame extends LocalGame {
 		return false;
 	}
 
+
 	protected boolean drawCard(int n) {
 
 		UnoState state = (UnoState) super.state;
@@ -110,6 +118,7 @@ public class UnoLocalGame extends LocalGame {
 
 		return true;
 	}
+
 
 	protected boolean placeCard(Card card) {
 
@@ -169,21 +178,14 @@ public class UnoLocalGame extends LocalGame {
 				break;
 		}
 
-		CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
-		// because it may have changed during special action execution
-
 		state.addCardToDiscardDeck(card);
 		state.takeCardFromHand(turn, card);
-//		playerHands.get(playerID).remove(card);
 
 		turn += direction.value;
 		turn %= handsSize;
 
 		state.setTurn(turn);
 
-		// Player's numerical value (1-4) is different from their ID's numerical value.
-		// Maybe amend this by making player #0 null so that player 1's player id = 1?
-		// Otherwise, any time we refer to a player id, we add one to translate that to what the frontfacing view knows as the player values,
-		// hence why we do playerId + 1 and turn + 1.
+		return true;
 	}
 }

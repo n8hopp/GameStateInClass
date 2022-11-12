@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -139,7 +141,8 @@ public class UnoState extends GameState implements Serializable {
         if(drawDeck.size() >= 7 * playerHands.size()) {
             for (int i = 0; i < 7; i++) {
                 for (int j = 0; j < playerHands.size(); j++) {
-                    drawCardFromDeck(playerHands.get(j), 1);
+                    ArrayList<Card> drawnCards = drawCardsFromDeck(1);
+                    addCardsToPlayerHand(j, drawnCards);
                 }
             }
             return true;
@@ -168,15 +171,6 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
-    // TODO: Remove drawcard functionality from State and put in LocalGame
-    private void drawCardFromDeck(ArrayList<Card> to, int n)
-    {
-        for (int i = 0; i < n; i++) {
-            Card nextCard = drawDeck.get(0);
-            to.add(nextCard);
-            drawDeck.remove(nextCard);
-        }
-    }
 
     public enum PlayDirection
     {
@@ -187,104 +181,6 @@ public class UnoState extends GameState implements Serializable {
         PlayDirection(int value) {
             this.value = value;
         }
-    }
-
-    // TODO: Remove validity functionality from State and put in LocalGame
-    public boolean checkCardValidity(Card card) {
-
-        if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
-            return true;
-        }
-
-        Card discardDeckTop = discardDeck.get(0);
-
-        if (discardDeckTop == null)
-        {
-            return false;
-        }
-        if (discardDeckTop.getFace() == card.getFace() ||
-                discardDeckTop.getCardColor() == card.getCardColor()) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks card validity. If valid, removes card from player hand,
-     * executes special card functionalities, places card into placedCards,
-     * then increments turn.
-     *
-     * @param playerID index of player whose placing card
-     * @param card the actual card object being placed
-     *
-     * @return true if card is valid, false otherwise
-     */
-    // TODO: Remove placecard functionality from State and put in LocalGame
-    public boolean placeCard(int playerID, Card card)
-    {
-        boolean cardValidity = checkCardValidity(card);
-        if (!cardValidity) {
-            return false;
-            // ends function, rest of code doesn't run
-        }
-
-        int nextPlayerID;
-        Face face = card.getFace();
-
-        switch (face) {
-
-            case SKIP:
-                turn += direction.value;
-                turn %= playerHands.size();
-                break;
-
-            case REVERSE:
-                if (direction == PlayDirection.CCW) {
-                    direction = PlayDirection.CW;
-                } else {
-                    direction = PlayDirection.CCW;
-                }
-
-                break;
-
-            case DRAWTWO:
-                turn += direction.value;
-                turn %= playerHands.size();
-
-                drawCardFromDeck(playerHands.get(turn), 2);
-                break;
-
-            case DRAWFOUR:
-                turn += direction.value;
-                turn %= playerHands.size();
-
-                drawCardFromDeck(playerHands.get(turn), 4);
-
-                // can change this based on demonstration
-                card.setColor(CardColor.BLUE);
-                break;
-
-            case WILD:
-
-                // same thing here
-                card.setColor(CardColor.BLUE);
-                break;
-        }
-
-        CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
-        // because it may have changed during special action execution
-        discardDeck.add(card);
-        playerHands.get(playerID).remove(card);
-
-        turn += direction.value;
-        turn %= playerHands.size();
-
-        // Player's numerical value (1-4) is different from their ID's numerical value.
-        // Maybe amend this by making player #0 null so that player 1's player id = 1?
-        // Otherwise, any time we refer to a player id, we add one to translate that to what the frontfacing view knows as the player values,
-        // hence why we do playerId + 1 and turn + 1.
-        return true;
     }
 
     public ArrayList<Card> fetchPlayerHand(int id) {
