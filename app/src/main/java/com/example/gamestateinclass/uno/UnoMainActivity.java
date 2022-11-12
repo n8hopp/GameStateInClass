@@ -1,7 +1,5 @@
 package com.example.gamestateinclass.uno;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
@@ -39,7 +37,7 @@ public class UnoMainActivity extends GameMainActivity {
         // dumb computer player 1
         playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
             public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayer2(name);
+                return new UnoComputerPlayer1(name);
             }
         });
 
@@ -53,7 +51,7 @@ public class UnoMainActivity extends GameMainActivity {
         // dumb computer player 3
         playerTypes.add(new GamePlayerType("Computer Player 3 (dumb)") {
             public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayer4(name);
+                return new UnoComputerPlayer69(name);
             }
         });
 
