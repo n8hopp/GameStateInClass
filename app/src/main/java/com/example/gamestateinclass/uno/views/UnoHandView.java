@@ -74,7 +74,8 @@ public class UnoHandView extends FlashSurfaceView {
     public void onDraw(Canvas canvas) {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
 
-        ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+//        ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+        ArrayList<Card> currentHand = new ArrayList<>();
         for (int i = 0; i < currentHand.size(); i ++) {
             Card card = currentHand.get(i);
             RenderCard renderCard = card.getRender();

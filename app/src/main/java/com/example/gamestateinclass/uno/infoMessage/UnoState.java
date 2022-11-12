@@ -10,6 +10,7 @@ import com.example.gamestateinclass.uno.objects.Face;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class UnoState extends GameState implements Serializable {
@@ -225,7 +226,9 @@ public class UnoState extends GameState implements Serializable {
     // this function REMOVES and RETURNS "n" amount of cards from the top of drawDeck
     public ArrayList<Card> drawCardsFromDeck(int n) {
 
-        ArrayList<Card> cardsTaken = (ArrayList<Card>) drawDeck.subList(0, n);
+        List<Card> subList = drawDeck.subList(0, n);
+        ArrayList<Card> cardsTaken = new ArrayList<>(subList);
+
         drawDeck.subList(0, n).clear();
 
         return cardsTaken;
