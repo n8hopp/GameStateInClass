@@ -130,7 +130,7 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
 
-		//testCard.draw(canvas);
+		// testCard.getRender().draw(canvas);
 		// Lukas: I will implement the drawArrow function
 
 		drawArrowPath(arrowPaint, arrowPath, arrowPos);
