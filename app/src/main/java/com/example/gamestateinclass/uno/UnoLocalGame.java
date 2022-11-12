@@ -172,8 +172,8 @@ public class UnoLocalGame extends LocalGame {
 		CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
 		// because it may have changed during special action execution
 
-		playedCards.add(card);
-		playerHands.get(playerID).remove(card);
+//		playedCards.add(card);
+//		playerHands.get(playerID).remove(card);
 
 		turn += direction.value;
 		turn %= handsSize;
@@ -184,5 +184,7 @@ public class UnoLocalGame extends LocalGame {
 		// Maybe amend this by making player #0 null so that player 1's player id = 1?
 		// Otherwise, any time we refer to a player id, we add one to translate that to what the frontfacing view knows as the player values,
 		// hence why we do playerId + 1 and turn + 1.
+		return false;
 	}
+
 }

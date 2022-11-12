@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -336,6 +338,6 @@ public class UnoState extends GameState implements Serializable {
 
     }
 
-    public void
+    //public void
 
 }
