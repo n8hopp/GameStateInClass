@@ -220,7 +220,7 @@ public class UnoState extends GameState implements Serializable {
     {
         boolean cardValidity = checkCardValidity(card);
         if (!cardValidity) {
-            latestAction = "Placed card was not valid!\n";
+            //latestAction = "Placed card was not valid!\n";
             return false;
             // ends function, rest of code doesn't run
         }

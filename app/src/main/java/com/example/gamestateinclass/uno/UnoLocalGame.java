@@ -55,7 +55,8 @@ public class UnoLocalGame extends LocalGame {
 			return true;
 		}
 
-		Card playedCardsTop = ((UnoState)state).playedCards.get(0);
+		//Card playedCardsTop = ((UnoState)state).playedCards.get(0);
+		Card playedCardsTop = null;
 
 		if (playedCardsTop == null)
 		{
