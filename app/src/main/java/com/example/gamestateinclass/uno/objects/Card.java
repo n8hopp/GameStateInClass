@@ -23,6 +23,7 @@ public class Card {
 
 	public void setColor(CardColor c) {
 		color = c;
+		render.setPaintfromEnum(c);
 	}
 
 	public void setFace(Face _face) {
@@ -36,5 +37,9 @@ public class Card {
 
 	public Face getFace() {
 		return this.face;
+	}
+
+	public RenderCard getRender(){
+		return this.render;
 	}
 }
