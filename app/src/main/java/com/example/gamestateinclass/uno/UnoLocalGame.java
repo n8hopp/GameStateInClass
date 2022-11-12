@@ -51,12 +51,11 @@ public class UnoLocalGame extends LocalGame {
 
 	public boolean checkCardValidity(Card card) {
 
-		if (card.getFace() == Card.Face.WILD || card.getFace() == Card.Face.DRAWFOUR) {
+		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
 			return true;
 		}
 
-		//Card playedCardsTop = ((UnoState)state).playedCards.get(0);
-		Card playedCardsTop = null;
+		Card playedCardsTop = ((UnoState)state).getTopCard();
 
 		if (playedCardsTop == null)
 		{

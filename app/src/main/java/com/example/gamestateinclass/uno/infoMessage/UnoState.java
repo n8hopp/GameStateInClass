@@ -55,15 +55,15 @@ public class UnoState extends GameState implements Serializable {
         drawDeck = new ArrayList<Card>();
         for(Card c : previous.drawDeck)
         {
-            Card.Face face = c.getFace();
-            Card.CardColor color = c.getCardColor();
+            Face face = c.getFace();
+            CardColor color = c.getCardColor();
             drawDeck.add(new Card(color, face));
         }
         playedCards = new ArrayList<Card>();
         for(Card c : previous.playedCards)
         {
-            Card.Face face = c.getFace();
-            Card.CardColor color = c.getCardColor();
+            Face face = c.getFace();
+            CardColor color = c.getCardColor();
             playedCards.add(new Card(color, face));
         }
         playerHands = new ArrayList<>();
@@ -78,8 +78,8 @@ public class UnoState extends GameState implements Serializable {
 
             for (Card c : newHand)
             {
-                Card.Face face = c.getFace();
-                Card.CardColor color = c.getCardColor();
+                Face face = c.getFace();
+                CardColor color = c.getCardColor();
 
                 playerHands.get(i).add(new Card(color, face));
             }
@@ -104,19 +104,19 @@ public class UnoState extends GameState implements Serializable {
     private ArrayList<Card> generateDeck()
     {
         ArrayList<Card> cards = new ArrayList<>();
-        for ( Card.CardColor c : Card.CardColor.values()){
-            for ( Card.Face f : Card.Face.values()){
-                if (c == Card.CardColor.BLACK) {
-                    if(f == Card.Face.WILD || f == Card.Face.DRAWFOUR) {
+        for ( CardColor c : CardColor.values()){
+            for ( Face f : Face.values()){
+                if (c == CardColor.BLACK) {
+                    if(f == Face.WILD || f == Face.DRAWFOUR) {
                         for ( int i = 0; i < 4; i++) {
                             cards.add(new Card(c, f));
                         }
                     }
                 }
-                else if (f != Card.Face.WILD && f != Card.Face.DRAWFOUR)
+                else if (f != Face.WILD && f != Face.DRAWFOUR)
                 {
                     cards.add(new Card(c, f));
-                    if (f != Card.Face.ZERO) cards.add(new Card(c, f));
+                    if (f != Face.ZERO) cards.add(new Card(c, f));
                 }
             }
         }
@@ -127,6 +127,7 @@ public class UnoState extends GameState implements Serializable {
     // fromStack: the origin of the card that is moving
     // from: the card that is moving
     // to: the place the card is going to
+    // TODO: Remove Swapcards from State and put in LocalGame
     private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
     {
         to.add(from);
@@ -146,6 +147,7 @@ public class UnoState extends GameState implements Serializable {
         return false;
     }
 
+    // TODO: Remove checkvic functionality from State and put in LocalGame
     public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
         if (playerHands.size() == 0) {
             return true;
@@ -166,6 +168,7 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // TODO: Remove drawcard functionality from State and put in LocalGame
     private void drawCardFromDeck(ArrayList<Card> to, int n)
     {
         for (int i = 0; i < n; i++) {
@@ -186,9 +189,10 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // TODO: Remove validity functionality from State and put in LocalGame
     public boolean checkCardValidity(Card card) {
 
-        if (card.getFace() == Card.Face.WILD || card.getFace() == Card.Face.DRAWFOUR) {
+        if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
             return true;
         }
 
@@ -216,19 +220,17 @@ public class UnoState extends GameState implements Serializable {
      *
      * @return true if card is valid, false otherwise
      */
+    // TODO: Remove placecard functionality from State and put in LocalGame
     public boolean placeCard(int playerID, Card card)
     {
         boolean cardValidity = checkCardValidity(card);
         if (!cardValidity) {
-            //latestAction = "Placed card was not valid!\n";
             return false;
             // ends function, rest of code doesn't run
         }
 
-
-
         int nextPlayerID;
-        Card.Face face = card.getFace();
+        Face face = card.getFace();
 
         switch (face) {
 
@@ -260,17 +262,17 @@ public class UnoState extends GameState implements Serializable {
                 drawCardFromDeck(playerHands.get(turn), 4);
 
                 // can change this based on demonstration
-                card.setColor(Card.CardColor.BLUE);
+                card.setColor(CardColor.BLUE);
                 break;
 
             case WILD:
 
                 // same thing here
-                card.setColor(Card.CardColor.BLUE);
+                card.setColor(CardColor.BLUE);
                 break;
         }
 
-        Card.CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
+        CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
         // because it may have changed during special action execution
         playedCards.add(card);
         playerHands.get(playerID).remove(card);
@@ -296,6 +298,9 @@ public class UnoState extends GameState implements Serializable {
         return turn % 4;
     }
 
-
+    public Card getTopCard()
+    {
+        return playedCards.get(0);
+    }
 
 }
