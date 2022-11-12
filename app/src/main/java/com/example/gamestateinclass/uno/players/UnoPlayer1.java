@@ -43,11 +43,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 
 		tableView.setState(gameState);
 		handView.setState(gameState);
-		
-		String p2HandSize = "" + gameState.fetchPlayerHand(1);
-		String p3HandSize = "" + gameState.fetchPlayerHand(2);
-		String p4HandSize = "" + gameState.fetchPlayerHand(3);
-		tableView.setPlayerHandText(p2HandSize, p3HandSize, p4HandSize);
+
+		String p1HandSize = "" + gameState.fetchPlayerHand(1).size();
+		String p2HandSize = "" + gameState.fetchPlayerHand(2).size();
+		String p3HandSize = "" + gameState.fetchPlayerHand(3).size();
+		tableView.setPlayerHandText(p1HandSize, p2HandSize, p3HandSize);
 
 		tableView.invalidate();
 		handView.invalidate();

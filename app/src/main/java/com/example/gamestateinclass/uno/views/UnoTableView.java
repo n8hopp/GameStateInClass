@@ -28,11 +28,11 @@ public class UnoTableView extends FlashSurfaceView {
 	protected UnoState state;
 
 
-	//	For the sake of these text strings, the human player is p1, and other player
+	//	For the sake of these text strings, the human player is p0, and other player
 	//	numbers count up in order, clockwise
+	private String p1hand;
 	private String p2hand;
 	private String p3hand;
-	private String p4hand;
 
 	public int arrowPos; // 0: human player. Increases clockwise
 
@@ -69,9 +69,9 @@ public class UnoTableView extends FlashSurfaceView {
 		textPaint2.setFakeBoldText(true);
 		textPaint.setTextSize(45);
 
+		p1hand = "7 Cards";
 		p2hand = "7 Cards";
 		p3hand = "7 Cards";
-		p4hand = "7 Cards";
 
 	}
 
@@ -89,15 +89,15 @@ public class UnoTableView extends FlashSurfaceView {
 
 		// Left card
 		canvas.drawRect(50, (getHeight()/2)-100, 350, (getHeight()/2)+100, cardPaint);
-		canvas.drawText(p2hand, 200, (getHeight()/2)+5, textPaint);
+		canvas.drawText(p1hand, 200, (getHeight()/2)+5, textPaint);
 
 		// Top card
 		canvas.drawRect((getWidth()/2)-100, 50, (getWidth()/2)+100, 350, cardPaint);
-		canvas.drawText(p3hand, (getWidth()/2), 200, textPaint);
+		canvas.drawText(p2hand, (getWidth()/2), 200, textPaint);
 
 		// Right card
 		canvas.drawRect((getWidth()-350), (getHeight()/2)-100, (getWidth()-50), (getHeight()/2)+100, cardPaint);
-		canvas.drawText(p4hand, (getWidth()-200), (getHeight()/2)+5, textPaint);
+		canvas.drawText(p3hand, (getWidth()-200), (getHeight()/2)+5, textPaint);
 
 		// Face up middle card
 		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
@@ -181,9 +181,9 @@ public class UnoTableView extends FlashSurfaceView {
 
 	}
 
-	public void setPlayerHandText(String _p2hand, String _p3hand, String _p4hand){
+	public void setPlayerHandText(String _p1hand, String _p2hand, String _p3hand){
+		p1hand = _p1hand;
 		p2hand = _p2hand;
 		p3hand = _p3hand;
-		p4hand = _p4hand;
 	}
 }
