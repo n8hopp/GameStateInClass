@@ -51,7 +51,7 @@ public class UnoLocalGame extends LocalGame {
 
 	public boolean checkCardValidity(Card card) {
 
-		if (card.getFace() == Card.Face.WILD || card.getFace() == Card.Face.DRAWFOUR) {
+		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
 			return true;
 		}
 
