@@ -2,10 +2,11 @@ package com.example.gamestateinclass.uno.actionMessage;
 
 
 
+
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.uno.objects.Card;
-import com.example.gamestateinclass.uno.objects.Card.*;
+import com.example.gamestateinclass.uno.objects.*;
 
 
 public class UnoMoveAction extends GameAction {
@@ -21,7 +22,7 @@ public class UnoMoveAction extends GameAction {
         super(player);
 
         this.card = new Card();
-        card.setPaintfromEnum(_card.getCardColor());
+        card.setColor(_card.getCardColor());
         card.setFace(_card.getFace());
 
     }

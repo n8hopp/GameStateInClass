@@ -5,6 +5,7 @@ import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.Face;
 
 public class UnoLocalGame extends LocalGame {
 	/*
