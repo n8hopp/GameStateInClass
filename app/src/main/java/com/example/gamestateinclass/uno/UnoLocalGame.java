@@ -5,6 +5,10 @@ import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
+
+import java.util.ArrayList;
 
 public class UnoLocalGame extends LocalGame {
 	/*
@@ -75,6 +79,110 @@ public class UnoLocalGame extends LocalGame {
 
 	@Override
 	protected boolean makeMove(GameAction action) {
+
+		if (action instanceof DrawCardAction) {
+
+			drawCard(1);
+
+			return true;
+		}
+
+		if (action instanceof PlaceCardAction) {
+
+			PlaceCardAction placeAction = (PlaceCardAction) action;
+			Card card = placeAction.getCard();
+
+			placeCard(card);
+
+			return true;
+		}
+
 		return false;
+	}
+
+	protected boolean drawCard(int n) {
+
+		UnoState state = (UnoState) super.state;
+		int turn = state.getTurn();
+
+		ArrayList<Card> cardsDrawn = state.drawCardsFromDeck(n);
+		state.addCardsToPlayerHand(turn, cardsDrawn);
+
+		return true;
+	}
+
+	protected boolean placeCard(Card card) {
+
+		UnoState state = (UnoState) super.state;
+
+		boolean cardValidity = checkCardValidity(card);
+		if (!cardValidity) {
+			return false;
+			// ends function, rest of code doesn't run
+		}
+
+
+		int turn = state.getTurn();
+		UnoState.PlayDirection direction = state.getDirection();
+		int handsSize = state.getHandsSize();
+
+		Face face = card.getFace();
+
+		switch (face) {
+
+			case SKIP:
+				turn += direction.value;
+				turn %= handsSize;
+
+				break;
+
+			case REVERSE:
+				if (direction == UnoState.PlayDirection.CCW) {
+					direction = UnoState.PlayDirection.CW;
+				} else {
+					direction = UnoState.PlayDirection.CCW;
+				}
+
+				break;
+
+			case DRAWTWO:
+				turn += direction.value;
+				turn %= handsSize;
+
+				drawCard(2);
+				break;
+
+			case DRAWFOUR:
+				turn += direction.value;
+				turn %= handsSize;
+
+				drawCard(4);
+
+				// can change this based on demonstration
+				card.setColor(CardColor.BLUE);
+				break;
+
+			case WILD:
+
+				// same thing here
+				card.setColor(CardColor.BLUE);
+				break;
+		}
+
+		CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
+		// because it may have changed during special action execution
+
+		playedCards.add(card);
+		playerHands.get(playerID).remove(card);
+
+		turn += direction.value;
+		turn %= handsSize;
+
+		state.setTurn(turn);
+
+		// Player's numerical value (1-4) is different from their ID's numerical value.
+		// Maybe amend this by making player #0 null so that player 1's player id = 1?
+		// Otherwise, any time we refer to a player id, we add one to translate that to what the frontfacing view knows as the player values,
+		// hence why we do playerId + 1 and turn + 1.
 	}
 }
