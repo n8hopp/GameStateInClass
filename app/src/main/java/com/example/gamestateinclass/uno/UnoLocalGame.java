@@ -172,8 +172,9 @@ public class UnoLocalGame extends LocalGame {
 		CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
 		// because it may have changed during special action execution
 
-		playedCards.add(card);
-		playerHands.get(playerID).remove(card);
+		state.addCardToDiscardDeck(card);
+		state.takeCardFromHand(turn, card);
+//		playerHands.get(playerID).remove(card);
 
 		turn += direction.value;
 		turn %= handsSize;

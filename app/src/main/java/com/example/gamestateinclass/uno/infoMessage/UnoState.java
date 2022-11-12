@@ -26,7 +26,7 @@ public class UnoState extends GameState implements Serializable {
     private PlayDirection direction;
 
     private ArrayList<ArrayList<Card>> playerHands;
-    private ArrayList<Card> playedCards;
+    private ArrayList<Card> discardDeck;
     private ArrayList<Card> drawDeck;
 
     // Default Constructor
@@ -44,7 +44,7 @@ public class UnoState extends GameState implements Serializable {
 
         shuffleDeck(drawDeck);
         initializePlayerHands();
-        playedCards = createPlayedCardsDeck(drawDeck);
+        discardDeck = creatediscardDeckDeck(drawDeck);
     }
 
     // Copy Constructor
@@ -59,12 +59,12 @@ public class UnoState extends GameState implements Serializable {
             CardColor color = c.getCardColor();
             drawDeck.add(new Card(color, face));
         }
-        playedCards = new ArrayList<Card>();
-        for(Card c : previous.playedCards)
+        discardDeck = new ArrayList<Card>();
+        for(Card c : previous.discardDeck)
         {
             Face face = c.getFace();
             CardColor color = c.getCardColor();
-            playedCards.add(new Card(color, face));
+            discardDeck.add(new Card(color, face));
         }
         playerHands = new ArrayList<>();
 
@@ -90,13 +90,13 @@ public class UnoState extends GameState implements Serializable {
         Collections.shuffle(deck, new Random(1234));
     }
 
-    private ArrayList<Card> createPlayedCardsDeck(ArrayList<Card> drawDeck) {
+    private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
         Card firstCard = drawDeck.get(0);
-        ArrayList<Card> playedCardsDeck = new ArrayList<>();
-        playedCardsDeck.add(firstCard);
+        ArrayList<Card> discardDeckDeck = new ArrayList<>();
+        discardDeckDeck.add(firstCard);
         drawDeck.remove(0);
 
-        return playedCardsDeck;
+        return discardDeckDeck;
     }
 
     // Generate deck of: 4 of each black card, 2 of each colored card
@@ -159,7 +159,7 @@ public class UnoState extends GameState implements Serializable {
 
     public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
         if (drawDeck.size() == 0) {
-            drawDeck.addAll(playedCards);
+            drawDeck.addAll(discardDeck);
             Collections.shuffle(drawDeck);
             return true;
         }
@@ -196,14 +196,14 @@ public class UnoState extends GameState implements Serializable {
             return true;
         }
 
-        Card playedCardsTop = playedCards.get(0);
+        Card discardDeckTop = discardDeck.get(0);
 
-        if (playedCardsTop == null)
+        if (discardDeckTop == null)
         {
             return false;
         }
-        if (playedCardsTop.getFace() == card.getFace() ||
-                playedCardsTop.getCardColor() == card.getCardColor()) {
+        if (discardDeckTop.getFace() == card.getFace() ||
+                discardDeckTop.getCardColor() == card.getCardColor()) {
             return true;
         }
 
@@ -274,7 +274,7 @@ public class UnoState extends GameState implements Serializable {
 
         CardColor color = card.getCardColor(); // we don't get color until here (for latestAction print)
         // because it may have changed during special action execution
-        playedCards.add(card);
+        discardDeck.add(card);
         playerHands.get(playerID).remove(card);
 
         turn += direction.value;
@@ -297,7 +297,7 @@ public class UnoState extends GameState implements Serializable {
     }
 
     public Card getTopCard() {
-        return playedCards.get(0);
+        return discardDeck.get(0);
     }
 
     public int getTurn() {
@@ -336,6 +336,19 @@ public class UnoState extends GameState implements Serializable {
 
     }
 
-    public void
+    // this function REMOVES and RETURNS the specified card from the specified player
+    public Card takeCardFromHand(int playerIndex, Card card) {
+
+        ArrayList<Card> playerHand = playerHands.get(playerIndex);
+        Card cardTaken = playerHand.get(playerHand.indexOf(card));
+        playerHand.remove(card);
+
+        return cardTaken;
+    }
+
+
+    public void addCardToDiscardDeck(Card card) {
+        discardDeck.add(card);
+    }
 
 }
