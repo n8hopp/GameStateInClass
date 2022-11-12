@@ -57,6 +57,15 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
+
+		if (view instanceof UnoTableView) {
+			return true;
+		}
+
+		if (view instanceof  UnoHandView) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -71,5 +80,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
+
+		tableView.setOnTouchListener(this);
+		handView.setOnTouchListener(this);
 	}
 }

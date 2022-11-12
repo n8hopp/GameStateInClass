@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.RenderCard;
 
 public class UnoTableView extends FlashSurfaceView {
 	/* We can "hard-code" the "hands" of each 3 opponents which will be a face down
@@ -100,13 +101,19 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawText(p3hand, (getWidth()-200), (getHeight()/2)+5, textPaint);
 
 		// Face up middle card
-		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
+//		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
 		// Lukas: Added 30 pixel border to match HandView
-		canvas.drawRect((getWidth()/2)+25+25,  (getHeight()/2)-150+25, (getWidth()/2)+225-25, (getHeight()/2)+150-25, faceUp);
+//		canvas.drawRect((getWidth()/2)+25+25,  (getHeight()/2)-150+25, (getWidth()/2)+225-25, (getHeight()/2)+150-25, faceUp);
 		// Draw big number on card
 
-		canvas.drawText("7", getWidth()/2 + 100, getHeight()/2 +30 , textPaint2);
+//		canvas.drawText("7", getWidth()/2 + 100, getHeight()/2 +30 , textPaint2);
 		canvas.drawText("PLACE", getWidth()/2+125,  (getHeight()/2)+200, textPaint);
+
+		if (state != null) {
+			RenderCard topCardRender = state.getTopCard().getRender();
+			topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
+			topCardRender.draw(canvas);
+		}
 
 		// Face down middle card
 		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
