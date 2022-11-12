@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -507,7 +508,8 @@ public abstract class GameMainActivity extends Activity implements
 
 
         String ipCode = IPCoder.encodeLocalIP();
-        String ipAddress = IPCoder.getLocalIpAddress();
+//        String ipAddress = IPCoder.getLocalIpAddress();
+        String ipAddress = "127.0.0.1";
         TextView ipText = (TextView)findViewById(R.id.ipCodeLabel);
         ipText.setText(ipText.getText()+ipCode+" ("+ipAddress+") ");
 

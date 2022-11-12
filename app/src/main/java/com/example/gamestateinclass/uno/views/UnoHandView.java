@@ -6,7 +6,13 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 
+import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
+import com.example.gamestateinclass.uno.infoMessage.UnoState;
+import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.RenderCard;
+
+import java.util.ArrayList;
 
 public class UnoHandView extends FlashSurfaceView {
 
@@ -16,6 +22,8 @@ public class UnoHandView extends FlashSurfaceView {
     public static final int cardSpacing = 30;
     public static final int xOffset = 500;
     public static final int yOffset = 60;
+
+    protected UnoState state;
 
     Paint redPaint = new Paint();
     Paint bluePaint = new Paint();
@@ -66,24 +74,31 @@ public class UnoHandView extends FlashSurfaceView {
     public void onDraw(Canvas canvas) {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
 
-        for (int i = 0; i < 6; i ++) {
+//        ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+        ArrayList<Card> currentHand = new ArrayList<>();
+        for (int i = 0; i < currentHand.size(); i ++) {
+            Card card = currentHand.get(i);
+            RenderCard renderCard = card.getRender();
+            renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
+            renderCard.draw(canvas);
 
-            // Card border
-            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),
-                    yOffset,
-                    xOffset + i * (cardSpacing + cardWidth) + cardWidth,
-                    yOffset + cardHeight, cardBorderPaint);
+//            // Card border
+//            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),
+//                    yOffset,
+//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth,
+//                    yOffset + cardHeight, cardBorderPaint);
+//
+//            // Main card rectangle
+//            canvas.drawRect(xOffset + i * (cardSpacing + cardWidth) + cardBorder,
+//                    yOffset + cardBorder,
+//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth - cardBorder,
+//                    yOffset + cardHeight - cardBorder, cardColors[i]);
+//
+//            // Number value
+//            canvas.drawText(""+cardNumbers[i],
+//                    xOffset + i * (cardSpacing + cardWidth) + 100,
+//                    yOffset + cardBorder + (cardHeight + cardBorder) / 2, numberPaint);
 
-            // Main card rectangle
-            canvas.drawRect(xOffset + i * (cardSpacing + cardWidth) + cardBorder,
-                    yOffset + cardBorder,
-                    xOffset + i * (cardSpacing + cardWidth) + cardWidth - cardBorder,
-                    yOffset + cardHeight - cardBorder, cardColors[i]);
-
-            // Number value
-            canvas.drawText(""+cardNumbers[i],
-                    xOffset + i * (cardSpacing + cardWidth) + 100,
-                    yOffset + cardBorder + (cardHeight + cardBorder) / 2, numberPaint);
         }
 
         // Big UNO Button

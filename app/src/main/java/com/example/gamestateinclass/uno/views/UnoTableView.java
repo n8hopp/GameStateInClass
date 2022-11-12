@@ -34,31 +34,6 @@ public class UnoTableView extends FlashSurfaceView {
 	public int arrowPos; // 0: human player. Increases clockwise
 
 	public UnoTableView(Context context, AttributeSet attrs) {
-	/*	super(context, attrs);
-		setWillNotDraw(false);
-
-		cardPaint = new Paint();
-		textPaint = new Paint();
-		arrowPaint = new Paint();
-		tableColor = new Paint();
-		textPaint2 = new Paint();
-		arrowPos = 1;
-
-		p2hand.setText("7 Cards");
-		p3hand.setText("7 Cards");
-		p4hand.setText("7 Cards");
-
-		tableColor.setARGB(255, 66, 143, 70);
-		tableColor.setStyle(Paint.Style.FILL);
-
-		arrowPaint.setARGB(255, 0, 255, 255);
-		arrowPaint.setStyle(Paint.Style.FILL);
-		arrowPath = new Path();
-
-		cardPaint.setTextAlign(Paint.Align.CENTER);
-		textPaint.setTextAlign(Paint.Align.CENTER);
-*/
-
 		super(context, attrs);
 
 		setWillNotDraw(false);
@@ -129,7 +104,7 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
 
-		// testCard.getRender().draw(canvas);
+		testCard.getRender().draw(canvas);
 		// Lukas: I will implement the drawArrow function
 
 		drawArrowPath(arrowPaint, arrowPath, arrowPos);

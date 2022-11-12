@@ -3,6 +3,7 @@ package com.example.gamestateinclass.uno.players;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
@@ -39,5 +40,10 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 	@Override
 	public void setAsGui(GameMainActivity activity) {
 
+		// remember the activity
+		myActivity = activity;
+
+		// Load the layout resource for our GUI
+		activity.setContentView(R.layout.uno_layout);
 	}
 }

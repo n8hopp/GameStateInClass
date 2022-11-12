@@ -2,11 +2,12 @@ package com.example.gamestateinclass.uno.actionMessage;
 
 
 
-
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.uno.objects.Card;
-import com.example.gamestateinclass.uno.objects.*;
+import com.example.gamestateinclass.uno.objects.Card.*;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
 
 
 public class UnoMoveAction extends GameAction {
