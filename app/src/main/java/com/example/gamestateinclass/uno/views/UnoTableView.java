@@ -180,4 +180,10 @@ public class UnoTableView extends FlashSurfaceView {
 
 
 	}
+
+	public void setPlayerHandText(String _p2hand, String _p3hand, String _p4hand){
+		p2hand = _p2hand;
+		p3hand = _p3hand;
+		p4hand = _p4hand;
+	}
 }
