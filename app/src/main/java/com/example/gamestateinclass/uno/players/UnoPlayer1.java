@@ -1,15 +1,21 @@
 package com.example.gamestateinclass.uno.players;
 
 import android.view.MotionEvent;
+import android.view.SurfaceView;
 import android.view.View;
 
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
+import com.example.gamestateinclass.uno.infoMessage.UnoState;
+import com.example.gamestateinclass.uno.views.UnoHandView;
+import com.example.gamestateinclass.uno.views.UnoTableView;
 
 public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
 	private int layoutId;
+	private UnoTableView tableView;
+	private UnoHandView handView;
 
 	/**
 	 * constructor
@@ -28,6 +34,18 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 
 	@Override
 	public void receiveInfo(GameInfo info) {
+		if (!(info instanceof UnoState)) {
+			flash(0xFFFF0000, 200);
+			return;
+		}
+
+		UnoState gameState = (UnoState) info;
+
+		tableView.setState(gameState);
+		handView.setState(gameState);
+
+		tableView.invalidate();
+		handView.invalidate();
 
 	}
 
@@ -45,5 +63,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 
 		// Load the layout resource for our GUI
 		activity.setContentView(R.layout.uno_layout);
+
+		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
+		handView = (UnoHandView) activity.findViewById(R.id.handView);
 	}
 }

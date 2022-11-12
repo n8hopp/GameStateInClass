@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
+import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 
 public class UnoTableView extends FlashSurfaceView {
@@ -23,6 +24,8 @@ public class UnoTableView extends FlashSurfaceView {
 	private Paint faceUp;
 	private Path arrowPath;
 	private Card testCard;
+
+	protected UnoState state;
 
 
 	//	For the sake of these text views, the human player is p1, and other player
@@ -74,6 +77,11 @@ public class UnoTableView extends FlashSurfaceView {
 	}
 
 
+	public void setState(UnoState _state) {
+		state = _state;
+	}
+
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 
@@ -105,7 +113,7 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
 
-		testCard.getRender().draw(canvas);
+//		testCard.getRender().draw(canvas);
 		// Lukas: I will implement the drawArrow function
 
 		drawArrowPath(arrowPaint, arrowPath, arrowPos);

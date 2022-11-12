@@ -19,9 +19,9 @@ public class UnoHandView extends FlashSurfaceView {
     public static final int cardHeight = 300;
     public static final int cardWidth = 200;
     public static final int cardBorder = 25;
-    public static final int cardSpacing = 30;
-    public static final int xOffset = 500;
-    public static final int yOffset = 60;
+    public static final int cardSpacing = 240;
+    public static final int xOffset = 150;
+    public static final int yOffset = 160;
 
     protected UnoState state;
 
@@ -71,16 +71,24 @@ public class UnoHandView extends FlashSurfaceView {
 
     }
 
+
+    public void setState(UnoState _state) {
+        state = _state;
+    }
+
+
     public void onDraw(Canvas canvas) {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
 
-//        ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
-        ArrayList<Card> currentHand = new ArrayList<>();
-        for (int i = 0; i < currentHand.size(); i ++) {
-            Card card = currentHand.get(i);
-            RenderCard renderCard = card.getRender();
-            renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
-            renderCard.draw(canvas);
+        if (state != null) {
+            ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+//        ArrayList<Card> currentHand = new ArrayList<>();
+            for (int i = 0; i < currentHand.size(); i ++) {
+                Card card = currentHand.get(i);
+                RenderCard renderCard = card.getRender();
+                renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
+                renderCard.draw(canvas);
+        }
 
 //            // Card border
 //            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),

@@ -47,7 +47,8 @@ public class UnoLocalGame extends LocalGame {
 
 	@Override
 	protected void sendUpdatedStateTo(GamePlayer p) {
-
+		UnoState stateCopy = new UnoState((UnoState) super.state);
+		p.sendInfo(stateCopy);
 	}
 
 

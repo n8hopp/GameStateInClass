@@ -90,7 +90,8 @@ public class UnoState extends GameState implements Serializable {
     }
 
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1234));
+//        Collections.shuffle(deck, new Random(1234));
+        Collections.shuffle(deck, new Random());
     }
 
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
