@@ -81,6 +81,10 @@ public class UnoLocalGame extends LocalGame {
 
 	@Override
 	protected String checkIfGameOver() {
+		UnoState tempState = ((UnoState)state); //
+		if (tempState.fetchPlayerHand(tempState.fetchCurrentPlayer()).size() == 0){
+			return "Player " + tempState.fetchCurrentPlayer() + " has won!";
+		}
 		return null;
 	}
 
@@ -101,6 +105,8 @@ public class UnoLocalGame extends LocalGame {
 			Card card = placeAction.getCard();
 
 			placeCard(card);
+
+			checkIfGameOver();
 
 			return true;
 		}

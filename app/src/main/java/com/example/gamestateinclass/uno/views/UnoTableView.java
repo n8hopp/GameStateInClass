@@ -28,14 +28,13 @@ public class UnoTableView extends FlashSurfaceView {
 	protected UnoState state;
 
 
-	//	For the sake of these text views, the human player is p1, and other player
+	//	For the sake of these text strings, the human player is p1, and other player
 	//	numbers count up in order, clockwise
-
-	// For some
 	private String p2hand;
 	private String p3hand;
 	private String p4hand;
-	public int arrowPos; // 1: human player. Increases clockwise
+
+	public int arrowPos; // 0: human player. Increases clockwise
 
 	public UnoTableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -49,7 +48,7 @@ public class UnoTableView extends FlashSurfaceView {
 		tableColor = new Paint();
 		textPaint2 = new Paint();
 		testCard = new Card();
-		arrowPos = 3;
+		arrowPos = 0;
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
 		textPaint.setARGB(255, 255, 255, 255); // Text color white
 		textPaint2.setARGB(255,255,255,255);
