@@ -42,8 +42,8 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		sleep(1);
 		UnoState state = ((UnoState) info);
 
-		Log.i("recievedc", state.getTurn()+"");
-		Log.i("playerNum",  ""+playerNum);
+//		Log.i("recievedc", state.getTurn()+"");
+//		Log.i("playerNum",  ""+playerNum);
 
 		if (state.getTurn() == playerNum) {
 			Logger.log("UnoComputer 69", "My turn!");
@@ -53,7 +53,9 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 			int autoDraw = rand.nextInt(10);
 
 			if (autoDraw < 5) {
+
 				action = new DrawCardAction(this, state.getTopCard());
+				Log.i("I am drawing a card now", "");
 			}
 
 			else {
@@ -69,14 +71,16 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
 					action = new PlaceCardAction(this, toPlace);
+					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
 				else {
 					action = new DrawCardAction(this, state.getTopCard());
+					Log.i("No valid, now drawing", "");
 				}
 			}
 
 			// This simulates the computer thinking (might be longer bc its dumb)
-			sleep(5);
+//			sleep(5);
 
 			game.sendAction(action);
 		}

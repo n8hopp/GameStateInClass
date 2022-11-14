@@ -113,6 +113,8 @@ public class UnoTableView extends FlashSurfaceView {
 			RenderCard topCardRender = state.getTopCard().getRender();
 			topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
 			topCardRender.draw(canvas);
+
+			arrowPos = state.getTurn();
 		}
 
 		// Face down middle card
