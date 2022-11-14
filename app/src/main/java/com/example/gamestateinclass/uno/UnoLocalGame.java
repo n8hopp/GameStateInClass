@@ -95,12 +95,12 @@ public class UnoLocalGame extends LocalGame {
 	protected boolean makeMove(GameAction action) {
 
 		UnoState state = (UnoState) super.state;
-		int turn = state.getTurn();
 
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
 
+			int turn = state.getTurn();
 			turn += state.getDirection().value;
 			turn %= state.getHandsSize();
 			state.setTurn(turn);
@@ -117,6 +117,7 @@ public class UnoLocalGame extends LocalGame {
 
 			checkIfGameOver();
 
+			int turn = state.getTurn();
 			turn += state.getDirection().value;
 			turn %= state.getHandsSize();
 			state.setTurn(turn);
