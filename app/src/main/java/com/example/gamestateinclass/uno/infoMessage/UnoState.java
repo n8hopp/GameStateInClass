@@ -240,20 +240,11 @@ public class UnoState extends GameState implements Serializable {
     public Card takeCardFromHand(int playerIndex, Card card) {
 
         ArrayList<Card> playerHand = playerHands.get(playerIndex);
-        Log.i("playerIndex", ""+playerIndex);
-//        Log.i("index", playerHand.indexOf(card)+"");
-
-        Log.i(""+card.getFace().name(), ""+card.getCardColor().name());
-
-        Log.i("BREAK", "");
-
-        for (Card c : playerHand) {
-            Log.i(""+c.getFace().name(), ""+c.getCardColor().name());
-        }
 
         Card cardTaken = null;
 
-//        for (Card c : playerHand) {
+        // loops through to find card with same face and color, couldn't use
+        // regular "indexOf" for some reason
         for (int i = 0; i < playerHand.size(); i++) {
             Card c = playerHand.get(i);
 
@@ -266,7 +257,6 @@ public class UnoState extends GameState implements Serializable {
             }
         }
 
-//        Card cardTaken = playerHand.get(playerHand.indexOf(card));
         playerHand.remove(card);
 
         return cardTaken;
