@@ -87,6 +87,10 @@ public class RenderCard {
 		}
 	}
 
+	public void setHighlight(int _color) {
+		strokePaint.setColor(_color);
+	}
+
 	public void draw(Canvas canvas){
 		float left = x-width/2;
 		float right = x+width/2;
