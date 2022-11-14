@@ -7,10 +7,8 @@ import com.example.gamestateinclass.game.GameFramework.players.GameComputerPlaye
 import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
 import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
-import com.example.gamestateinclass.uno.actionMessage.UnoMoveAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
-import com.example.gamestateinclass.uno.UnoLocalGame;
 import com.example.gamestateinclass.uno.objects.Face;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ import java.util.Random;
  *
  */
 
-public class UnoComputerPlayer69 extends GameComputerPlayer {
+public class UnoComputerPlayerDumb extends GameComputerPlayer {
 	private Random rand = new Random();
 	private GameAction action;
 	/**
@@ -32,7 +30,7 @@ public class UnoComputerPlayer69 extends GameComputerPlayer {
 	 *
 	 * @param name the player's name (e.g., "The Dumb AI")
 	 */
-	public UnoComputerPlayer69(String name) {
+	public UnoComputerPlayerDumb(String name) {
 		super(name);
 	}
 
@@ -49,7 +47,7 @@ public class UnoComputerPlayer69 extends GameComputerPlayer {
 			int autoDraw = rand.nextInt(10);
 
 			if (autoDraw < 5) {
-				action = new DrawCardAction(this, state.getTopCard()); // There's a problem here
+				action = new DrawCardAction(this, state.getTopCard());
 			}
 
 			else {
@@ -62,6 +60,7 @@ public class UnoComputerPlayer69 extends GameComputerPlayer {
 						break;
 					}
 				}
+				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
 					action = new PlaceCardAction(this, toPlace);
 				}
