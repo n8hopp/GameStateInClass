@@ -18,6 +18,8 @@ public class UnoMainActivity extends GameMainActivity {
     private static final String TAG = "UnoMainActivity";
     public static final int PORT_NUMBER = 5213;
 
+    private GameConfig game = null;
+
     /**
      * Default configuration for our game is 1 human vs 3 computers
      */
@@ -51,7 +53,7 @@ public class UnoMainActivity extends GameMainActivity {
         // dumb computer player 3
         playerTypes.add(new GamePlayerType("Computer Player 3 (dumb)") {
             public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayer69(name);
+                return new UnoComputerPlayerDumb(name);
             }
         });
 
@@ -62,6 +64,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 2", 2); // smart computer player
         defaultConfig.addPlayer("Computer 3", 3); // dumb computer player
 
+        game = defaultConfig;
         return defaultConfig;
     }
 
