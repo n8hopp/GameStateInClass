@@ -11,8 +11,10 @@ public class DrawCardAction extends GameAction {
     // Instance Variables: the selected row and column
     private Card card;
 
-    public DrawCardAction(GamePlayer player, Card card) {
+    public DrawCardAction(GamePlayer player, Card _card) {
         super(player);
+
+        card = _card;
     }
 
     public Card getCard() {

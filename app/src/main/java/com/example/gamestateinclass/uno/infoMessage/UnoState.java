@@ -90,8 +90,8 @@ public class UnoState extends GameState implements Serializable {
     }
 
     private void shuffleDeck(ArrayList<Card> deck) {
-//        Collections.shuffle(deck, new Random(1234));
-        Collections.shuffle(deck, new Random());
+        Collections.shuffle(deck, new Random(1234));
+//        Collections.shuffle(deck, new Random());
     }
 
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
@@ -240,7 +240,33 @@ public class UnoState extends GameState implements Serializable {
     public Card takeCardFromHand(int playerIndex, Card card) {
 
         ArrayList<Card> playerHand = playerHands.get(playerIndex);
-        Card cardTaken = playerHand.get(playerHand.indexOf(card));
+        Log.i("playerIndex", ""+playerIndex);
+//        Log.i("index", playerHand.indexOf(card)+"");
+
+        Log.i(""+card.getFace().name(), ""+card.getCardColor().name());
+
+        Log.i("BREAK", "");
+
+        for (Card c : playerHand) {
+            Log.i(""+c.getFace().name(), ""+c.getCardColor().name());
+        }
+
+        Card cardTaken = null;
+
+//        for (Card c : playerHand) {
+        for (int i = 0; i < playerHand.size(); i++) {
+            Card c = playerHand.get(i);
+
+            if (c.getFace().equals(card.getFace()) &&
+                c.getCardColor().equals(card.getCardColor())) {
+
+                cardTaken = playerHand.get(i);
+                playerHand.remove(i);
+                break;
+            }
+        }
+
+//        Card cardTaken = playerHand.get(playerHand.indexOf(card));
         playerHand.remove(card);
 
         return cardTaken;
@@ -248,7 +274,7 @@ public class UnoState extends GameState implements Serializable {
 
 
     public void addCardToDiscardDeck(Card card) {
-        discardDeck.add(card);
+        discardDeck.add(0, card);
     }
 
 }

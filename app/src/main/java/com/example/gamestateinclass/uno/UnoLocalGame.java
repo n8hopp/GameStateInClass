@@ -1,5 +1,7 @@
 package com.example.gamestateinclass.uno;
 
+import android.util.Log;
+
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
@@ -144,6 +146,8 @@ public class UnoLocalGame extends LocalGame {
 
 		Face face = card.getFace();
 
+		state.takeCardFromHand(turn, card);
+
 		switch (face) {
 
 			case SKIP:
@@ -186,7 +190,9 @@ public class UnoLocalGame extends LocalGame {
 		}
 
 		state.addCardToDiscardDeck(card);
-		state.takeCardFromHand(turn, card);
+
+		Log.i("top card", "");
+		Log.i(state.getTopCard().getCardColor().name(), state.getTopCard().getFace().name());
 
 		turn += direction.value;
 		turn %= handsSize;

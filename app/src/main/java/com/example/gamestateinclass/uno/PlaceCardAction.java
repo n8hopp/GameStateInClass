@@ -11,9 +11,11 @@ public class PlaceCardAction extends GameAction {
     // Instance Variables: the selected row and column
     private Card card;
 
-    public PlaceCardAction(GamePlayer player, Card card) {
+    public PlaceCardAction(GamePlayer player, Card _card) {
         // Invokes superclass constructor to set the player
         super(player);
+
+        card = _card;
     }
 
     public Card getCard() {

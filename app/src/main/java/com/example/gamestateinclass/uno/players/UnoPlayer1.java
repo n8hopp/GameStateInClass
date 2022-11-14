@@ -3,19 +3,29 @@ package com.example.gamestateinclass.uno.players;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
+import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
+import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
+import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
-public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener {
+import java.util.ArrayList;
+
+public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener {
 	private int layoutId;
 	private UnoTableView tableView;
 	private UnoHandView handView;
+
+	private Button testButton;
+
+	private ArrayList<Card> myHand;
 
 	/**
 	 * constructor
@@ -52,6 +62,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 		tableView.invalidate();
 		handView.invalidate();
 
+		myHand = gameState.fetchPlayerHand(playerNum);
 	}
 
 
@@ -81,7 +92,21 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener 
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
+		testButton = (Button) activity.findViewById(R.id.testButton);
+
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
+
+		testButton.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View view) {
+		GameAction action;
+
+
+		action = new PlaceCardAction(this, myHand.get(0));
+
+		game.sendAction(action);
 	}
 }
