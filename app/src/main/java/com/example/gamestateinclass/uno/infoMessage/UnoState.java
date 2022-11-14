@@ -191,7 +191,7 @@ public class UnoState extends GameState implements Serializable {
     }
 
     public int fetchCurrentPlayer() {
-        return turn % 4;
+        return Math.floorMod(turn, 4);
     }
 
     public Card getTopCard() {

@@ -150,4 +150,14 @@ public class RenderCard {
 		width = _width;
 	}
 
+	public boolean isClicked(float clickX, float clickY)
+	{
+		float left = x-width/2;
+		float right = x+width/2;
+		float top = y-length/2;
+		float bottom = y+length/2;
+
+		return (clickX >= left) && (clickX <= right) && (clickY >= top) && (clickY <= bottom);
+	}
+
 }
