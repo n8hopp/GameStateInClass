@@ -35,6 +35,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public UnoPlayer1(String name, int _layoutId) {
 		super(name);
 		this.layoutId = _layoutId;
+
 	}
 
 	@Override
