@@ -49,7 +49,7 @@ public class UnoTableView extends FlashSurfaceView {
 		tableColor = new Paint();
 		textPaint2 = new Paint();
 		testCard = new Card();
-		arrowPos = 0;
+		arrowPos = state.getTurn();
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
 		textPaint.setARGB(255, 255, 255, 255); // Text color white
 		textPaint2.setARGB(255,255,255,255);
