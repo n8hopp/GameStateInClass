@@ -38,6 +38,8 @@ public class UnoHandView extends FlashSurfaceView {
     Paint unoTextPaint = new Paint();
     Paint numberPaint = new Paint();
 
+    private int selectedIndex = 0;
+
 
     public UnoHandView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -77,17 +79,31 @@ public class UnoHandView extends FlashSurfaceView {
     }
 
 
+    public void setSelectedIndex(int index) {
+        selectedIndex = index;
+    }
+
+
     public void onDraw(Canvas canvas) {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
 
         if (state != null) {
             ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
-//        ArrayList<Card> currentHand = new ArrayList<>();
+
             for (int i = 0; i < currentHand.size(); i ++) {
+
                 Card card = currentHand.get(i);
                 RenderCard renderCard = card.getRender();
                 renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
+
+                if (i == selectedIndex) {
+                    renderCard.setHighlight(Color.YELLOW);
+                } else {
+                    renderCard.setHighlight(Color.WHITE);
+                }
+
                 renderCard.draw(canvas);
+
         }
 
 //            // Card border
