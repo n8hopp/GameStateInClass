@@ -1,5 +1,7 @@
 package com.example.gamestateinclass.uno.players;
 
+import android.util.Log;
+
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.NotYourTurnInfo;
@@ -36,10 +38,14 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 	@Override
 	protected void receiveInfo(GameInfo info) {
+
 		sleep(1);
 		UnoState state = ((UnoState) info);
 
-		if (info instanceof NotYourTurnInfo) {
+		Log.i("recievedc", state.getTurn()+"");
+		Log.i("playerNum",  ""+playerNum);
+
+		if (state.getTurn() == playerNum) {
 			Logger.log("UnoComputer 69", "My turn!");
 			// hmm i don't really know what i should add here
 

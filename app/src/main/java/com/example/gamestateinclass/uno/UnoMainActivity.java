@@ -39,14 +39,14 @@ public class UnoMainActivity extends GameMainActivity {
         // dumb computer player 1
         playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
             public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayer1(name);
+                return new UnoComputerPlayerDumb(name);
             }
         });
 
         // smarter computer player 2
         playerTypes.add(new GamePlayerType("Computer Player 2 (smart)") {
             public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayer3(name);
+                return new UnoComputerPlayerDumb(name);
             }
         });
 
@@ -57,7 +57,7 @@ public class UnoMainActivity extends GameMainActivity {
             }
         });
 
-        GameConfig defaultConfig = new GameConfig(playerTypes, 2, 2, "Uno", PORT_NUMBER);
+        GameConfig defaultConfig = new GameConfig(playerTypes, 4, 4, "Uno", PORT_NUMBER);
 
         defaultConfig.addPlayer("Human", 0); // human player
         defaultConfig.addPlayer("Computer 1", 1); // dumb computer player

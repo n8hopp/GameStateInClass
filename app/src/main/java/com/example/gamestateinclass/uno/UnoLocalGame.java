@@ -199,6 +199,8 @@ public class UnoLocalGame extends LocalGame {
 
 		state.setTurn(turn);
 
+		Log.i("turn", turn+"");
+
 		return true;
 	}
 }
