@@ -94,9 +94,16 @@ public class UnoLocalGame extends LocalGame {
 	@Override
 	protected boolean makeMove(GameAction action) {
 
+		UnoState state = (UnoState) super.state;
+		int turn = state.getTurn();
+
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
+
+			turn += state.getDirection().value;
+			turn %= state.getHandsSize();
+			state.setTurn(turn);
 
 			return true;
 		}
@@ -109,6 +116,10 @@ public class UnoLocalGame extends LocalGame {
 			placeCard(card);
 
 			checkIfGameOver();
+
+			turn += state.getDirection().value;
+			turn %= state.getHandsSize();
+			state.setTurn(turn);
 
 			return true;
 		}
@@ -153,9 +164,11 @@ public class UnoLocalGame extends LocalGame {
 			case SKIP:
 				turn += direction.value;
 				turn %= handsSize;
+				state.setTurn(turn);
 
 				break;
 
+			// need to set direction
 			case REVERSE:
 				if (direction == UnoState.PlayDirection.CCW) {
 					direction = UnoState.PlayDirection.CW;
@@ -168,6 +181,7 @@ public class UnoLocalGame extends LocalGame {
 			case DRAWTWO:
 				turn += direction.value;
 				turn %= handsSize;
+				state.setTurn(turn);
 
 				drawCard(2);
 				break;
@@ -175,6 +189,7 @@ public class UnoLocalGame extends LocalGame {
 			case DRAWFOUR:
 				turn += direction.value;
 				turn %= handsSize;
+				state.setTurn(turn);
 
 				drawCard(4);
 
@@ -194,10 +209,9 @@ public class UnoLocalGame extends LocalGame {
 		Log.i("top card", "");
 		Log.i(state.getTopCard().getCardColor().name(), state.getTopCard().getFace().name());
 
-		turn += direction.value;
-		turn %= handsSize;
+//		turn += direction.value;
+//		turn %= handsSize;
 
-		state.setTurn(turn);
 
 		Log.i("turn", turn+"");
 
