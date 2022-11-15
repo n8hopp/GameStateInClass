@@ -91,8 +91,8 @@ public class UnoState extends GameState implements Serializable {
     }
 
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1234));
-//        Collections.shuffle(deck, new Random());
+//        Collections.shuffle(deck, new Random(1234));
+        Collections.shuffle(deck, new Random());
     }
 
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
@@ -235,6 +235,12 @@ public class UnoState extends GameState implements Serializable {
 
         drawDeck.subList(0, n).clear();
 
+        if (drawDeck.size() <= 5) {
+            refillDrawDeck();
+        }
+
+        Log.i("draw deck size: ", drawDeck.size()+"");
+
         return cardsTaken;
 
     }
@@ -276,5 +282,22 @@ public class UnoState extends GameState implements Serializable {
 
     public String getLatestAction() {
         return latestAction;
+    }
+
+    public void refillDrawDeck() {
+
+        // make temps
+        List<Card> subList = discardDeck.subList(1, discardDeck.size());
+        ArrayList<Card> allButTop = new ArrayList<>(subList);
+        Card topCard = discardDeck.get(0);
+
+        // add all but top card to discard deck, shuffle after
+        drawDeck.addAll(0, allButTop);
+        shuffleDeck(drawDeck);
+
+        // make it so only the top card remains in discard deck
+        discardDeck.clear();
+        discardDeck.add(topCard);
+
     }
 }
