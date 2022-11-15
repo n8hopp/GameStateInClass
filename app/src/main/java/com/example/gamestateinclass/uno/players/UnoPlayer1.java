@@ -145,7 +145,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		handSeekBar.setMax(myHand.size());
+		handSeekBar.setMax(myHand.size()-1);
 		handView.setStartingCard(i);
 		handView.invalidate();
 	}
