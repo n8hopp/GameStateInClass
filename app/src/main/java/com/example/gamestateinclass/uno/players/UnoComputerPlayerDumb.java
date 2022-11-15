@@ -43,7 +43,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		UnoState state = ((UnoState) info);
 
 		if (state.getTurn() == playerNum) {
-			sleep(0.5);
+			sleep(1.5);
 			Logger.log("UnoComputer 69", "My turn!");
 			// hmm i don't really know what i should add here
 
