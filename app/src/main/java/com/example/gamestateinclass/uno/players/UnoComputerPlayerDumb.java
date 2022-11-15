@@ -54,7 +54,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 			// Does the AI draw a card or not?
 			int autoDraw = rand.nextInt(10);
 
-			if (autoDraw < 5) {
+			if (autoDraw < 2) {
 
 				action = new DrawCardAction(this);
 				Log.i("I am drawing a card now", "");
