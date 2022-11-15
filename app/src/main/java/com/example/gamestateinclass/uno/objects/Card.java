@@ -9,11 +9,13 @@ public class Card {
 	private CardColor color;
 	private Face face;
 	private RenderCard render;
+
 	public Card() {
 		face = Face.ZERO;
 		color = CardColor.BLACK;
 		render = new RenderCard(face, color);
 	}
+
 	// Basic constructor that takes a color and a face
 	public Card(CardColor _color, Face _face) {
 		color = _color;
@@ -29,7 +31,6 @@ public class Card {
 	public void setFace(Face _face) {
 		face = _face;
 	}
-
 
 	public CardColor getCardColor() {
 		return this.color;

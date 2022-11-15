@@ -9,7 +9,6 @@ import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
-import com.example.gamestateinclass.uno.objects.Hand;
 
 import java.util.ArrayList;
 
@@ -88,7 +87,7 @@ public class UnoLocalGame extends LocalGame {
 		for(int i = 0; i < players.length; i++)
 		{
 			if(tempState.fetchPlayerHand(i).size() == 0){
-				return "Player " + i + " has won!";
+				return "Player " + i + " has won! ";
 			}
 		}
 		return null;

@@ -64,10 +64,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
+		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
 		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
-		tableView.setPlayerHandText(p1HandSize, p2HandSize, p3HandSize);
+		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
 
 		tableView.invalidate();
 		handView.invalidate();
@@ -136,6 +137,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
+		// Sets a Listener for views and buttons users can touch
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
@@ -145,7 +147,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		handSeekBar.setMax(myHand.size());
+		handSeekBar.setMax(myHand.size()-1);
 		handView.setStartingCard(i);
 		handView.invalidate();
 	}

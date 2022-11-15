@@ -34,6 +34,7 @@ public class UnoTableView extends FlashSurfaceView {
 
 	//	For the sake of these text strings, the human player is p0, and other player
 	//	numbers count up in order, clockwise
+	private String p0hand;
 	private String p1hand;
 	private String p2hand;
 	private String p3hand;
@@ -76,6 +77,7 @@ public class UnoTableView extends FlashSurfaceView {
 		textPaint2.setFakeBoldText(true);
 		textPaint.setTextSize(45);
 
+		p0hand = "7 Cards";
 		p1hand = "7 Cards";
 		p2hand = "7 Cards";
 		p3hand = "7 Cards";
@@ -113,6 +115,9 @@ public class UnoTableView extends FlashSurfaceView {
 		// Right card
 		canvas.drawRect((getWidth()-350), (getHeight()/2)-100, (getWidth()-50), (getHeight()/2)+100, cardPaint);
 		canvas.drawText(p3hand, (getWidth()-200), (getHeight()/2)+5, textPaint);
+
+		// Player hand text
+		canvas.drawText(p0hand, getWidth()/2, (getHeight()/15) * 14, textPaint);
 
 		// Face up middle card
 //		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
@@ -274,7 +279,8 @@ public class UnoTableView extends FlashSurfaceView {
 
 	}
 
-	public void setPlayerHandText(String _p1hand, String _p2hand, String _p3hand){
+	public void setPlayerHandText(String _p0hand, String _p1hand, String _p2hand, String _p3hand){
+		p0hand = _p0hand;
 		p1hand = _p1hand;
 		p2hand = _p2hand;
 		p3hand = _p3hand;
