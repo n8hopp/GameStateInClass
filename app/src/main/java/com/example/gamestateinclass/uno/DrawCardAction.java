@@ -9,12 +9,11 @@ public class DrawCardAction extends GameAction {
     private static final String TAG = "DrawCardAction";
 
     // Instance Variables: the selected row and column
-//    private Card card;
+    // private Card card;
 
     public DrawCardAction(GamePlayer player) {
         super(player);
-
-//        card = _card;
+//      card = _card;
     }
 
 //    public Card getCard() {

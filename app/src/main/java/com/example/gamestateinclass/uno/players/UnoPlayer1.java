@@ -137,6 +137,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
+		// Sets a Listener for views and buttons users can touch
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);

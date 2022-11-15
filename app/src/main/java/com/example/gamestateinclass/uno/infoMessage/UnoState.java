@@ -24,6 +24,7 @@ public class UnoState extends GameState implements Serializable {
     // getTopCard and addTopCard
     // getWhoseMove and setWhoseMove
     // TAG for logging
+
     private static final String TAG = "UnoState";
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
