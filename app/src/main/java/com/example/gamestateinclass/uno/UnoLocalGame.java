@@ -95,15 +95,15 @@ public class UnoLocalGame extends LocalGame {
 	protected boolean makeMove(GameAction action) {
 
 		UnoState state = (UnoState) super.state;
-		int turn = state.getTurn();
 
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
 			
 
+			int turn = state.getTurn();
 			turn += state.getDirection().value;
-			turn %= state.getHandsSize();
+			turn = Math.floorMod(turn, state.getHandsSize());
 			state.setTurn(turn);
 
 			return true;
@@ -114,12 +114,16 @@ public class UnoLocalGame extends LocalGame {
 			PlaceCardAction placeAction = (PlaceCardAction) action;
 			Card card = placeAction.getCard();
 
-			placeCard(card);
+			if(!placeCard(card))
+			{
+				return false;
+			}
 
 			checkIfGameOver();
 
+			int turn = state.getTurn();
 			turn += state.getDirection().value;
-			turn %= state.getHandsSize();
+			turn = Math.floorMod(turn, state.getHandsSize());
 			state.setTurn(turn);
 
 			return true;
@@ -164,7 +168,7 @@ public class UnoLocalGame extends LocalGame {
 
 			case SKIP:
 				turn += direction.value;
-				turn %= handsSize;
+				turn = Math.floorMod(turn,handsSize);
 				state.setTurn(turn);
 
 				break;
@@ -177,11 +181,12 @@ public class UnoLocalGame extends LocalGame {
 					direction = UnoState.PlayDirection.CCW;
 				}
 
+				state.setDirection(direction);
 				break;
 
 			case DRAWTWO:
 				turn += direction.value;
-				turn %= handsSize;
+				turn = Math.floorMod(turn,handsSize);
 				state.setTurn(turn);
 
 				drawCard(2);
@@ -189,7 +194,7 @@ public class UnoLocalGame extends LocalGame {
 
 			case DRAWFOUR:
 				turn += direction.value;
-				turn %= handsSize;
+				turn = Math.floorMod(turn,handsSize);
 				state.setTurn(turn);
 
 				drawCard(4);

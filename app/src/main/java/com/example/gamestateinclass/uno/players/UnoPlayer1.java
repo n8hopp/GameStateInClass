@@ -1,7 +1,7 @@
 package com.example.gamestateinclass.uno.players;
 
+import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,7 +23,10 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	private UnoTableView tableView;
 	private UnoHandView handView;
 
-	private Button testButton;
+	private Button placeButton;
+	private Button selectButton;
+
+	private int selectedIndex;
 
 	private ArrayList<Card> myHand;
 
@@ -36,6 +39,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		super(name);
 		this.layoutId = _layoutId;
 
+		selectedIndex = 0;
 	}
 
 	@Override
@@ -75,6 +79,17 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		}
 
 		if (view instanceof  UnoHandView) {
+			for(int i=0; i < myHand.size(); i++)
+			{
+				Card c = myHand.get(i);
+				if(c.getRender().isClicked(motionEvent.getX(), motionEvent.getY()))
+				{
+					selectedIndex = i;
+					handView.setSelectedIndex(i);
+					handView.invalidate();
+					return true;
+				}
+			}
 			return true;
 		}
 
@@ -93,20 +108,37 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		testButton = (Button) activity.findViewById(R.id.testButton);
+		placeButton = (Button) activity.findViewById(R.id.placeButton);
+		selectButton = (Button) activity.findViewById(R.id.selectButton);
 
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
 
-		testButton.setOnClickListener(this);
+		placeButton.setOnClickListener(this);
+		selectButton.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View view) {
-		GameAction action;
+		GameAction action = null;
+
+		if (view.getId() == placeButton.getId()) {
+			Card card = myHand.get(selectedIndex);
+
+			action = new PlaceCardAction(this, card);
+
+		} else if (view.getId() == selectButton.getId()) {
+
+			selectedIndex++;
+			selectedIndex %= myHand.size();
+			Log.i("selected index", ""+selectedIndex);
+
+			handView.setSelectedIndex(selectedIndex);
+			handView.invalidate();
+
+		}
 
 
-		action = new PlaceCardAction(this, myHand.get(0));
 
 		game.sendAction(action);
 	}

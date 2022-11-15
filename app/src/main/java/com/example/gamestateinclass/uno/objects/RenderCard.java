@@ -87,6 +87,10 @@ public class RenderCard {
 		}
 	}
 
+	public void setHighlight(int _color) {
+		strokePaint.setColor(_color);
+	}
+
 	public void draw(Canvas canvas){
 		float left = x-width/2;
 		float right = x+width/2;
@@ -144,6 +148,16 @@ public class RenderCard {
 	{
 		length = _length;
 		width = _width;
+	}
+
+	public boolean isClicked(float clickX, float clickY)
+	{
+		float left = x-width/2;
+		float right = x+width/2;
+		float top = y-length/2;
+		float bottom = y+length/2;
+
+		return (clickX >= left) && (clickX <= right) && (clickY >= top) && (clickY <= bottom);
 	}
 
 }
