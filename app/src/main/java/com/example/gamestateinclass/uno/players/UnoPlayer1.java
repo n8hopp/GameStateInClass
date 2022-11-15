@@ -21,13 +21,11 @@ import com.example.gamestateinclass.uno.views.UnoTableView;
 
 import java.util.ArrayList;
 
-public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener{
+public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, SeekBar.OnSeekBarChangeListener{
 	private int layoutId;
 	private UnoTableView tableView;
 	private UnoHandView handView;
 
-	private Button placeButton;
-	private Button selectButton;
 	private TextView actionText;
 
 	private int selectedIndex;
@@ -135,8 +133,6 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		placeButton = (Button) activity.findViewById(R.id.placeButton);
-		selectButton = (Button) activity.findViewById(R.id.selectButton);
 		actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
@@ -144,32 +140,6 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
 
-		placeButton.setOnClickListener(this);
-		selectButton.setOnClickListener(this);
-	}
-
-	@Override
-	public void onClick(View view) {
-		// we shouldn't need any of this but i won't delete it yet
-
-//		GameAction action = null;
-//
-//		if (view.getId() == placeButton.getId()) {
-//			Card card = myHand.get(selectedIndex);
-//
-//			action = new PlaceCardAction(this, card);
-//
-//		} else if (view.getId() == selectButton.getId()) {
-//
-//			selectedIndex++;
-//			selectedIndex %= myHand.size();
-//			Log.i("selected index", ""+selectedIndex);
-//
-//			handView.setSelectedIndex(selectedIndex);
-//			handView.invalidate();
-//
-//		}
-//		game.sendAction(action);
 	}
 
 
