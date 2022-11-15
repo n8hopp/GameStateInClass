@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
@@ -19,15 +21,16 @@ import com.example.gamestateinclass.uno.views.UnoTableView;
 
 import java.util.ArrayList;
 
-public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener {
+public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, SeekBar.OnSeekBarChangeListener{
 	private int layoutId;
 	private UnoTableView tableView;
 	private UnoHandView handView;
 
-	private Button placeButton;
-	private Button selectButton;
+	private TextView actionText;
 
 	private int selectedIndex;
+	private SeekBar handSeekBar;
+	private int startingHandCard;
 
 	private ArrayList<Card> myHand;
 	private Card topCard;
@@ -40,7 +43,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public UnoPlayer1(String name, int _layoutId) {
 		super(name);
 		this.layoutId = _layoutId;
-
+		startingHandCard = 0;
 		selectedIndex = 0;
 	}
 
@@ -61,16 +64,18 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
+		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
 		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
-		tableView.setPlayerHandText(p1HandSize, p2HandSize, p3HandSize);
+		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
 
 		tableView.invalidate();
 		handView.invalidate();
 
 		myHand = gameState.fetchPlayerHand(playerNum);
 		topCard = gameState.getTopCard();
+
 	}
 
 
@@ -129,38 +134,31 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		placeButton = (Button) activity.findViewById(R.id.placeButton);
-		selectButton = (Button) activity.findViewById(R.id.selectButton);
+		actionText = activity.findViewById(R.id.lobbyInfoText);
+		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
 		// Sets a Listener for views and buttons users can touch
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
+		handSeekBar.setOnSeekBarChangeListener(this);
 
-		placeButton.setOnClickListener(this);
-		selectButton.setOnClickListener(this);
+	}
+
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+		handSeekBar.setMax(myHand.size()-1);
+		handView.setStartingCard(i);
+		handView.invalidate();
 	}
 
 	@Override
-	public void onClick(View view) {
-		// we shouldn't need any of this but i won't delete it yet
+	public void onStartTrackingTouch(SeekBar seekBar) {
 
-//		GameAction action = null;
-//
-//		if (view.getId() == placeButton.getId()) {
-//			Card card = myHand.get(selectedIndex);
-//
-//			action = new PlaceCardAction(this, card);
-//
-//		} else if (view.getId() == selectButton.getId()) {
-//
-//			selectedIndex++;
-//			selectedIndex %= myHand.size();
-//			Log.i("selected index", ""+selectedIndex);
-//
-//			handView.setSelectedIndex(selectedIndex);
-//			handView.invalidate();
-//
-//		}
-//		game.sendAction(action);
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+
 	}
 }
