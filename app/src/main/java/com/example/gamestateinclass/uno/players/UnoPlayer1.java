@@ -79,6 +79,17 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		}
 
 		if (view instanceof  UnoHandView) {
+			for(int i=0; i < myHand.size(); i++)
+			{
+				Card c = myHand.get(i);
+				if(c.getRender().isClicked(motionEvent.getX(), motionEvent.getY()))
+				{
+					selectedIndex = i;
+					handView.setSelectedIndex(i);
+					handView.invalidate();
+					return true;
+				}
+			}
 			return true;
 		}
 
@@ -112,8 +123,9 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		GameAction action = null;
 
 		if (view.getId() == placeButton.getId()) {
+			Card card = myHand.get(selectedIndex);
 
-			action = new PlaceCardAction(this, myHand.get(selectedIndex));
+			action = new PlaceCardAction(this, card);
 
 		} else if (view.getId() == selectButton.getId()) {
 
@@ -125,6 +137,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			handView.invalidate();
 
 		}
+
 
 
 		game.sendAction(action);
