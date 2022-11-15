@@ -54,8 +54,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public void receiveInfo(GameInfo info) {
+		// Ensures inability for a player to do actions when it isn't it's turn
 		if (!(info instanceof UnoState)) {
-			flash(0xFFFF0000, 200);
 			return;
 		}
 
@@ -65,7 +65,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
-		// Set string to display and size texts
+		// Set string to display and size texts for all player hands
 		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
@@ -152,6 +152,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	}
 
 	// Set hand view based on progress bar
+	// Gains ability for player to access cards not in initial view
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 		handSeekBar.setMax(myHand.size()-1);
