@@ -151,7 +151,7 @@ public class UnoLocalGame extends LocalGame {
 		boolean cardValidity = checkCardValidity(card);
 		if (!cardValidity) {
 			return false;
-			// ends function, rest of code doesn't run
+			// ends function, rest of code doesn't run, throws away move (player has to make a valid one)
 		}
 
 
