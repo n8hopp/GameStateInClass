@@ -36,23 +36,23 @@ public class UnoMainActivity extends GameMainActivity {
 
         });
 
-        // ability to have and choose to play against a smart AI will be implemented soon
+        // Ability to have and choose to play against a smart AI will be implemented soon
 
-        // dumb computer player 1
+        // Dumb computer player 1
         playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
         });
 
-        // dumb computer player 2
+        // Dumb computer player 2
         playerTypes.add(new GamePlayerType("Computer Player 2 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
         });
 
-        // dumb computer player 3
+        // Dumb computer player 3
         playerTypes.add(new GamePlayerType("Computer Player 3 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
