@@ -119,13 +119,7 @@ public class UnoTableView extends FlashSurfaceView {
 		// Player hand text
 		canvas.drawText(p0hand, getWidth()/2, (getHeight()/15) * 14, textPaint);
 
-		// Face up middle card
-//		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
-		// Lukas: Added 30 pixel border to match HandView
-//		canvas.drawRect((getWidth()/2)+25+25,  (getHeight()/2)-150+25, (getWidth()/2)+225-25, (getHeight()/2)+150-25, faceUp);
-		// Draw big number on card
 
-//		canvas.drawText("7", getWidth()/2 + 100, getHeight()/2 +30 , textPaint2);
 		canvas.drawText("PLACE", getWidth()/2+125,  (getHeight()/2)+200, textPaint);
 
 		if (state != null) {
@@ -158,7 +152,8 @@ public class UnoTableView extends FlashSurfaceView {
 
 	}
 
-	// Dummied up
+	// For beta, we will utilize an image so we don't have this huge brick of code
+	// But it works well currently
 	private void drawArrowPath(Paint _arrowPaint, Path _arrowPath, int _arrowPos, int _arrowDirection) {
 
 		// First switch statement is for clockwise direction
@@ -279,6 +274,7 @@ public class UnoTableView extends FlashSurfaceView {
 
 	}
 
+	// Helper method to set player hand texts
 	public void setPlayerHandText(String _p0hand, String _p1hand, String _p2hand, String _p3hand){
 		p0hand = _p0hand;
 		p1hand = _p1hand;

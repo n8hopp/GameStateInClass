@@ -61,9 +61,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 		UnoState gameState = (UnoState) info;
 
+		// Send state info to the views
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
+		// Set string to display and size texts
 		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
@@ -144,7 +146,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	}
 
-
+	// Set hand view based on progress bar
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 		handSeekBar.setMax(myHand.size()-1);

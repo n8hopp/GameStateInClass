@@ -103,7 +103,6 @@ public class UnoState extends GameState implements Serializable {
     }
 
     // This just creates a new deck from the top card of the draw deck and returns it.
-    // We must make sure to add it to the new deck before we remove it from the old one, else it ends up not existing.
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
         Card firstCard = drawDeck.get(0);
         ArrayList<Card> discardDeckDeck = new ArrayList<>();
@@ -177,6 +176,7 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // Helper method to check if the draw deck is empty
     public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
         if (drawDeck.size() == 0) {
             drawDeck.addAll(discardDeck);

@@ -59,7 +59,7 @@ public class UnoLocalGame extends LocalGame {
 		return playerIdx == ((UnoState)state).fetchCurrentPlayer();
 	}
 
-
+	// Helper method to compare card to top of discard deck
 	public boolean checkCardValidity(Card card) {
 
 		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
@@ -80,7 +80,7 @@ public class UnoLocalGame extends LocalGame {
 		return false;
 	}
 
-
+	// If any player's hand is size 0, that player won
 	@Override
 	protected String checkIfGameOver() {
 		UnoState tempState = ((UnoState)state); //
@@ -213,9 +213,6 @@ public class UnoLocalGame extends LocalGame {
 
 		Log.i("top card", "");
 		Log.i(state.getTopCard().getCardColor().name(), state.getTopCard().getFace().name());
-
-//		turn += direction.value;
-//		turn %= handsSize;
 
 
 		Log.i("turn", turn+"");
