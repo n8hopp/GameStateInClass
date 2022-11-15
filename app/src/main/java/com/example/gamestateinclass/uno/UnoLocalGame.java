@@ -94,11 +94,13 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
+	// this function runs when the UnoPlayer1 or UnoComputerPlayerDump classes send a MoveAction
 	@Override
 	protected boolean makeMove(GameAction action) {
 
 		UnoState state = (UnoState) super.state;
 
+		// if its a draw action, draw 1 card and increment the turn
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
@@ -111,6 +113,8 @@ public class UnoLocalGame extends LocalGame {
 			return true;
 		}
 
+		// if its a place card action, see if its valid and check for special faces,
+		// then increment turn
 		if (action instanceof PlaceCardAction) {
 
 			PlaceCardAction placeAction = (PlaceCardAction) action;
@@ -132,6 +136,7 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
+	// draws "n" amount of cards into current player's hand
 	protected boolean drawCard(int n) {
 
 		UnoState state = (UnoState) super.state;
@@ -144,6 +149,7 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
+	// checks card validity and also deals with logic of special faces
 	protected boolean placeCard(Card card) {
 
 		UnoState state = (UnoState) super.state;
@@ -155,6 +161,7 @@ public class UnoLocalGame extends LocalGame {
 		}
 
 
+		// get state info
 		int turn = state.getTurn();
 		UnoState.PlayDirection direction = state.getDirection();
 		int handsSize = state.getHandsSize();
@@ -163,6 +170,7 @@ public class UnoLocalGame extends LocalGame {
 
 		state.takeCardFromHand(turn, card);
 
+		// change direction, turn and card color according to card's face
 		switch (face) {
 
 			case SKIP:
@@ -209,13 +217,8 @@ public class UnoLocalGame extends LocalGame {
 				break;
 		}
 
+		// finally, add card to discard deck
 		state.addCardToDiscardDeck(card);
-
-		Log.i("top card", "");
-		Log.i(state.getTopCard().getCardColor().name(), state.getTopCard().getFace().name());
-
-
-		Log.i("turn", turn+"");
 
 		return true;
 	}
