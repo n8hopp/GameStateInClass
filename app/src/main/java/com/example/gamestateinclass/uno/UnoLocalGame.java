@@ -9,6 +9,7 @@ import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
+import com.example.gamestateinclass.uno.objects.Hand;
 
 import java.util.ArrayList;
 
@@ -84,8 +85,11 @@ public class UnoLocalGame extends LocalGame {
 	@Override
 	protected String checkIfGameOver() {
 		UnoState tempState = ((UnoState)state); //
-		if (tempState.fetchPlayerHand(tempState.fetchCurrentPlayer()).size() == 0){
-			return "Player " + tempState.fetchCurrentPlayer() + " has won!";
+		for(int i = 0; i < players.length; i++)
+		{
+			if(tempState.fetchPlayerHand(i).size() == 0){
+				return "Player " + i + " has won!";
+			}
 		}
 		return null;
 	}
@@ -113,12 +117,9 @@ public class UnoLocalGame extends LocalGame {
 			PlaceCardAction placeAction = (PlaceCardAction) action;
 			Card card = placeAction.getCard();
 
-			if(!placeCard(card))
-			{
+			if(!placeCard(card)) {
 				return false;
 			}
-
-			checkIfGameOver();
 
 			int turn = state.getTurn();
 			turn += state.getDirection().value;

@@ -126,11 +126,11 @@ public class UnoHandView extends FlashSurfaceView {
         }
 
         // Big UNO Button
-        int radius = getHeight();
-        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
-        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
-
-        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+//        int radius = getHeight();
+//        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
+//        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
+//
+//        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
     }
 }
 

@@ -30,6 +30,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	private int selectedIndex;
 
 	private ArrayList<Card> myHand;
+	private Card topCard;
 
 	/**
 	 * constructor
@@ -69,6 +70,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		handView.invalidate();
 
 		myHand = gameState.fetchPlayerHand(playerNum);
+		topCard = gameState.getTopCard();
 	}
 
 
@@ -80,8 +82,18 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+
 				action = new DrawCardAction(this);
 				game.sendAction(action);
+
+			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+
+				Card card = myHand.get(selectedIndex);
+				action = new PlaceCardAction(this, card);
+				game.sendAction(action);
+				selectedIndex = 0;
+				handView.setSelectedIndex(0);
+
 			}
 
 			return true;
@@ -129,26 +141,25 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public void onClick(View view) {
-		GameAction action = null;
+		// we shouldn't need any of this but i won't delete it yet
 
-		if (view.getId() == placeButton.getId()) {
-			Card card = myHand.get(selectedIndex);
-
-			action = new PlaceCardAction(this, card);
-
-		} else if (view.getId() == selectButton.getId()) {
-
-			selectedIndex++;
-			selectedIndex %= myHand.size();
-			Log.i("selected index", ""+selectedIndex);
-
-			handView.setSelectedIndex(selectedIndex);
-			handView.invalidate();
-
-		}
-
-
-
-		game.sendAction(action);
+//		GameAction action = null;
+//
+//		if (view.getId() == placeButton.getId()) {
+//			Card card = myHand.get(selectedIndex);
+//
+//			action = new PlaceCardAction(this, card);
+//
+//		} else if (view.getId() == selectButton.getId()) {
+//
+//			selectedIndex++;
+//			selectedIndex %= myHand.size();
+//			Log.i("selected index", ""+selectedIndex);
+//
+//			handView.setSelectedIndex(selectedIndex);
+//			handView.invalidate();
+//
+//		}
+//		game.sendAction(action);
 	}
 }
