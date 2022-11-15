@@ -59,7 +59,7 @@ public class UnoLocalGame extends LocalGame {
 		return playerIdx == ((UnoState)state).fetchCurrentPlayer();
 	}
 
-
+	// Helper method to compare card to top of discard deck
 	public boolean checkCardValidity(Card card) {
 
 		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
@@ -80,7 +80,7 @@ public class UnoLocalGame extends LocalGame {
 		return false;
 	}
 
-
+	// If any player's hand is size 0, that player won
 	@Override
 	protected String checkIfGameOver() {
 		UnoState tempState = ((UnoState)state); //
@@ -94,13 +94,11 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
-	// This function receives game actions from the UnoPlayer1 and UnoComputerPlayerDump classes
 	@Override
 	protected boolean makeMove(GameAction action) {
 
 		UnoState state = (UnoState) super.state;
 
-		// draw one card for current player, then increment turn
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
@@ -113,13 +111,12 @@ public class UnoLocalGame extends LocalGame {
 			return true;
 		}
 
-		// Try to place card. If valid, increment turn.
 		if (action instanceof PlaceCardAction) {
 
 			PlaceCardAction placeAction = (PlaceCardAction) action;
 			Card card = placeAction.getCard();
 
-			if (!placeCard(card)) {
+			if(!placeCard(card)) {
 				return false;
 			}
 
@@ -135,7 +132,6 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
-	// draws "n" amount of cards
 	protected boolean drawCard(int n) {
 
 		UnoState state = (UnoState) super.state;
@@ -148,31 +144,25 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
-	// handles the logic regarding what card has been placed
 	protected boolean placeCard(Card card) {
 
 		UnoState state = (UnoState) super.state;
 
-		// if card placement is invalid, return false
 		boolean cardValidity = checkCardValidity(card);
 		if (!cardValidity) {
 			return false;
-			// ends function, rest of code doesn't run
+			// ends function, rest of code doesn't run, throws away move (player has to make a valid one)
 		}
 
 
-		// get turn, direction and hand size info from state
 		int turn = state.getTurn();
 		UnoState.PlayDirection direction = state.getDirection();
 		int handsSize = state.getHandsSize();
 
 		Face face = card.getFace();
 
-
-		// remove card from current players hand
 		state.takeCardFromHand(turn, card);
 
-		// change turns and directions depending on face of card.
 		switch (face) {
 
 			case SKIP:
@@ -182,6 +172,7 @@ public class UnoLocalGame extends LocalGame {
 
 				break;
 
+			// need to set direction
 			case REVERSE:
 				if (direction == UnoState.PlayDirection.CCW) {
 					direction = UnoState.PlayDirection.CW;
@@ -218,8 +209,13 @@ public class UnoLocalGame extends LocalGame {
 				break;
 		}
 
-		// finally, add card to discard deck
 		state.addCardToDiscardDeck(card);
+
+		Log.i("top card", "");
+		Log.i(state.getTopCard().getCardColor().name(), state.getTopCard().getFace().name());
+
+
+		Log.i("turn", turn+"");
 
 		return true;
 	}

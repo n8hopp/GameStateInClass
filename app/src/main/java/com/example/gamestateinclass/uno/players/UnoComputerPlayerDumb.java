@@ -44,24 +44,20 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 		if (state.getTurn() == playerNum) {
 
-			Logger.log("UnoComputer69 aka Dumb", "My turn!");
+			Logger.log("A Dumb Computer", "My turn!");
 
 			sleep(1.5);
-			Logger.log("UnoComputer 69", "My turn!");
 
-			// hmm i don't really know what i should add here
-
-			// Does the AI draw a card or not?
+			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
-
-			if (autoDraw < 5) {
+			if (autoDraw < 2) {
 
 				action = new DrawCardAction(this);
 				Log.i("I am drawing a card now", "");
 			}
 
 			else {
-				// Try to find a viable card
+				// Try to find a viable card in computer hand
 				ArrayList<Card> hand = state.fetchPlayerHand(playerNum);
 				Card toPlace = null;
 				for ( Card c : hand) {
@@ -81,14 +77,12 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				}
 			}
 
-			// This simulates the computer thinking (might be longer bc its dumb)
-//			sleep(5);
-
 			game.sendAction(action);
 		}
 
 	}
 
+	// Helper method to compare a card to the top of discard deck
 	public boolean checkCardValidity(Card card, UnoState state) {
 
 		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {

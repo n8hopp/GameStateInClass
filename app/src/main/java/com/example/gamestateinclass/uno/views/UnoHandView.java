@@ -90,6 +90,8 @@ public class UnoHandView extends FlashSurfaceView {
 
         if (state != null) {
             ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+            // The loop iterates through based on the scroll bar, however the visual card offset
+            // still needs to always be zero when drawing
             int offset = 0;
             for (int i = startingCard; i < currentHand.size(); i ++) {
 
@@ -106,24 +108,7 @@ public class UnoHandView extends FlashSurfaceView {
                 renderCard.draw(canvas);
                 offset++;
         }
-
-//            // Card border
-//            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),
-//                    yOffset,
-//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth,
-//                    yOffset + cardHeight, cardBorderPaint);
-//
-//            // Main card rectangle
-//            canvas.drawRect(xOffset + i * (cardSpacing + cardWidth) + cardBorder,
-//                    yOffset + cardBorder,
-//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth - cardBorder,
-//                    yOffset + cardHeight - cardBorder, cardColors[i]);
-//
-//            // Number value
-//            canvas.drawText(""+cardNumbers[i],
-//                    xOffset + i * (cardSpacing + cardWidth) + 100,
-//                    yOffset + cardBorder + (cardHeight + cardBorder) / 2, numberPaint);
-
+            
         }
 
         // Big UNO Button
