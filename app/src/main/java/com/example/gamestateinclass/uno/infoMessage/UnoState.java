@@ -110,17 +110,19 @@ public class UnoState extends GameState implements Serializable {
         ArrayList<Card> cards = new ArrayList<>();
         for ( CardColor c : CardColor.values()){
             for ( Face f : Face.values()){
-                if (c == CardColor.BLACK) {
-                    if(f == Face.WILD || f == Face.DRAWFOUR) {
-                        for ( int i = 0; i < 4; i++) {
-                            cards.add(new Card(c, f));
+                if (f != Face.NONE) {
+                    if (c == CardColor.BLACK) {
+                        if(f == Face.WILD || f == Face.DRAWFOUR) {
+                            for ( int i = 0; i < 4; i++) {
+                                cards.add(new Card(c, f));
+                            }
                         }
                     }
-                }
-                else if (f != Face.WILD && f != Face.DRAWFOUR)
-                {
-                    cards.add(new Card(c, f));
-                    if (f != Face.ZERO) cards.add(new Card(c, f));
+                    else if (f != Face.WILD && f != Face.DRAWFOUR)
+                    {
+                        cards.add(new Card(c, f));
+                        if (f != Face.ZERO) cards.add(new Card(c, f));
+                    }
                 }
             }
         }
