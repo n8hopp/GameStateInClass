@@ -14,6 +14,7 @@ public class RenderCard {
 	private Paint miniLabelPaint;
 	private Face face;
 	private CardColor cardColor;
+
 	public RenderCard(Face _face, CardColor _cardColor){
 		x = y = 300;
 		width = 200;
@@ -42,7 +43,6 @@ public class RenderCard {
 		mainLabelPaint.setTextAlign(Paint.Align.CENTER);
 		miniLabelPaint.setTextAlign(Paint.Align.CENTER);
 
-
 	}
 
 	/* DrawRect, by default, takes the distance of the left edge from the left edge of the canvas
@@ -50,8 +50,7 @@ public class RenderCard {
 	By doing it this way, dividing our width and length by 2, we can define a card as the x,y center point
 	and it's a little nicer to deal with
 	 */
-	public RenderCard(float _x, float _y, float _width, float _length, Card _card)
-	{
+	public RenderCard(float _x, float _y, float _width, float _length, Card _card) {
 		x = _x;
 		y = _y;
 		width = _width;
@@ -59,16 +58,13 @@ public class RenderCard {
 		setPaintfromEnum(_card.getCardColor());
 	}
 
-	public void setCenter(float _x, float _y)
-	{
+	public void setCenter(float _x, float _y) {
 		x = _x;
 		y = _y;
 	}
 
-	public void setPaintfromEnum(CardColor _cardColor)
-	{
-		switch(_cardColor)
-		{
+	public void setPaintfromEnum(CardColor _cardColor) {
+		switch(_cardColor) {
 			case BLACK:
 				paint.setARGB(255, 0, 0,0);
 				break;
@@ -91,29 +87,32 @@ public class RenderCard {
 		strokePaint.setColor(_color);
 	}
 
-	public void draw(Canvas canvas){
+	public void draw(Canvas canvas) {
+
 		float left = x-width/2;
 		float right = x+width/2;
 		float top = y-length/2;
 		float bottom = y+length/2;
+
 		strokePaint.setStrokeWidth(width/10);
 		canvas.drawRect(left, top, right, bottom, paint);
 		canvas.drawRect(left, top, right, bottom, strokePaint);
 		strokePaint.setStrokeWidth(width/20);
 		canvas.save();
 		canvas.rotate(45, x, y);
+
 		float ovalLeft = (float)(x-width*(0.375));
 		float ovalRight = (float)(x+width*(0.375));
 		float ovalTop = (float)(y-length*(0.4));
 		float ovalBottom = (float)(y+length*(0.4));
+
 		canvas.drawOval(ovalLeft, ovalTop, ovalRight, ovalBottom, strokePaint);
 		canvas.restore();
 		drawCardNumber(canvas);
 
 	}
 
-	public void drawCardNumber(Canvas canvas)
-	{
+	public void drawCardNumber(Canvas canvas) {
 		float mainTextY = y - (mainLabelPaint.descent() + mainLabelPaint.ascent()) / 2;
 		float miniTextY = y - (miniLabelPaint.descent() + miniLabelPaint.ascent()) / 2;
 
@@ -146,14 +145,12 @@ public class RenderCard {
 
 	}
 
-	public void setLengthWidth(int _length, int _width)
-	{
+	public void setLengthWidth(int _length, int _width) {
 		length = _length;
 		width = _width;
 	}
 
-	public boolean isClicked(float clickX, float clickY)
-	{
+	public boolean isClicked(float clickX, float clickY) {
 		float left = x-width/2;
 		float right = x+width/2;
 		float top = y-length/2;

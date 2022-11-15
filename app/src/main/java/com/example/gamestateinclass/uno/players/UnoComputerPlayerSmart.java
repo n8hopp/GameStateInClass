@@ -7,8 +7,8 @@ import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 
 /**
- * This is Clei's attempt at trying to implement a competent computer player.
- * Here are the goals that Clei will be trying to achieve.
+ * This is Clei and friends attempt at trying to implement a competent computer player.
+ * Here are the goals that Clei and friends will be trying to achieve.
  *
  * Places down a card when it has a playable card to place down
  * Playable cards include:

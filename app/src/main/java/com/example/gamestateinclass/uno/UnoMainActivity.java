@@ -36,6 +36,8 @@ public class UnoMainActivity extends GameMainActivity {
 
         });
 
+        // ability to have and choose to play against a smart AI will be implemented soon
+
         // dumb computer player 1
         playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
             public GamePlayer createPlayer(String name) {
