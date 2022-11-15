@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.objects.RenderCard;
 
 public class UnoTableView extends FlashSurfaceView {
@@ -34,6 +36,9 @@ public class UnoTableView extends FlashSurfaceView {
 	private String p1hand;
 	private String p2hand;
 	private String p3hand;
+
+//	private RenderCard fakeDrawCardRender;
+	private Card fakeDrawCard;
 
 	public int arrowPos; // 0: human player. Increases clockwise
 
@@ -74,11 +79,19 @@ public class UnoTableView extends FlashSurfaceView {
 		p2hand = "7 Cards";
 		p3hand = "7 Cards";
 
+//		fakeDrawCardRender = (new Card(CardColor.BLACK, Face.ZERO)).getRender();
+//		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
+		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
 	}
 
 
 	public void setState(UnoState _state) {
 		state = _state;
+	}
+
+
+	public Card getFakeDrawCard() {
+		return fakeDrawCard;
 	}
 
 
@@ -118,8 +131,15 @@ public class UnoTableView extends FlashSurfaceView {
 		}
 
 		// Face down middle card
-		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
+//		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
+
+//		Card fakeDrawCard = new Card(CardColor.BLACK, Face.ZERO);
+
+		RenderCard fakeDrawCardRender = fakeDrawCard.getRender();
+		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
+		fakeDrawCardRender.draw(canvas);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
+
 
 //		testCard.getRender().draw(canvas);
 		// Lukas: I will implement the drawArrow function

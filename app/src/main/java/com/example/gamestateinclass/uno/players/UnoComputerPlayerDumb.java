@@ -54,7 +54,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			if (autoDraw < 5) {
 
-				action = new DrawCardAction(this, state.getTopCard());
+				action = new DrawCardAction(this);
 				Log.i("I am drawing a card now", "");
 			}
 
@@ -74,7 +74,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
 				else {
-					action = new DrawCardAction(this, state.getTopCard());
+					action = new DrawCardAction(this);
 					Log.i("No valid, now drawing", "");
 				}
 			}
