@@ -88,11 +88,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		if (view instanceof UnoTableView) {
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
+			// if the "fake" draw card was touched, send the drawCardAction
 			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				action = new DrawCardAction(this);
 				game.sendAction(action);
 
+			// otherwise, see if topCard was touched, if so place the currently selected card in hand
 			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				Card card = myHand.get(selectedIndex);
@@ -107,6 +109,9 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		}
 
 		if (view instanceof UnoHandView) {
+
+			// check each card in hand to see if it was tapped.
+			// if so, set it as selected
 			for(int i=0; i < myHand.size(); i++)
 			{
 				Card c = myHand.get(i);
