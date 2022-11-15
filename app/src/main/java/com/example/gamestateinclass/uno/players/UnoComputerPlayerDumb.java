@@ -46,7 +46,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 //		Log.i("playerNum",  ""+playerNum);
 
 		if (state.getTurn() == playerNum) {
-			Logger.log("UnoComputer 69", "My turn!");
+			Logger.log("UnoComputer69 aka Dumb", "My turn!");
 			// hmm i don't really know what i should add here
 
 			// Does the AI draw a card or not?

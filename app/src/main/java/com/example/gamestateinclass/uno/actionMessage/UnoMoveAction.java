@@ -25,7 +25,6 @@ public class UnoMoveAction extends GameAction {
         this.card = new Card();
         card.setColor(_card.getCardColor());
         card.setFace(_card.getFace());
-
     }
 
     public Face getFace(){

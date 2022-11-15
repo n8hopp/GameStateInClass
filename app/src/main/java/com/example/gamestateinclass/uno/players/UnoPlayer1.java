@@ -132,6 +132,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		placeButton = (Button) activity.findViewById(R.id.placeButton);
 		selectButton = (Button) activity.findViewById(R.id.selectButton);
 
+		// Sets a Listener for views and buttons users can touch
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
 

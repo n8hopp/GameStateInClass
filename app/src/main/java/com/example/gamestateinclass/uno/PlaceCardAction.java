@@ -22,5 +22,4 @@ public class PlaceCardAction extends GameAction {
         return card;
     }
 
-
 }
