@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
@@ -26,6 +27,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	private Button placeButton;
 	private Button selectButton;
+	private TextView actionText;
 
 	private int selectedIndex;
 
@@ -131,6 +133,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 		placeButton = (Button) activity.findViewById(R.id.placeButton);
 		selectButton = (Button) activity.findViewById(R.id.selectButton);
+		actionText = activity.findViewById(R.id.lobbyInfoText);
 
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);

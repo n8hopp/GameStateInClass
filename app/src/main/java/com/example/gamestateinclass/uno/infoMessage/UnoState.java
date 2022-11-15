@@ -27,6 +27,7 @@ public class UnoState extends GameState implements Serializable {
     private static final String TAG = "UnoState";
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
+    private String latestAction;
 
     private ArrayList<ArrayList<Card>> playerHands;
     private ArrayList<Card> discardDeck;
@@ -269,4 +270,11 @@ public class UnoState extends GameState implements Serializable {
         discardDeck.add(0, card);
     }
 
+    public void setLatestAction(String _latestAction){
+        latestAction = _latestAction;
+    }
+
+    public String getLatestAction() {
+        return latestAction;
+    }
 }

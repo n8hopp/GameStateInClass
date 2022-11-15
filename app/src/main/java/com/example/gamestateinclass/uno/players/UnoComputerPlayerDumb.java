@@ -39,13 +39,14 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		sleep(1);
+
 		UnoState state = ((UnoState) info);
 
 //		Log.i("recievedc", state.getTurn()+"");
 //		Log.i("playerNum",  ""+playerNum);
 
 		if (state.getTurn() == playerNum) {
+			sleep(2);
 			Logger.log("UnoComputer 69", "My turn!");
 			// hmm i don't really know what i should add here
 
