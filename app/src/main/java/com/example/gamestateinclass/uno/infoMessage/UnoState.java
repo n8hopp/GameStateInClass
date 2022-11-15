@@ -92,10 +92,11 @@ public class UnoState extends GameState implements Serializable {
     }
 
     private void shuffleDeck(ArrayList<Card> deck) {
-//        Collections.shuffle(deck, new Random(1234));
         Collections.shuffle(deck, new Random());
     }
 
+
+    // instantiates the discard deck from the first card of the draw deck
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
         Card firstCard = drawDeck.get(0);
         ArrayList<Card> discardDeckDeck = new ArrayList<>();
@@ -142,6 +143,8 @@ public class UnoState extends GameState implements Serializable {
         fromStack.remove(from);
     }
 
+
+    // fill each player hand with seven cards to start
     private boolean initializePlayerHands()
     {
         if(drawDeck.size() >= 7 * playerHands.size()) {
@@ -154,27 +157,6 @@ public class UnoState extends GameState implements Serializable {
             return true;
         }
         return false;
-    }
-
-    // TODO: Remove checkvic functionality from State and put in LocalGame
-    public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
-        if (playerHands.size() == 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
-    public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
-        if (drawDeck.size() == 0) {
-            drawDeck.addAll(discardDeck);
-            Collections.shuffle(drawDeck);
-            return true;
-        }
-        else {
-            return false;
-        }
     }
 
 
@@ -285,6 +267,8 @@ public class UnoState extends GameState implements Serializable {
         return latestAction;
     }
 
+
+    // if draw deck has five or less cards, refill it from discard deck (leaving top card)
     public void refillDrawDeck() {
 
         // make temps

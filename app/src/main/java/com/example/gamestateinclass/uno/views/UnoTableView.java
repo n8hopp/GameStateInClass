@@ -39,7 +39,6 @@ public class UnoTableView extends FlashSurfaceView {
 	private String p2hand;
 	private String p3hand;
 
-//	private RenderCard fakeDrawCardRender;
 	private Card fakeDrawCard;
 
 	public int arrowPos; // 0: human player. Increases clockwise
@@ -82,8 +81,7 @@ public class UnoTableView extends FlashSurfaceView {
 		p2hand = "7 Cards";
 		p3hand = "7 Cards";
 
-//		fakeDrawCardRender = (new Card(CardColor.BLACK, Face.ZERO)).getRender();
-//		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
+		// a "fake" card that is acts as a button for drawing
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
 	}
 
@@ -119,13 +117,6 @@ public class UnoTableView extends FlashSurfaceView {
 		// Player hand text
 		canvas.drawText(p0hand, getWidth()/2, (getHeight()/15) * 14, textPaint);
 
-		// Face up middle card
-//		canvas.drawRect((getWidth()/2)+25,  (getHeight()/2)-150, (getWidth()/2)+225, (getHeight()/2)+150, cardPaint); //
-		// Lukas: Added 30 pixel border to match HandView
-//		canvas.drawRect((getWidth()/2)+25+25,  (getHeight()/2)-150+25, (getWidth()/2)+225-25, (getHeight()/2)+150-25, faceUp);
-		// Draw big number on card
-
-//		canvas.drawText("7", getWidth()/2 + 100, getHeight()/2 +30 , textPaint2);
 		canvas.drawText("PLACE", getWidth()/2+125,  (getHeight()/2)+200, textPaint);
 
 		if (state != null) {
@@ -137,19 +128,11 @@ public class UnoTableView extends FlashSurfaceView {
 			arrowDirection = state.getDirection().value;
 		}
 
-		// Face down middle card
-//		canvas.drawRect((getWidth()/2)-225,  (getHeight()/2)-150, (getWidth()/2)-25, (getHeight()/2)+150, cardPaint);
-
-//		Card fakeDrawCard = new Card(CardColor.BLACK, Face.ZERO);
-
 		RenderCard fakeDrawCardRender = fakeDrawCard.getRender();
 		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
 		fakeDrawCardRender.draw(canvas);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
 
-
-//		testCard.getRender().draw(canvas);
-		// Lukas: I will implement the drawArrow function
 
 		drawArrowPath(arrowPaint, arrowPath, arrowPos, arrowDirection);
 		canvas.drawPath(arrowPath, arrowPaint);
