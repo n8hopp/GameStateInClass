@@ -87,7 +87,7 @@ public class UnoLocalGame extends LocalGame {
 		for(int i = 0; i < players.length; i++)
 		{
 			if(tempState.fetchPlayerHand(i).size() == 0){
-				return "Player " + i + " has won!";
+				return "Player " + i + " has won! ";
 			}
 		}
 		return null;
