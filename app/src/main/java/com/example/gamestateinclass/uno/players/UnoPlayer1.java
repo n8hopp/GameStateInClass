@@ -10,6 +10,7 @@ import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
+import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
@@ -73,12 +74,20 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
+		GameAction action = null;
 
 		if (view instanceof UnoTableView) {
+			Card fakeDrawCard = tableView.getFakeDrawCard();
+
+			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+				action = new DrawCardAction(this);
+				game.sendAction(action);
+			}
+
 			return true;
 		}
 
-		if (view instanceof  UnoHandView) {
+		if (view instanceof UnoHandView) {
 			for(int i=0; i < myHand.size(); i++)
 			{
 				Card c = myHand.get(i);

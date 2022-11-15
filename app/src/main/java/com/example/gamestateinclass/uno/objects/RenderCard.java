@@ -134,6 +134,8 @@ public class RenderCard {
 			case REVERSE:
 				canvas.drawText("REV", x, mainTextY, mainLabelPaint);
 				break;
+			case NONE:
+				break;
 			default:
 				canvas.drawText(String.valueOf(face.faceID), x, mainTextY, mainLabelPaint);
 				canvas.drawText(String.valueOf(face.faceID), (float)(x-width*0.35), (float)(miniTextY-length*0.35), miniLabelPaint);

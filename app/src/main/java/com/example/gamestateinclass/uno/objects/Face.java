@@ -16,7 +16,8 @@ public enum Face //
 	SKIP(11),
 	DRAWTWO(12),
 	DRAWFOUR(13),
-	WILD(14);
+	WILD(14),
+	NONE(15);
 
 	public int faceID;
 
