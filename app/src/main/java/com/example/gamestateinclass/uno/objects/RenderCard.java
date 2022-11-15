@@ -87,6 +87,7 @@ public class RenderCard {
 		strokePaint.setColor(_color);
 	}
 
+	// Draws a rectangle, with the color given, the oval on top, and the text for the card type.
 	public void draw(Canvas canvas) {
 
 		float left = x-width/2;
