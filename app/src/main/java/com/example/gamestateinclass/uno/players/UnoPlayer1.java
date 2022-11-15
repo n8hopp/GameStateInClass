@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.example.gamestateinclass.R;
@@ -20,7 +21,7 @@ import com.example.gamestateinclass.uno.views.UnoTableView;
 
 import java.util.ArrayList;
 
-public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener {
+public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener{
 	private int layoutId;
 	private UnoTableView tableView;
 	private UnoHandView handView;
@@ -30,6 +31,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	private TextView actionText;
 
 	private int selectedIndex;
+	private SeekBar handSeekBar;
+	private int startingHandCard;
 
 	private ArrayList<Card> myHand;
 	private Card topCard;
@@ -42,7 +45,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public UnoPlayer1(String name, int _layoutId) {
 		super(name);
 		this.layoutId = _layoutId;
-
+		startingHandCard = 0;
 		selectedIndex = 0;
 	}
 
@@ -73,6 +76,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 		myHand = gameState.fetchPlayerHand(playerNum);
 		topCard = gameState.getTopCard();
+
 	}
 
 
@@ -134,9 +138,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		placeButton = (Button) activity.findViewById(R.id.placeButton);
 		selectButton = (Button) activity.findViewById(R.id.selectButton);
 		actionText = activity.findViewById(R.id.lobbyInfoText);
+		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
+		handSeekBar.setOnSeekBarChangeListener(this);
 
 		placeButton.setOnClickListener(this);
 		selectButton.setOnClickListener(this);
@@ -164,5 +170,23 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 //
 //		}
 //		game.sendAction(action);
+	}
+
+
+	@Override
+	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+		handSeekBar.setMax(myHand.size());
+		handView.setStartingCard(i);
+		handView.invalidate();
+	}
+
+	@Override
+	public void onStartTrackingTouch(SeekBar seekBar) {
+
+	}
+
+	@Override
+	public void onStopTrackingTouch(SeekBar seekBar) {
+
 	}
 }

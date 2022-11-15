@@ -39,6 +39,7 @@ public class UnoHandView extends FlashSurfaceView {
     Paint numberPaint = new Paint();
 
     private int selectedIndex = 0;
+    private int startingCard = 0;
 
 
     public UnoHandView(Context context, AttributeSet attrs) {
@@ -89,12 +90,12 @@ public class UnoHandView extends FlashSurfaceView {
 
         if (state != null) {
             ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
-
-            for (int i = 0; i < currentHand.size(); i ++) {
+            int offset = 0;
+            for (int i = startingCard; i < currentHand.size(); i ++) {
 
                 Card card = currentHand.get(i);
                 RenderCard renderCard = card.getRender();
-                renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
+                renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
 
                 if (i == selectedIndex) {
                     renderCard.setHighlight(Color.YELLOW);
@@ -103,7 +104,7 @@ public class UnoHandView extends FlashSurfaceView {
                 }
 
                 renderCard.draw(canvas);
-
+                offset++;
         }
 
 //            // Card border
@@ -131,6 +132,10 @@ public class UnoHandView extends FlashSurfaceView {
 //        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
 //
 //        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+    }
+
+    public void setStartingCard(int startingHandCard) {
+        startingCard = startingHandCard;
     }
 }
 
