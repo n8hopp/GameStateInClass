@@ -12,15 +12,14 @@ public class UnoLocalGameTest extends TestCase {
         assertEquals(4,2+2);
     }
 
-    @Test
-    public void testMakeMove() {
-    }
 
     @Test
     public void testDrawCard() {
+
     }
 
     @Test
     public void testPlaceCard() {
+
     }
 }
