@@ -69,13 +69,14 @@ public class UnoLocalGameTest extends TestCase {
         assertEquals(playDirectionAfter, -playDirectionBefore);
     }
 
+    @Test
     public void testSkipCard() {
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
         int turnBefore = testState.getTurn();
 
-        Card skipCard = new Card(CardColor.BLUE, Face.SKIP);
+        Card skipCard = new Card(CardColor.RED, Face.SKIP);
         testGame.placeCard(skipCard);
 
         int turnAfter = testState.getTurn();
