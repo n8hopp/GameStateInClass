@@ -41,4 +41,28 @@ public class UnoLocalGameTest extends TestCase {
         assertEquals(testCard, resultCard);
 
     }
+
+    @Test
+    public void testCanMove() {
+        UnoLocalGame testGame = new UnoLocalGame();
+        UnoState testState = (UnoState) testGame.getGameState();
+        assertTrue(testGame.canMove(0));
+        assertFalse(testGame.canMove(1));
+    }
+
+    /** This one is hard lol
+    @Test
+    public void testCheckIfGameOver() {
+        UnoLocalGame testGame = new UnoLocalGame();
+        UnoState testState = (UnoState) testGame.getGameState();
+
+        ArrayList<Card> Hand = testState.fetchPlayerHand(0);
+        for ( Card c : Hand ) {
+            Hand.remove(c);
+        }
+        String expected = "Player 0 has won! ";
+        assertEquals(expected, testGame.checkIfGameOver());
+
+    }
+    **/
 }
