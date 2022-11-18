@@ -138,6 +138,10 @@ public class UnoState extends GameState implements Serializable {
         return cards;
     }
 
+    public ArrayList<ArrayList<Card>> getAllPlayerHands() {
+        return playerHands;
+    }
+
     // Parameters
     // fromStack: the origin of the card that is moving
     // from: the card that is moving
@@ -168,12 +172,15 @@ public class UnoState extends GameState implements Serializable {
 
     // TODO: Remove checkvic functionality from State and put in LocalGame
     public boolean checkVictory (ArrayList<ArrayList<Card>> playerHands) {
-        if (playerHands.size() == 0) {
-            return true;
+        for ( ArrayList<Card> hand : playerHands ) {
+
+            if (hand.size() == 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     // Helper method to check if the draw deck is empty
