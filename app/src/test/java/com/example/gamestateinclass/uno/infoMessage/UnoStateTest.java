@@ -9,11 +9,21 @@ public class UnoStateTest extends TestCase {
     }
 
     public void testFetchCurrentPlayer() {
+        UnoState testState = new UnoState();
+
+        int currentPlayer = testState.fetchCurrentPlayer();
+
+        assertEquals(0, currentPlayer);
     }
 
     public void testGetTopCard() {
     }
 
     public void testGetDirection() {
+        UnoState testState = new UnoState();
+
+        UnoState.PlayDirection direction = testState.getDirection();
+
+        assertEquals(UnoState.PlayDirection.CW, direction);
     }
 }
