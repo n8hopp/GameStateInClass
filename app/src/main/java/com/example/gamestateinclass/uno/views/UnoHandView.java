@@ -39,6 +39,7 @@ public class UnoHandView extends FlashSurfaceView {
     Paint numberPaint = new Paint();
 
     private int selectedIndex = 0;
+    private int startingCard = 0;
 
 
     public UnoHandView(Context context, AttributeSet attrs) {
@@ -89,12 +90,14 @@ public class UnoHandView extends FlashSurfaceView {
 
         if (state != null) {
             ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
-
-            for (int i = 0; i < currentHand.size(); i ++) {
+            // The loop iterates through based on the scroll bar, however the visual card offset
+            // still needs to always be zero when drawing
+            int offset = 0;
+            for (int i = startingCard; i < currentHand.size(); i ++) {
 
                 Card card = currentHand.get(i);
                 RenderCard renderCard = card.getRender();
-                renderCard.setCenter(xOffset + (i * cardSpacing), yOffset);
+                renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
 
                 if (i == selectedIndex) {
                     renderCard.setHighlight(Color.YELLOW);
@@ -103,37 +106,21 @@ public class UnoHandView extends FlashSurfaceView {
                 }
 
                 renderCard.draw(canvas);
-
+                offset++;
         }
-
-<<<<<<< Updated upstream
-//            // Card border
-//            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),
-//                    yOffset,
-//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth,
-//                    yOffset + cardHeight, cardBorderPaint);
-//
-//            // Main card rectangle
-//            canvas.drawRect(xOffset + i * (cardSpacing + cardWidth) + cardBorder,
-//                    yOffset + cardBorder,
-//                    xOffset + i * (cardSpacing + cardWidth) + cardWidth - cardBorder,
-//                    yOffset + cardHeight - cardBorder, cardColors[i]);
-//
-//            // Number value
-//            canvas.drawText(""+cardNumbers[i],
-//                    xOffset + i * (cardSpacing + cardWidth) + 100,
-//                    yOffset + cardBorder + (cardHeight + cardBorder) / 2, numberPaint);
-
-=======
->>>>>>> Stashed changes
+            
         }
 
         // Big UNO Button
-        int radius = getHeight();
-        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
-        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
+//        int radius = getHeight();
+//        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
+//        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
+//
+//        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+    }
 
-        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+    public void setStartingCard(int startingHandCard) {
+        startingCard = startingHandCard;
     }
 }
 

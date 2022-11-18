@@ -43,8 +43,8 @@ public class UnoMainActivity extends GameMainActivity {
             }
         });
 
-        // smarter computer player 2
-        playerTypes.add(new GamePlayerType("Computer Player 2 (smart)") {
+        // dumb computer player 2
+        playerTypes.add(new GamePlayerType("Computer Player 2 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }

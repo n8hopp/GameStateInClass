@@ -4,9 +4,6 @@ import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameComputerPlayer;
 import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
-import com.example.gamestateinclass.uno.DrawCardAction;
-import com.example.gamestateinclass.uno.PlaceCardAction;
-import com.example.gamestateinclass.uno.actionMessage.UnoMoveAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 
 /**
@@ -25,13 +22,13 @@ import com.example.gamestateinclass.uno.infoMessage.UnoState;
  *
  */
 
-public class UnoComputerPlayer1 extends GameComputerPlayer {
+public class UnoComputerPlayerSmart extends GameComputerPlayer {
 	/**
 	 * constructor
 	 *
 	 * @param name the player's name (e.g., "John")
 	 */
-	public UnoComputerPlayer1(String name) {
+	public UnoComputerPlayerSmart(String name) {
 		super(name);
 	}
 
@@ -40,7 +37,7 @@ public class UnoComputerPlayer1 extends GameComputerPlayer {
 		UnoState gameInfo = ((UnoState) info);
 
 		if (info instanceof NotYourTurnInfo) {
-			Logger.log("UnoComputer 1", "My turn!");
+			Logger.log("UnoComputer1 aka Smart", "My turn!");
 			// hmm i don't really know what i should add here
 
 			// Tests hand deck to place deck for possible playable plays

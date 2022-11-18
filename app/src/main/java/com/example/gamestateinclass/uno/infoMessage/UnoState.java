@@ -24,15 +24,19 @@ public class UnoState extends GameState implements Serializable {
     // getTopCard and addTopCard
     // getWhoseMove and setWhoseMove
     // TAG for logging
+
     private static final String TAG = "UnoState";
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
+    private String latestAction;
 
     private ArrayList<ArrayList<Card>> playerHands;
     private ArrayList<Card> discardDeck;
     private ArrayList<Card> drawDeck;
 
-    // Default Constructor
+    // Default Constructor. Initializes turn to 0, direction to be clockwise,
+    // generates the drawDeck, adds four Arraylist<Card> for the player hands (change to be the number of players?)
+    // shuffles the drawdeck, and plays the first card from the top onto the discard deck.
     public UnoState() {
         // Initialize
         turn = 0;
@@ -50,7 +54,9 @@ public class UnoState extends GameState implements Serializable {
         discardDeck = creatediscardDeckDeck(drawDeck);
     }
 
-    // Copy Constructor
+    // Copy Constructor makes a deep copy of each individual card in our draw and discard deck, as well as
+    // in each player hand. We have a separate for loop for each arraylist of cards.
+    // Since enums & ints are constant values, we don't need to make a deep copy of our turn and direction variables.
     public UnoState(UnoState previous)
     {
         turn = previous.turn;
@@ -89,11 +95,14 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // shuffleDeck simply calls Collections.shuffle on the Arraylist of cards passed into it.
+    // This randomizes it with a random seed.
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1234));
-//        Collections.shuffle(deck, new Random());
+//        Collections.shuffle(deck, new Random(1234));
+        Collections.shuffle(deck, new Random());
     }
 
+    // This just creates a new deck from the top card of the draw deck and returns it.
     private ArrayList<Card> creatediscardDeckDeck(ArrayList<Card> drawDeck) {
         Card firstCard = drawDeck.get(0);
         ArrayList<Card> discardDeckDeck = new ArrayList<>();
@@ -110,17 +119,19 @@ public class UnoState extends GameState implements Serializable {
         ArrayList<Card> cards = new ArrayList<>();
         for ( CardColor c : CardColor.values()){
             for ( Face f : Face.values()){
-                if (c == CardColor.BLACK) {
-                    if(f == Face.WILD || f == Face.DRAWFOUR) {
-                        for ( int i = 0; i < 4; i++) {
-                            cards.add(new Card(c, f));
+                if (f != Face.NONE) {
+                    if (c == CardColor.BLACK) {
+                        if(f == Face.WILD || f == Face.DRAWFOUR) {
+                            for ( int i = 0; i < 4; i++) {
+                                cards.add(new Card(c, f));
+                            }
                         }
                     }
-                }
-                else if (f != Face.WILD && f != Face.DRAWFOUR)
-                {
-                    cards.add(new Card(c, f));
-                    if (f != Face.ZERO) cards.add(new Card(c, f));
+                    else if (f != Face.WILD && f != Face.DRAWFOUR)
+                    {
+                        cards.add(new Card(c, f));
+                        if (f != Face.ZERO) cards.add(new Card(c, f));
+                    }
                 }
             }
         }
@@ -138,6 +149,9 @@ public class UnoState extends GameState implements Serializable {
         fromStack.remove(from);
     }
 
+    // For each player hand, add 7 cards from the draw deck. We do this in a round robin style
+    // (instead of each person just drawing 7 cards) so there's more suspension of random-ness,
+    // and it's more in line with the original game's card drawing.
     private boolean initializePlayerHands()
     {
         if(drawDeck.size() >= 7 * playerHands.size()) {
@@ -162,6 +176,7 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // Helper method to check if the draw deck is empty
     public boolean checkDrawEmpty (ArrayList<Card> drawDeck) {
         if (drawDeck.size() == 0) {
             drawDeck.addAll(discardDeck);
@@ -173,7 +188,8 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
-
+    // PlayDirection is an enum (with an integer parameter value) where 1 refers to clockwise and
+    // -1 refers to counter clockwise.
     public enum PlayDirection
     {
         CW (1), CCW (-1);
@@ -185,11 +201,16 @@ public class UnoState extends GameState implements Serializable {
         }
     }
 
+    // Returns the player hand associated with the id passed into the function.
     public ArrayList<Card> fetchPlayerHand(int id) {
         ArrayList<Card> hand = playerHands.get(id);
         return hand;
     }
 
+    // Fetch the current turn (floorMod is equivalent to the modulus operator (%) except it
+    // also works for negative values.
+    // For example, -1 % 4 == -1. Math.floorMod(-1, 4) = 3. Since we decrement the turn when
+    // we're going counter clockwise, we need to use floorMod instead of %.
     public int fetchCurrentPlayer() {
         return Math.floorMod(turn, 4);
     }
@@ -232,6 +253,12 @@ public class UnoState extends GameState implements Serializable {
 
         drawDeck.subList(0, n).clear();
 
+        if (drawDeck.size() <= 5) {
+            refillDrawDeck();
+        }
+
+        Log.i("draw deck size: ", drawDeck.size()+"");
+
         return cardsTaken;
 
     }
@@ -267,4 +294,30 @@ public class UnoState extends GameState implements Serializable {
         discardDeck.add(0, card);
     }
 
+    public void setLatestAction(String _latestAction){
+        latestAction = _latestAction;
+    }
+
+    public String getLatestAction() {
+        return latestAction;
+    }
+
+    // This function shuffles the discardDeck if the drawDeck is empty, and fills the drawDeck
+    // back up with the shuffled discardDeck.
+    public void refillDrawDeck() {
+
+        // make temps
+        List<Card> subList = discardDeck.subList(1, discardDeck.size());
+        ArrayList<Card> allButTop = new ArrayList<>(subList);
+        Card topCard = discardDeck.get(0);
+
+        // add all but top card to discard deck, shuffle after
+        drawDeck.addAll(0, allButTop);
+        shuffleDeck(drawDeck);
+
+        // make it so only the top card remains in discard deck
+        discardDeck.clear();
+        discardDeck.add(topCard);
+
+    }
 }

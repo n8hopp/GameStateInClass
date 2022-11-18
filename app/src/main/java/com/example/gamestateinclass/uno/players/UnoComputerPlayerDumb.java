@@ -39,27 +39,25 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		sleep(1);
+
 		UnoState state = ((UnoState) info);
 
-//		Log.i("recievedc", state.getTurn()+"");
-//		Log.i("playerNum",  ""+playerNum);
-
 		if (state.getTurn() == playerNum) {
-			Logger.log("UnoComputer 69", "My turn!");
-			// hmm i don't really know what i should add here
 
-			// Does the AI draw a card or not?
+			Logger.log("A Dumb Computer", "My turn!");
+
+			sleep(1.5);
+
+			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
+			if (autoDraw < 2) {
 
-			if (autoDraw < 5) {
-
-				action = new DrawCardAction(this, state.getTopCard());
+				action = new DrawCardAction(this);
 				Log.i("I am drawing a card now", "");
 			}
 
 			else {
-				// Try to find a viable card
+				// Try to find a viable card in computer hand
 				ArrayList<Card> hand = state.fetchPlayerHand(playerNum);
 				Card toPlace = null;
 				for ( Card c : hand) {
@@ -74,19 +72,17 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
 				else {
-					action = new DrawCardAction(this, state.getTopCard());
+					action = new DrawCardAction(this);
 					Log.i("No valid, now drawing", "");
 				}
 			}
-
-			// This simulates the computer thinking (might be longer bc its dumb)
-//			sleep(5);
 
 			game.sendAction(action);
 		}
 
 	}
 
+	// Helper method to compare a card to the top of discard deck
 	public boolean checkCardValidity(Card card, UnoState state) {
 
 		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {

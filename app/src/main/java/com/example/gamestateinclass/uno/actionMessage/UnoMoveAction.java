@@ -22,10 +22,10 @@ public class UnoMoveAction extends GameAction {
     public UnoMoveAction(GamePlayer player, Card _card) {
         super(player);
 
+        // Set relating to the action
         this.card = new Card();
         card.setColor(_card.getCardColor());
         card.setFace(_card.getFace());
-
     }
 
     public Face getFace(){
