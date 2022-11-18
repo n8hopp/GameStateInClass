@@ -257,7 +257,7 @@ public class UnoState extends GameState implements Serializable {
             refillDrawDeck();
         }
 
-        Log.i("draw deck size: ", drawDeck.size()+"");
+        //Log.i("draw deck size: ", drawDeck.size()+"");
 
         return cardsTaken;
 
