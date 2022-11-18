@@ -13,7 +13,9 @@ public class UnoLocalGameTest extends TestCase {
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
-        assertEquals(4, 2+2);
+
+
+        assertEquals(4, testState.fetchPlayerHand(0));
     }
 
 
