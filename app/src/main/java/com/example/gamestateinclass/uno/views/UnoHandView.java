@@ -106,6 +106,7 @@ public class UnoHandView extends FlashSurfaceView {
 
         }
 
+<<<<<<< Updated upstream
 //            // Card border
 //            canvas.drawRect( xOffset + i * (cardSpacing + cardWidth),
 //                    yOffset,
@@ -123,6 +124,8 @@ public class UnoHandView extends FlashSurfaceView {
 //                    xOffset + i * (cardSpacing + cardWidth) + 100,
 //                    yOffset + cardBorder + (cardHeight + cardBorder) / 2, numberPaint);
 
+=======
+>>>>>>> Stashed changes
         }
 
         // Big UNO Button
