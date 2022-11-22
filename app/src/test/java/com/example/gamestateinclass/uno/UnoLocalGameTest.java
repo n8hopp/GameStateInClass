@@ -1,5 +1,7 @@
 package com.example.gamestateinclass.uno;
 
+import static org.junit.Assert.assertNotEquals;
+
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
@@ -37,7 +39,7 @@ public class UnoLocalGameTest extends TestCase {
         int handSizeAfter = hand.size();
 
         assertEquals(handSizeBefore + 1, handSizeAfter);
-
+        assertNotEquals(handSizeBefore, handSizeAfter);
     }
 
     @Test
@@ -51,7 +53,6 @@ public class UnoLocalGameTest extends TestCase {
         // Places it's red card on deck
         Card resultCard = testState.getTopCard();
         assertEquals(testCard, resultCard);
-
     }
 
     @Test
@@ -67,6 +68,7 @@ public class UnoLocalGameTest extends TestCase {
         int playDirectionAfter = testState.getDirection().value;
 
         assertEquals(playDirectionAfter, -playDirectionBefore);
+        assertNotEquals(playDirectionAfter, playDirectionBefore);
     }
 
     @Test
@@ -82,5 +84,8 @@ public class UnoLocalGameTest extends TestCase {
         int turnAfter = testState.getTurn();
 
         assertEquals(turnBefore + 1, turnAfter);
+        assertNotEquals(turnBefore, turnAfter);
     }
+
+
 }
