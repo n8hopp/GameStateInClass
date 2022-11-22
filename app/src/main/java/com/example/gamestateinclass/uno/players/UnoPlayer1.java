@@ -149,15 +149,18 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
 
+
 	}
 
 	// Set hand view based on progress bar
 	// Gains ability for player to access cards not in initial view
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		handSeekBar.setMax(myHand.size()-1);
-		handView.setStartingCard(i);
-		handView.invalidate();
+		if (myHand.size() > 6) {
+			handSeekBar.setMax(myHand.size() - 6);
+			handView.setStartingCard(i);
+			handView.invalidate();
+		}
 	}
 
 	@Override
