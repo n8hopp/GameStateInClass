@@ -48,6 +48,14 @@ public class UnoTableView extends FlashSurfaceView {
 	private String p2hand;
 	private String p3hand;
 
+	private String p0name;
+	private String p1name;
+	private String p2name;
+	private String p3name;
+
+	private String actionText;
+	private final Paint actionPaint;
+
 	private Card fakeDrawCard;
 
 	public int arrowPos; // 0: human player. Increases clockwise
@@ -78,6 +86,7 @@ public class UnoTableView extends FlashSurfaceView {
 		greenPaint = new Paint();
 		yellowPaint = new Paint();
 		testCard = new Card();
+		actionPaint = new Paint();
 		arrowPos = 0;
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
 		textPaint.setARGB(255, 255, 255, 255); // Text color white
@@ -109,6 +118,14 @@ public class UnoTableView extends FlashSurfaceView {
 		p1hand = "7 Cards";
 		p2hand = "7 Cards";
 		p3hand = "7 Cards";
+
+		p0name = "";
+		p1name = "";
+		p2name = "";
+		p3name = "";
+
+		actionText = "test";
+		actionPaint.setARGB(130, 31, 61, 12);
 
 		// a "fake" card that is acts as a button for drawing
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
@@ -144,19 +161,28 @@ public class UnoTableView extends FlashSurfaceView {
 		// Left card
 		canvas.drawRect(50, (getHeight()/2)-100, 350, (getHeight()/2)+100, cardPaint);
 		canvas.drawText(p1hand, 200, (getHeight()/2)+5, textPaint);
+		canvas.drawText(p1name, 200, (getHeight()/2)-110, textPaint);
 
 		// Top card
 		canvas.drawRect((getWidth()/2)-100, 50, (getWidth()/2)+100, 350, cardPaint);
 		canvas.drawText(p2hand, (getWidth()/2), 200, textPaint);
+		canvas.drawText(p2name, (getWidth()/2), 40, textPaint);
 
 		// Right card
 		canvas.drawRect((getWidth()-350), (getHeight()/2)-100, (getWidth()-50), (getHeight()/2)+100, cardPaint);
 		canvas.drawText(p3hand, (getWidth()-200), (getHeight()/2)+5, textPaint);
+		canvas.drawText(p3name, (getWidth()-200), (getHeight()/2)-110, textPaint);
+
 
 		// Player hand text
 		canvas.drawText(p0hand, getWidth()/2, (getHeight()/15) * 14, textPaint);
+		canvas.drawText(p0name, getWidth()/2, getHeight() - 10 , textPaint);
 
 		canvas.drawText("PLACE", getWidth()/2+125,  (getHeight()/2)+200, textPaint);
+
+		// Draw a small "canvas" for action text to be drawn on
+		canvas.drawRect(40, (getHeight()/4)*3-50, (getWidth()-40), (getHeight()/4)*3+30, actionPaint);
+		canvas.drawText(actionText, getWidth()/2,  (getHeight()/4)*3, textPaint);
 
 		if (state != null) {
 			RenderCard topCardRender = state.getTopCard().getRender();
@@ -182,7 +208,6 @@ public class UnoTableView extends FlashSurfaceView {
 		}
 	}
 
-	// Dummied up
 	private void drawArrowPath(Paint _arrowPaint, Path _arrowPath, int _arrowPos, int _arrowDirection) {
 
 		// First switch statement is for clockwise direction
@@ -365,5 +390,20 @@ public class UnoTableView extends FlashSurfaceView {
 
 	public void setWildCardSelection(boolean bool) {
 		wildCardSelection = bool;
+	}
+
+	public void setPlayerNameText(String _p0name, String _p1name, String _p2name, String _p3name){
+		p0name = _p0name;
+		p1name = _p1name;
+		p2name = _p2name;
+		p3name = _p3name;
+	}
+
+	public void setActionText(String _actionText){
+		actionText = _actionText;
+	}
+
+	public UnoState getState(){
+		return state;
 	}
 }

@@ -52,6 +52,7 @@ public class UnoState extends GameState implements Serializable {
         shuffleDeck(drawDeck);
         initializePlayerHands();
         discardDeck = creatediscardDeckDeck(drawDeck);
+        latestAction = "Welcome! Place or draw a card to begin.";
     }
 
     // Copy Constructor makes a deep copy of each individual card in our draw and discard deck, as well as
@@ -61,6 +62,7 @@ public class UnoState extends GameState implements Serializable {
     {
         turn = previous.turn;
         direction = previous.direction;
+        latestAction = previous.latestAction;
         drawDeck = new ArrayList<Card>();
         for(Card c : previous.drawDeck) // for each card in the drawDeck we're copying
         {
@@ -145,7 +147,7 @@ public class UnoState extends GameState implements Serializable {
     // TODO: Remove Swapcards from State and put in LocalGame
     private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
     {
-        to.add(from);
+//        to.add(from);
         fromStack.remove(from);
     }
 

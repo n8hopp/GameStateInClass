@@ -72,6 +72,9 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
 		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
+		tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+		tableView.setActionText(gameState.getLatestAction());
+
 
 		tableView.invalidate();
 		handView.invalidate();
@@ -157,13 +160,16 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		actionText = activity.findViewById(R.id.lobbyInfoText);
+		// actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
 		// Sets a Listener for views and buttons users can touch
 		tableView.setOnTouchListener(this);
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
+
+		//tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+
 
 
 	}
@@ -172,8 +178,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	// Gains ability for player to access cards not in initial view
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		if (myHand.size() > 6) {
-			handSeekBar.setMax(myHand.size() - 6);
+		if (myHand.size() > 4) {
+			handSeekBar.setMax(myHand.size() - 4);
 			handView.setStartingCard(i);
 			handView.invalidate();
 		}

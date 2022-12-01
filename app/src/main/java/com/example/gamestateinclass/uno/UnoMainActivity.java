@@ -31,7 +31,7 @@ public class UnoMainActivity extends GameMainActivity {
         playerTypes.add(new GamePlayerType("Local Human Player") {
             @Override
             public GamePlayer createPlayer(String name) {
-                return new UnoPlayer1(name, R.layout.human_player_1);
+                return new UnoPlayer1(name, R.layout.uno_layout);
             }
 
         });
@@ -67,7 +67,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 3", 3); // dumb computer player
 
         game = defaultConfig;
-        return defaultConfig;
+        return game;
     }
 
     /**
@@ -112,6 +112,5 @@ public class UnoMainActivity extends GameMainActivity {
         Logger.log(TAG, "Loading: " + gameName);
         return (GameState) new UnoState((UnoState) Saving.readFromFile(appName, this.getApplicationContext()));
     }
-
 
 }
