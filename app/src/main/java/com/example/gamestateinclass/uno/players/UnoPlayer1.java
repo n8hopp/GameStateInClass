@@ -127,6 +127,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				tableView.invalidate();
 				handView.invalidate();
 
+
 			// lastly, check if color wheel is tapped (black means out of bounds)
 			} else if (tableView.getTappedColor(
 				motionEvent.getX(), motionEvent.getY()) != CardColor.BLACK
