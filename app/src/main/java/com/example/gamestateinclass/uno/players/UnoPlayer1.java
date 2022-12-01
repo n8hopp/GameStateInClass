@@ -16,6 +16,7 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
@@ -95,13 +96,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 		if (view instanceof UnoTableView) {
 
-			Log.i("color", tableView.getTappedColor(
-					motionEvent.getX(), motionEvent.getY()).name());
-
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			// if the "fake" draw card was touched, send the drawCardAction
-			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())
+				&& tableView.getWildCardSelection()) {
 
 				action = new DrawCardAction(this);
 				game.sendAction(action);
@@ -112,8 +111,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				Card card = myHand.get(selectedIndex);
 
 				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+					tableView.setTempWildFace(card.getFace());
 					tableView.setWildCardSelection(true);
+					handView.setWildCardSelection(true);
 					tableView.invalidate();
+					handView.invalidate();
 					return true;
 				}
 
@@ -122,12 +124,33 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
 
+			// lastly, check if color wheel is tapped (black means out of bounds)
+			} else if (tableView.getTappedColor(
+					motionEvent.getX(), motionEvent.getY()) != CardColor.BLACK) {
+
+				CardColor color = tableView.getTappedColor(motionEvent.getX(), motionEvent.getY());
+				Card card = myHand.get(selectedIndex);
+				card.setColor(color);
+
+				action = new PlaceCardAction(this, card);
+				game.sendAction(action);
+				selectedIndex = 0;
+				handView.setSelectedIndex(0);
+
+				tableView.setWildCardSelection(false);
+				handView.setWildCardSelection(false);
+				tableView.invalidate();
+				handView.invalidate();
 			}
 
 			return true;
 		}
 
 		if (view instanceof UnoHandView) {
+
+			if (handView.getWildCardSelection()) {
+				return false;
+			}
 
 			// check each card in hand to see if it was tapped.
 			// if so, set it as selected

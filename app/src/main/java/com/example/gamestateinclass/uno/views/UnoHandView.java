@@ -41,6 +41,7 @@ public class UnoHandView extends FlashSurfaceView {
     private int selectedIndex = 0;
     private int startingCard = 0;
 
+    private boolean wildCardSelection;
 
     public UnoHandView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -71,7 +72,7 @@ public class UnoHandView extends FlashSurfaceView {
         numberPaint.setTextSize(100);
         numberPaint.setFakeBoldText(true);
 
-
+        wildCardSelection = false;
     }
 
 
@@ -93,21 +94,25 @@ public class UnoHandView extends FlashSurfaceView {
             // The loop iterates through based on the scroll bar, however the visual card offset
             // still needs to always be zero when drawing
             int offset = 0;
-                for (int i = startingCard; i < currentHand.size(); i++) {
+            for (int i = startingCard; i < currentHand.size(); i++) {
 
-                    Card card = currentHand.get(i);
-                    RenderCard renderCard = card.getRender();
-                    renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
-
-                    if (i == selectedIndex) {
-                        renderCard.setHighlight(Color.YELLOW);
-                    } else {
-                        renderCard.setHighlight(Color.WHITE);
-                    }
-
-                    renderCard.draw(canvas);
-                    offset++;
+                if (i == selectedIndex && wildCardSelection) {
+                    continue;
                 }
+
+                Card card = currentHand.get(i);
+                RenderCard renderCard = card.getRender();
+                renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
+
+                if (i == selectedIndex) {
+                    renderCard.setHighlight(Color.YELLOW);
+                } else {
+                    renderCard.setHighlight(Color.WHITE);
+                }
+
+                renderCard.draw(canvas);
+                offset++;
+            }
         }
 
         // Big UNO Button
@@ -121,5 +126,15 @@ public class UnoHandView extends FlashSurfaceView {
     public void setStartingCard(int startingHandCard) {
         startingCard = startingHandCard;
     }
+
+
+    public void setWildCardSelection(boolean bool) {
+        wildCardSelection = bool;
+    }
+
+    public boolean getWildCardSelection() {
+        return wildCardSelection;
+    }
+
 }
 
