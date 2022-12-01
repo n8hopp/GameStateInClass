@@ -16,6 +16,7 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
@@ -71,6 +72,9 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
 		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
+		tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+		tableView.setActionText(gameState.getLatestAction());
+
 
 		tableView.invalidate();
 		handView.invalidate();
@@ -85,7 +89,15 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
 
+		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
+			return false;
+		}
+
 		if (view instanceof UnoTableView) {
+
+			Log.i("color", tableView.getTappedColor(
+					motionEvent.getX(), motionEvent.getY()).name());
+
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			// if the "fake" draw card was touched, send the drawCardAction
@@ -98,6 +110,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				Card card = myHand.get(selectedIndex);
+
+				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+					tableView.setWildCardSelection(true);
+					tableView.invalidate();
+				//	return true;
+				}
+
 				action = new PlaceCardAction(this, card);
 				game.sendAction(action);
 				selectedIndex = 0;
@@ -141,7 +160,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		actionText = activity.findViewById(R.id.lobbyInfoText);
+		// actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
 		// Sets a Listener for views and buttons users can touch
@@ -149,15 +168,21 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
 
+		//tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+
+
+
 	}
 
 	// Set hand view based on progress bar
 	// Gains ability for player to access cards not in initial view
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		handSeekBar.setMax(myHand.size()-1);
-		handView.setStartingCard(i);
-		handView.invalidate();
+		if (myHand.size() > 4) {
+			handSeekBar.setMax(myHand.size() - 4);
+			handView.setStartingCard(i);
+			handView.invalidate();
+		}
 	}
 
 	@Override

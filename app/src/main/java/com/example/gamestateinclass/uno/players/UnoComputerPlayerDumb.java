@@ -11,6 +11,7 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(1.5);
+			sleep(3);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -94,6 +95,13 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		{
 			return false;
 		}
+
+		// This accounts for the instance that the first card of the game turned
+		// over is black. Allows the player to play anything
+		if (discardDeckTop.getCardColor() == CardColor.BLACK){
+			return true;
+		}
+
 		if (discardDeckTop.getFace() == card.getFace() ||
 				discardDeckTop.getCardColor() == card.getCardColor()) {
 			return true;

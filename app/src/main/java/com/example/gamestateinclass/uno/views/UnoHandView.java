@@ -93,22 +93,21 @@ public class UnoHandView extends FlashSurfaceView {
             // The loop iterates through based on the scroll bar, however the visual card offset
             // still needs to always be zero when drawing
             int offset = 0;
-            for (int i = startingCard; i < currentHand.size(); i ++) {
+                for (int i = startingCard; i < currentHand.size(); i++) {
 
-                Card card = currentHand.get(i);
-                RenderCard renderCard = card.getRender();
-                renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
+                    Card card = currentHand.get(i);
+                    RenderCard renderCard = card.getRender();
+                    renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
 
-                if (i == selectedIndex) {
-                    renderCard.setHighlight(Color.YELLOW);
-                } else {
-                    renderCard.setHighlight(Color.WHITE);
+                    if (i == selectedIndex) {
+                        renderCard.setHighlight(Color.YELLOW);
+                    } else {
+                        renderCard.setHighlight(Color.WHITE);
+                    }
+
+                    renderCard.draw(canvas);
+                    offset++;
                 }
-
-                renderCard.draw(canvas);
-                offset++;
-        }
-            
         }
 
         // Big UNO Button

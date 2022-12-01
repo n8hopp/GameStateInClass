@@ -72,6 +72,13 @@ public class UnoLocalGame extends LocalGame {
 		{
 			return false;
 		}
+
+		// This accounts for the instance that the first card of the game turned
+		// over is black. Allows the player to play anything
+		if (discardDeckTop.getCardColor() == CardColor.BLACK){
+			return true;
+		}
+
 		if (discardDeckTop.getFace() == card.getFace() ||
 				discardDeckTop.getCardColor() == card.getCardColor()) {
 			return true;
@@ -99,11 +106,15 @@ public class UnoLocalGame extends LocalGame {
 	protected boolean makeMove(GameAction action) {
 
 		UnoState state = (UnoState) super.state;
+		String actingPlayer = playerNames[state.fetchCurrentPlayer()];
+		String actionPlayed = "";
 
 		// if its a draw action, draw 1 card and increment the turn
 		if (action instanceof DrawCardAction) {
 
 			drawCard(1);
+
+			state.setLatestAction( actingPlayer + " drew a card.");
 
 			int turn = state.getTurn();
 			turn += state.getDirection().value;
@@ -124,6 +135,7 @@ public class UnoLocalGame extends LocalGame {
 				return false;
 			}
 
+			state.setLatestAction( actingPlayer + " placed a " + card.getCardColor() + " " + card.getFace());
 			int turn = state.getTurn();
 			turn += state.getDirection().value;
 			turn = Math.floorMod(turn, state.getHandsSize());
@@ -144,6 +156,7 @@ public class UnoLocalGame extends LocalGame {
 
 		ArrayList<Card> cardsDrawn = state.drawCardsFromDeck(n);
 		state.addCardsToPlayerHand(turn, cardsDrawn);
+		// state.setLatestAction(playerNames[state.fetchCurrentPlayer()]);
 
 		return true;
 	}
