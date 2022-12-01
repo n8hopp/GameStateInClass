@@ -17,6 +17,9 @@ import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.objects.RenderCard;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class UnoTableView extends FlashSurfaceView {
 	/* We can "hard-code" the "hands" of each 3 opponents which will be a face down
 		Uno card art. Each of those players will need a dynamic textView for their
@@ -39,7 +42,7 @@ public class UnoTableView extends FlashSurfaceView {
 	private int arrowDirection;
 
 	protected UnoState state;
-
+	private ArrayList<Integer> displayOrder;
 
 	//	For the sake of these text strings, the human player is p0, and other player
 	//	numbers count up in order, clockwise
@@ -199,7 +202,7 @@ public class UnoTableView extends FlashSurfaceView {
 				wildTopCardRender.draw(canvas);
 			}
 
-			arrowPos = state.getTurn();
+			arrowPos = displayOrder.indexOf(state.getTurn());
 			arrowDirection = state.getDirection().value;
 		}
 
@@ -424,4 +427,8 @@ public class UnoTableView extends FlashSurfaceView {
 	public UnoState getState(){
 		return state;
 	}
+
+	public void setDisplayOrder(ArrayList<Integer> display) { displayOrder = display;}
+
+	public ArrayList<Integer> getPlayerId() { return displayOrder;}
 }
