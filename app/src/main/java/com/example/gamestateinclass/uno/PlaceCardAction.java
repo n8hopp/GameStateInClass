@@ -10,14 +10,12 @@ public class PlaceCardAction extends GameAction {
 
     // Instance Variables: the card being placed
     private Card card;
-    private int cardIndex;
 
-    public PlaceCardAction(GamePlayer player, Card _card, int _cardIndex) {
+    public PlaceCardAction(GamePlayer player, Card _card) {
         // Invokes superclass constructor to set the player
         super(player);
 
         card = _card;
-        cardIndex = _cardIndex;
     }
 
     // return card from this action
@@ -25,7 +23,4 @@ public class PlaceCardAction extends GameAction {
         return card;
     }
 
-    public int getCardIndex() {
-        return cardIndex;
-    }
 }

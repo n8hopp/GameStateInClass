@@ -16,12 +16,10 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
-import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, SeekBar.OnSeekBarChangeListener{
@@ -35,8 +33,6 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	private SeekBar handSeekBar;
 	private int startingHandCard;
 
-	boolean moveMade = false;
-	boolean currentTurn = false;
 	private ArrayList<Card> myHand;
 	private Card topCard;
 
@@ -70,40 +66,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
-		if(gameState.getTurn() == playerNum)
-		{
-			moveMade = false;
-			currentTurn = true;
-		}
-
-
-
-		handView.setCurrentPlayerId(playerNum);
-
-		ArrayList<Integer> displayOrder = new ArrayList<>();
-		ArrayList<Integer> tempOrder = new ArrayList<>();
-		boolean playerFound = false;
-		for(int i=0; i < gameState.getHandsSize(); i++) {
-			if(i != playerNum && !playerFound)
-			{
-				tempOrder.add(i);
-			}
-			else
-			{
-				displayOrder.add(i);
-				playerFound = true;
-			}
-		}
-		displayOrder.addAll(tempOrder);
-
-		tableView.setDisplayOrder(displayOrder);
 		// Set string to display and size texts for all player hands
-		String p0HandSize = gameState.fetchPlayerHand(displayOrder.get(0)).size() + " Cards";
-		String p1HandSize = gameState.fetchPlayerHand(displayOrder.get(1)).size() + " Cards";
-		String p2HandSize = gameState.fetchPlayerHand(displayOrder.get(2)).size() + " Cards";
-		String p3HandSize = gameState.fetchPlayerHand(displayOrder.get(3)).size() + " Cards";
+		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
+		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
+		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
+		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
-		tableView.setPlayerNameText(allPlayerNames[displayOrder.get(0)], allPlayerNames[displayOrder.get(1)], allPlayerNames[displayOrder.get(2)], allPlayerNames[displayOrder.get(3)]);
+		tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
 		tableView.setActionText(gameState.getLatestAction());
 
 
@@ -120,17 +89,19 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
 
-		if (motionEvent.getAction() == motionEvent.ACTION_UP || !currentTurn) {
+		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
 			return false;
 		}
 
 		if (view instanceof UnoTableView) {
 
+			Log.i("color", tableView.getTappedColor(
+					motionEvent.getX(), motionEvent.getY()).name());
+
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			// if the "fake" draw card was touched, send the drawCardAction
-			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())
-				&& !tableView.getWildCardSelection()) {
+			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				action = new DrawCardAction(this);
 				game.sendAction(action);
@@ -140,56 +111,23 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				Card card = myHand.get(selectedIndex);
 
-				// don't place if wild: instead bring up color prompt
-				if(!moveMade) {
-					if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
-						tableView.setTempWildFace(card.getFace());
-						tableView.setWildCardSelection(true);
-						handView.setWildCardSelection(true);
-						tableView.invalidate();
-						handView.invalidate();
-						return true;
-					}
+				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+					tableView.setWildCardSelection(true);
+					tableView.invalidate();
+				//	return true;
 				}
 
-				action = new PlaceCardAction(this, card, selectedIndex);
+				action = new PlaceCardAction(this, card);
 				game.sendAction(action);
-				moveMade = true;
-				currentTurn = false;
-				tableView.invalidate();
-				handView.invalidate();
-
-
-			// lastly, check if color wheel is tapped (black means out of bounds)
-			} else if (tableView.getTappedColor(
-				motionEvent.getX(), motionEvent.getY()) != CardColor.BLACK
-				&& tableView.getWildCardSelection()) {
-
-				CardColor color = tableView.getTappedColor(motionEvent.getX(), motionEvent.getY());
-				Card card = myHand.get(selectedIndex);
-				card.setColor(color);
-
-				action = new PlaceCardAction(this, card, selectedIndex);
-				game.sendAction(action);
-				currentTurn = false;
-				moveMade = true;
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
 
-				tableView.setWildCardSelection(false);
-				handView.setWildCardSelection(false);
-				tableView.invalidate();
-				handView.invalidate();
 			}
 
 			return true;
 		}
 
 		if (view instanceof UnoHandView) {
-
-			if (handView.getWildCardSelection()) {
-				return false;
-			}
 
 			// check each card in hand to see if it was tapped.
 			// if so, set it as selected

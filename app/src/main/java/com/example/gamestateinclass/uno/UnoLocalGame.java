@@ -130,9 +130,8 @@ public class UnoLocalGame extends LocalGame {
 
 			PlaceCardAction placeAction = (PlaceCardAction) action;
 			Card card = placeAction.getCard();
-			int cardIndex = placeAction.getCardIndex();
 
-			if(!placeCard(card, cardIndex)) {
+			if(!placeCard(card)) {
 				return false;
 			}
 
@@ -164,7 +163,7 @@ public class UnoLocalGame extends LocalGame {
 
 
 	// checks card validity and also deals with logic of special faces
-	protected boolean placeCard(Card card, int cardIndex) {
+	protected boolean placeCard(Card card) {
 
 		UnoState state = (UnoState) super.state;
 
@@ -182,11 +181,7 @@ public class UnoLocalGame extends LocalGame {
 
 		Face face = card.getFace();
 
-		if (card.getFace().equals(Face.WILD) || card.getFace().equals(Face.DRAWFOUR)) {
-			state.takeCardFromHandByIndex(turn, cardIndex);
-		} else {
-			state.takeCardFromHand(turn, card);
-		}
+		state.takeCardFromHand(turn, card);
 
 		// change direction, turn and card color according to card's face
 		switch (face) {
@@ -224,12 +219,14 @@ public class UnoLocalGame extends LocalGame {
 
 				drawCard(4);
 
-				// color is set in UnoPlayer1
+				// can change this based on demonstration
+				card.setColor(CardColor.BLUE);
 				break;
 
 			case WILD:
 
-				// color is set in UnoPlayer1
+				// same thing here
+				card.setColor(CardColor.BLUE);
 				break;
 		}
 

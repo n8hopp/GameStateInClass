@@ -20,7 +20,7 @@ public class UnoStateTest extends TestCase {
     public void testInitializePlayerHands() {
         // Each player should start with 7 cards
         UnoState testState = new UnoState();
-        for (ArrayList<Card> hands : testState.fetchAllPlayerHands()) {
+        for (ArrayList<Card> hands : testState.getAllPlayerHands()) {
             assertNotEquals(0, hands.size());
             assertNotEquals(6,hands.size());
             assertEquals(7, hands.size());

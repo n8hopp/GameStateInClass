@@ -53,7 +53,7 @@ public class UnoLocalGameTest extends TestCase {
         // Top card of the seeded discard deck is always red
         ArrayList<Card> Hand = testState.fetchPlayerHand(0);
         Card testCard = Hand.get(0);
-        testGame.placeCard(testCard, 0);
+        testGame.placeCard(Hand.get(0));
         // Places it's red card on deck
         Card resultCard = testState.getTopCard();
         assertEquals(testCard, resultCard);
@@ -67,7 +67,7 @@ public class UnoLocalGameTest extends TestCase {
         int playDirectionBefore = testState.getDirection().value;
 
         Card reverseCard = new Card(CardColor.BLUE, Face.REVERSE);
-        testGame.placeCard(reverseCard, 0);
+        testGame.placeCard(reverseCard);
 
         int playDirectionAfter = testState.getDirection().value;
 
@@ -76,18 +76,18 @@ public class UnoLocalGameTest extends TestCase {
     }
 
     @Test
-    public void testSkipCard() { //Nate
+    public void testSkipCard() {
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
         int turnBefore = testState.getTurn();
 
         Card skipCard = new Card(CardColor.RED, Face.SKIP);
-        testGame.placeCard(skipCard, 0);
+        testGame.placeCard(skipCard);
 
         int turnAfter = testState.getTurn();
 
-        assertEquals(turnBefore, turnAfter);
+        assertEquals(turnBefore + 1, turnAfter);
         assertNotEquals(turnBefore, turnAfter);
     }
 
