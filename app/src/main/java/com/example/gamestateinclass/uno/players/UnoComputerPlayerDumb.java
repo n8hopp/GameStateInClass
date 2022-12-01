@@ -60,15 +60,17 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				// Try to find a viable card in computer hand
 				ArrayList<Card> hand = state.fetchPlayerHand(playerNum);
 				Card toPlace = null;
+				int toPlaceIndex = 0;
 				for ( Card c : hand) {
 					if ( checkCardValidity(c, state)){
 						toPlace = c;
+						toPlaceIndex++;
 						break;
 					}
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
-					action = new PlaceCardAction(this, toPlace);
+					action = new PlaceCardAction(this, toPlace, toPlaceIndex);
 					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
 				else {

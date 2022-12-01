@@ -120,7 +120,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 					return true;
 				}
 
-				action = new PlaceCardAction(this, card);
+				action = new PlaceCardAction(this, card, selectedIndex);
 				game.sendAction(action);
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
@@ -137,7 +137,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				Card card = myHand.get(selectedIndex);
 				card.setColor(color);
 
-				action = new PlaceCardAction(this, card);
+				action = new PlaceCardAction(this, card, selectedIndex);
 				game.sendAction(action);
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
