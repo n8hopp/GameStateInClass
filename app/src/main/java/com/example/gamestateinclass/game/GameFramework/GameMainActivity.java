@@ -18,9 +18,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TableLayout;
@@ -155,6 +157,7 @@ public abstract class GameMainActivity extends Activity implements
      *
      * "main" for the game framework
      */
+
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -514,7 +517,6 @@ public abstract class GameMainActivity extends Activity implements
         ipText.setText(ipText.getText()+ipCode+" ("+ipAddress+") ");
 
     }// initStarterGui
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.game_main, menu);

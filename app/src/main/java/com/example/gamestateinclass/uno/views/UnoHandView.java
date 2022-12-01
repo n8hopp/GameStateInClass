@@ -25,6 +25,8 @@ public class UnoHandView extends FlashSurfaceView {
 
     protected UnoState state;
 
+    int currentPlayerId;
+
     Paint redPaint = new Paint();
     Paint bluePaint = new Paint();
     Paint greenPaint = new Paint();
@@ -90,7 +92,7 @@ public class UnoHandView extends FlashSurfaceView {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), backgroundPaint);
 
         if (state != null) {
-            ArrayList<Card> currentHand = state.fetchPlayerHand(0); // TODO: change to user id of current player
+            ArrayList<Card> currentHand = state.fetchPlayerHand(currentPlayerId);
             // The loop iterates through based on the scroll bar, however the visual card offset
             // still needs to always be zero when drawing
             int offset = 0;
@@ -137,5 +139,8 @@ public class UnoHandView extends FlashSurfaceView {
         return wildCardSelection;
     }
 
+
+    public void setCurrentPlayerId(int id) { currentPlayerId = id;}
+    public int getCurrentPlayerId() { return currentPlayerId;}
 }
 
