@@ -219,14 +219,12 @@ public class UnoLocalGame extends LocalGame {
 
 				drawCard(4);
 
-				// can change this based on demonstration
-				card.setColor(CardColor.BLUE);
+				// color is set in UnoPlayer1
 				break;
 
 			case WILD:
 
-				// same thing here
-				card.setColor(CardColor.BLUE);
+				// color is set in UnoPlayer1
 				break;
 		}
 

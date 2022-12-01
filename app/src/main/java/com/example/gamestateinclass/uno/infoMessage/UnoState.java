@@ -98,7 +98,7 @@ public class UnoState extends GameState implements Serializable {
     // shuffleDeck simply calls Collections.shuffle on the Arraylist of cards passed into it.
     // This randomizes it with a random seed.
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1235));
+        Collections.shuffle(deck, new Random(1243));
 //        Collections.shuffle(deck, new Random());
     }
 
@@ -269,6 +269,10 @@ public class UnoState extends GameState implements Serializable {
 
             if (c.getFace().equals(card.getFace()) &&
                     c.getCardColor().equals(card.getCardColor())) {
+
+            if ((c.getFace().equals(card.getFace())
+                    && c.getCardColor().equals(card.getCardColor()))
+                    || c.getCardColor().equals(CardColor.BLACK)) {
 
                 cardTaken = playerHand.get(i);
                 playerHand.remove(i);
