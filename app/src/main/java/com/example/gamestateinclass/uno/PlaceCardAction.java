@@ -8,7 +8,7 @@ public class PlaceCardAction extends GameAction {
     // Tag for logging
     private static final String TAG = "PlaceCardAction";
 
-    // Instance Variables: the selected row and column
+    // Instance Variables: the card being placed
     private Card card;
 
     public PlaceCardAction(GamePlayer player, Card _card) {
@@ -18,6 +18,7 @@ public class PlaceCardAction extends GameAction {
         card = _card;
     }
 
+    // return card from this action
     public Card getCard() {
         return card;
     }

@@ -52,6 +52,7 @@ public class UnoState extends GameState implements Serializable {
         shuffleDeck(drawDeck);
         initializePlayerHands();
         discardDeck = creatediscardDeckDeck(drawDeck);
+        latestAction = "Welcome! Place or draw a card to begin.";
     }
 
     // Copy Constructor makes a deep copy of each individual card in our draw and discard deck, as well as
@@ -61,12 +62,13 @@ public class UnoState extends GameState implements Serializable {
     {
         turn = previous.turn;
         direction = previous.direction;
+        latestAction = previous.latestAction;
         drawDeck = new ArrayList<Card>();
-        for(Card c : previous.drawDeck)
+        for(Card c : previous.drawDeck) // for each card in the drawDeck we're copying
         {
             Face face = c.getFace();
             CardColor color = c.getCardColor();
-            drawDeck.add(new Card(color, face));
+            drawDeck.add(new Card(color, face)); // deep copy
         }
         discardDeck = new ArrayList<Card>();
         for(Card c : previous.discardDeck)
@@ -98,8 +100,8 @@ public class UnoState extends GameState implements Serializable {
     // shuffleDeck simply calls Collections.shuffle on the Arraylist of cards passed into it.
     // This randomizes it with a random seed.
     private void shuffleDeck(ArrayList<Card> deck) {
-//        Collections.shuffle(deck, new Random(1234));
-        Collections.shuffle(deck, new Random());
+        Collections.shuffle(deck, new Random(1243));
+//        Collections.shuffle(deck, new Random());
     }
 
     // This just creates a new deck from the top card of the draw deck and returns it.
@@ -145,7 +147,7 @@ public class UnoState extends GameState implements Serializable {
     // TODO: Remove Swapcards from State and put in LocalGame
     private void swapCards(ArrayList<Card> fromStack, Card from, ArrayList<Card> to)
     {
-        to.add(from);
+//        to.add(from);
         fromStack.remove(from);
     }
 
@@ -257,7 +259,7 @@ public class UnoState extends GameState implements Serializable {
             refillDrawDeck();
         }
 
-        Log.i("draw deck size: ", drawDeck.size()+"");
+        //Log.i("draw deck size: ", drawDeck.size()+"");
 
         return cardsTaken;
 
@@ -275,8 +277,9 @@ public class UnoState extends GameState implements Serializable {
         for (int i = 0; i < playerHand.size(); i++) {
             Card c = playerHand.get(i);
 
-            if (c.getFace().equals(card.getFace()) &&
-                c.getCardColor().equals(card.getCardColor())) {
+            if ((c.getFace().equals(card.getFace())
+                    && c.getCardColor().equals(card.getCardColor()))
+                    || card.getCardColor().equals(CardColor.BLACK)) {
 
                 cardTaken = playerHand.get(i);
                 playerHand.remove(i);

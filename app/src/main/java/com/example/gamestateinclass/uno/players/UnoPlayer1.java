@@ -16,6 +16,8 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
+import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
@@ -54,8 +56,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 	@Override
 	public void receiveInfo(GameInfo info) {
+		// Ensures inability for a player to do actions when it isn't it's turn
 		if (!(info instanceof UnoState)) {
-			flash(0xFFFF0000, 200);
 			return;
 		}
 
@@ -65,12 +67,15 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
-		// Set string to display and size texts
+		// Set string to display and size texts for all player hands
 		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
 		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
 		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
+		tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+		tableView.setActionText(gameState.getLatestAction());
+
 
 		tableView.invalidate();
 		handView.invalidate();
@@ -85,28 +90,75 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
 
+		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
+			return false;
+		}
+
 		if (view instanceof UnoTableView) {
+
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
-			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+			// if the "fake" draw card was touched, send the drawCardAction
+			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())
+				&& !tableView.getWildCardSelection()) {
 
 				action = new DrawCardAction(this);
 				game.sendAction(action);
 
+			// otherwise, see if topCard was touched, if so place the currently selected card in hand
 			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				Card card = myHand.get(selectedIndex);
+
+				// don't place if wild: instead bring up color prompt
+				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+					tableView.setTempWildFace(card.getFace());
+					tableView.setWildCardSelection(true);
+					handView.setWildCardSelection(true);
+					tableView.invalidate();
+					handView.invalidate();
+					return true;
+				}
+
+				action = new PlaceCardAction(this, card);
+				game.sendAction(action);
+				selectedIndex = 0;
+				handView.setSelectedIndex(0);
+				tableView.invalidate();
+				handView.invalidate();
+
+
+			// lastly, check if color wheel is tapped (black means out of bounds)
+			} else if (tableView.getTappedColor(
+				motionEvent.getX(), motionEvent.getY()) != CardColor.BLACK
+				&& tableView.getWildCardSelection()) {
+
+				CardColor color = tableView.getTappedColor(motionEvent.getX(), motionEvent.getY());
+				Card card = myHand.get(selectedIndex);
+				card.setColor(color);
+
 				action = new PlaceCardAction(this, card);
 				game.sendAction(action);
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
 
+				tableView.setWildCardSelection(false);
+				handView.setWildCardSelection(false);
+				tableView.invalidate();
+				handView.invalidate();
 			}
 
 			return true;
 		}
 
 		if (view instanceof UnoHandView) {
+
+			if (handView.getWildCardSelection()) {
+				return false;
+			}
+
+			// check each card in hand to see if it was tapped.
+			// if so, set it as selected
 			for(int i=0; i < myHand.size(); i++)
 			{
 				Card c = myHand.get(i);
@@ -136,7 +188,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView = (UnoTableView) activity.findViewById(R.id.tableView);
 		handView = (UnoHandView) activity.findViewById(R.id.handView);
 
-		actionText = activity.findViewById(R.id.lobbyInfoText);
+		// actionText = activity.findViewById(R.id.lobbyInfoText);
 		handSeekBar = activity.findViewById(R.id.scrollHandSeekBar);
 
 		// Sets a Listener for views and buttons users can touch
@@ -144,14 +196,21 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		handView.setOnTouchListener(this);
 		handSeekBar.setOnSeekBarChangeListener(this);
 
+		//tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+
+
+
 	}
 
 	// Set hand view based on progress bar
+	// Gains ability for player to access cards not in initial view
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-		handSeekBar.setMax(myHand.size()-1);
-		handView.setStartingCard(i);
-		handView.invalidate();
+		if (myHand.size() > 4) {
+			handSeekBar.setMax(myHand.size() - 4);
+			handView.setStartingCard(i);
+			handView.invalidate();
+		}
 	}
 
 	@Override

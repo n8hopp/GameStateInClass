@@ -31,26 +31,28 @@ public class UnoMainActivity extends GameMainActivity {
         playerTypes.add(new GamePlayerType("Local Human Player") {
             @Override
             public GamePlayer createPlayer(String name) {
-                return new UnoPlayer1(name, R.layout.human_player_1);
+                return new UnoPlayer1(name, R.layout.uno_layout);
             }
 
         });
 
-        // dumb computer player 1
+        // Ability to have and choose to play against a smart AI will be implemented soon
+
+        // Dumb computer player 1
         playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
         });
 
-        // dumb computer player 2
+        // Dumb computer player 2
         playerTypes.add(new GamePlayerType("Computer Player 2 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
         });
 
-        // dumb computer player 3
+        // Dumb computer player 3
         playerTypes.add(new GamePlayerType("Computer Player 3 (dumb)") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
@@ -65,7 +67,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 3", 3); // dumb computer player
 
         game = defaultConfig;
-        return defaultConfig;
+        return game;
     }
 
     /**
@@ -110,6 +112,5 @@ public class UnoMainActivity extends GameMainActivity {
         Logger.log(TAG, "Loading: " + gameName);
         return (GameState) new UnoState((UnoState) Saving.readFromFile(appName, this.getApplicationContext()));
     }
-
 
 }

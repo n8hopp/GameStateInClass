@@ -1,22 +1,25 @@
 package com.example.gamestateinclass.uno;
 
-import com.example.gamestateinclass.uno.infoMessage.UnoState;
-import android.graphics.Paint;
-
 import junit.framework.TestCase;
+
+import org.junit.Test;
+
 public class UnoLocalGameTest extends TestCase {
 
+    @Test
     public void testCheckCardValidity() {
-        UnoState state = new UnoState();
-
-        assertEquals(4, 2+2);
+        UnoLocalGame testGame = new UnoLocalGame();
+        assertEquals(4,2+2);
     }
 
-    public void testCheckIfGameOver() {
 
-    }
-
+    @Test
     public void testDrawCard() {
+
+    }
+
+    @Test
+    public void testPlaceCard() {
 
     }
 }

@@ -11,17 +11,19 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * This is Clei's attempt at trying to implement a really dumb computer player.
- * Here are the goals that Clei will be trying to achieve.
+ * This is Clei and friends attempt at trying to implement a really dumb computer player.
+ * Here are the goals that Clei and friends will be trying to achieve.
  *
- * 50% chance of picking drawing a card when its the computer player's turn
- *
+ * 20% chance of picking drawing a card when its the computer player's turn
+ * 80% of finding a first playable card in player hand
+ * If no playable card in in hand, draw a card from the draw deck
  */
 
 public class UnoComputerPlayerDumb extends GameComputerPlayer {
@@ -38,15 +40,13 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 	@Override
 	protected void receiveInfo(GameInfo info) {
-
-
 		UnoState state = ((UnoState) info);
 
 		if (state.getTurn() == playerNum) {
 
 			Logger.log("A Dumb Computer", "My turn!");
-
-			sleep(1.5);
+			// Allows a delay between actions so actions are visible to player
+			sleep(3);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -95,6 +95,13 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		{
 			return false;
 		}
+
+		// This accounts for the instance that the first card of the game turned
+		// over is black. Allows the player to play anything
+		if (discardDeckTop.getCardColor() == CardColor.BLACK){
+			return true;
+		}
+
 		if (discardDeckTop.getFace() == card.getFace() ||
 				discardDeckTop.getCardColor() == card.getCardColor()) {
 			return true;

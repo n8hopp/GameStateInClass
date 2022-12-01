@@ -1,7 +1,6 @@
 package com.example.gamestateinclass.uno.objects;
 
-public enum Face //
-{
+public enum Face {
 	ZERO(0),
 	ONE(1),
 	TWO(2),

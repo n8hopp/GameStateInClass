@@ -25,7 +25,7 @@ public class Card {
 
 	public void setColor(CardColor c) {
 		color = c;
-		render.setPaintfromEnum(c);
+		 render.setPaintfromEnum(c);
 	}
 
 	public void setFace(Face _face) {
