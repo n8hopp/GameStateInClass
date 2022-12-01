@@ -58,6 +58,7 @@ public class UnoTableView extends FlashSurfaceView {
 
 	private String actionText;
 	private final Paint actionPaint;
+	private final Paint actionTextPaint;
 
 	private Card fakeDrawCard;
 
@@ -91,6 +92,7 @@ public class UnoTableView extends FlashSurfaceView {
 		yellowPaint = new Paint();
 		testCard = new Card();
 		actionPaint = new Paint();
+		actionTextPaint = new Paint();
 		arrowPos = 0;
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
 		textPaint.setARGB(255, 255, 255, 255); // Text color white
@@ -108,8 +110,7 @@ public class UnoTableView extends FlashSurfaceView {
 		cardPaint.setTextAlign(Paint.Align.CENTER);
 		textPaint.setTextAlign(Paint.Align.CENTER);
 
-		textPaint2.setTextSize(100); // Only text this paint uses currently is the number on top of face up card
-		textPaint2.setFakeBoldText(true);
+
 		textPaint.setTextSize(45);
 
 		blackPaint.setColor(Color.BLACK);
@@ -130,6 +131,10 @@ public class UnoTableView extends FlashSurfaceView {
 
 		actionText = "test";
 		actionPaint.setARGB(130, 31, 61, 12);
+		actionTextPaint.setTextSize(50);
+		actionTextPaint.setFakeBoldText(true);
+		actionTextPaint.setARGB(255, 255, 255, 255); // Text color white
+		actionTextPaint.setTextAlign(Paint.Align.CENTER);
 
 		// a "fake" card that is acts as a button for drawing
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
@@ -188,7 +193,7 @@ public class UnoTableView extends FlashSurfaceView {
 
 		// Draw a small "canvas" for action text to be drawn on
 		canvas.drawRect(40, (getHeight()/4)*3-50, (getWidth()-40), (getHeight()/4)*3+30, actionPaint);
-		canvas.drawText(actionText, getWidth()/2,  (getHeight()/4)*3, textPaint);
+		canvas.drawText(actionText, getWidth()/2,  (getHeight()/4)*3+10, actionTextPaint);
 
 		if (state != null) {
 			if (!wildCardSelection) {

@@ -98,7 +98,7 @@ public class UnoState extends GameState implements Serializable {
     // shuffleDeck simply calls Collections.shuffle on the Arraylist of cards passed into it.
     // This randomizes it with a random seed.
     private void shuffleDeck(ArrayList<Card> deck) {
-        Collections.shuffle(deck, new Random(1243));
+        Collections.shuffle(deck, new Random());
 //        Collections.shuffle(deck, new Random());
     }
 
