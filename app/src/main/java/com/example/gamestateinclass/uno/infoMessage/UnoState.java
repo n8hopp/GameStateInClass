@@ -269,9 +269,6 @@ public class UnoState extends GameState implements Serializable {
 
             if (c.getFace().equals(card.getFace()) &&
                     c.getCardColor().equals(card.getCardColor())) {
-
-            if ((c.getFace().equals(card.getFace())
-                && c.getCardColor().equals(card.getCardColor()))) {
 //                || (card.getCardColor().equals(CardColor.BLACK)
 //                && c.getFace().equals(card.getFace()))) {
 
@@ -284,6 +281,7 @@ public class UnoState extends GameState implements Serializable {
         playerHand.remove(card);
 
         return cardTaken;
+
     }
 
 
