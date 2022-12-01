@@ -17,6 +17,9 @@ import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.objects.RenderCard;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class UnoTableView extends FlashSurfaceView {
 	/* We can "hard-code" the "hands" of each 3 opponents which will be a face down
 		Uno card art. Each of those players will need a dynamic textView for their
@@ -39,7 +42,7 @@ public class UnoTableView extends FlashSurfaceView {
 	private int arrowDirection;
 
 	protected UnoState state;
-
+	private ArrayList<Integer> displayOrder;
 
 	//	For the sake of these text strings, the human player is p0, and other player
 	//	numbers count up in order, clockwise
@@ -61,6 +64,7 @@ public class UnoTableView extends FlashSurfaceView {
 	public int arrowPos; // 0: human player. Increases clockwise
 
 	public boolean wildCardSelection; // whether or not a wild card color is being selected
+	public Face tempWildFace; // this is the face to be drawn as the top card when a color is being selected
 	public int colorRadius; // radius of color selection wheel
 
 	public int colorWheelOffsetX;
@@ -131,6 +135,8 @@ public class UnoTableView extends FlashSurfaceView {
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
 
 		wildCardSelection = false;
+		tempWildFace = null;
+
 		colorRadius = 100;
 		colorWheelOffsetX = 425;
 		colorWheelOffsetY = 300;
@@ -185,11 +191,18 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawText(actionText, getWidth()/2,  (getHeight()/4)*3, textPaint);
 
 		if (state != null) {
-			RenderCard topCardRender = state.getTopCard().getRender();
-			topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
-			topCardRender.draw(canvas);
+			if (!wildCardSelection) {
+				RenderCard topCardRender = state.getTopCard().getRender();
+				topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
+				topCardRender.draw(canvas);
+			} else {
+				Card wildTopCard = new Card(CardColor.BLACK, tempWildFace);
+				RenderCard wildTopCardRender = wildTopCard.getRender();
+				wildTopCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
+				wildTopCardRender.draw(canvas);
+			}
 
-			arrowPos = state.getTurn();
+			arrowPos = displayOrder.indexOf(state.getTurn());
 			arrowDirection = state.getDirection().value;
 		}
 
@@ -392,6 +405,14 @@ public class UnoTableView extends FlashSurfaceView {
 		wildCardSelection = bool;
 	}
 
+	public boolean getWildCardSelection() {
+		return wildCardSelection;
+	}
+
+	public void setTempWildFace(Face face) {
+		tempWildFace = face;
+	}
+
 	public void setPlayerNameText(String _p0name, String _p1name, String _p2name, String _p3name){
 		p0name = _p0name;
 		p1name = _p1name;
@@ -406,4 +427,8 @@ public class UnoTableView extends FlashSurfaceView {
 	public UnoState getState(){
 		return state;
 	}
+
+	public void setDisplayOrder(ArrayList<Integer> display) { displayOrder = display;}
+
+	public ArrayList<Integer> getPlayerId() { return displayOrder;}
 }
