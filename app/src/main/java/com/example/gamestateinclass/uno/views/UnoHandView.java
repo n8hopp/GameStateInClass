@@ -97,6 +97,7 @@ public class UnoHandView extends FlashSurfaceView {
             for (int i = startingCard; i < currentHand.size(); i++) {
 
                 if (i == selectedIndex && wildCardSelection) {
+                    offset++;
                     continue;
                 }
 

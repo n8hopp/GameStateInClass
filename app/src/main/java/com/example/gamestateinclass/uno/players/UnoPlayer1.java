@@ -110,6 +110,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				Card card = myHand.get(selectedIndex);
 
+				// don't place if wild: instead bring up color prompt
 				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
 					tableView.setTempWildFace(card.getFace());
 					tableView.setWildCardSelection(true);
@@ -123,6 +124,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				game.sendAction(action);
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
+				tableView.invalidate();
+				handView.invalidate();
 
 			// lastly, check if color wheel is tapped (black means out of bounds)
 			} else if (tableView.getTappedColor(
