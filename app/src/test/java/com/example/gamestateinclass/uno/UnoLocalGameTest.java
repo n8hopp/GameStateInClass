@@ -14,16 +14,20 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class UnoLocalGameTest extends TestCase {
-
+    // In our seeded randomization, the first card turned over at the beginning
+    // is a red reverse. The human player's cards from 0-6 in order are:
+    // red skip, red 8, blue 8, green 3, green reverse, blue 2, red +2
     @Test
     public void testCheckCardValidity() {
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
-        // Top card of the seeded discard deck is always red
         ArrayList<Card> Hand = testState.fetchPlayerHand(0);
+        Card wildTest = new Card(CardColor.BLACK, Face.WILD);
 
         assertTrue(testGame.checkCardValidity(Hand.get(0)));
         assertFalse(testGame.checkCardValidity(Hand.get(2)));
+        assertTrue(testGame.checkCardValidity(Hand.get(4)));
+        assertTrue(testGame.checkCardValidity(wildTest));
     }
 
 

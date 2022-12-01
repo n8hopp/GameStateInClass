@@ -13,7 +13,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class UnoStateTest extends TestCase {
-
+    // In our seeded randomization, the first card turned over at the beginning
+    // is a red reverse. The human player's cards from 0-6 in order are:
+    // red skip, red 8, blue 8, green 3, green reverse, blue 2, red +2
     @Test
     public void testInitializePlayerHands() {
         // Each player should start with 7 cards
