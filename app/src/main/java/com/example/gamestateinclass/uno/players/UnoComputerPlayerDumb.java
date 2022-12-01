@@ -14,6 +14,7 @@ import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -70,6 +71,19 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
+					if (toPlace.getCardColor().equals(CardColor.BLACK)) {
+						ArrayList<CardColor> colors = new ArrayList<>();
+						colors.add(CardColor.RED);
+						colors.add(CardColor.BLUE);
+						colors.add(CardColor.GREEN);
+						colors.add(CardColor.YELLOW);
+
+						int randomIndex = (int) Math.random() * 4;
+						CardColor randomColor = colors.get(randomIndex);
+
+						toPlace.setColor(randomColor);
+					}
+
 					action = new PlaceCardAction(this, toPlace, toPlaceIndex);
 					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
