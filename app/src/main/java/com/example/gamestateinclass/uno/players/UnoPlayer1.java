@@ -114,7 +114,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
 					tableView.setWildCardSelection(true);
 					tableView.invalidate();
-					return true;
+				//	return true;
 				}
 
 				action = new PlaceCardAction(this, card);
