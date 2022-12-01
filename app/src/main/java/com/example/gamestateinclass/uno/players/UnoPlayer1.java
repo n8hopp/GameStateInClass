@@ -21,6 +21,7 @@ import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, SeekBar.OnSeekBarChangeListener{
@@ -67,13 +68,33 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setState(gameState);
 		handView.setState(gameState);
 
+
+		handView.setCurrentPlayerId(playerNum);
+
+		ArrayList<Integer> displayOrder = new ArrayList<>();
+		ArrayList<Integer> tempOrder = new ArrayList<>();
+		boolean playerFound = false;
+		for(int i=0; i < gameState.getHandsSize(); i++) {
+			if(i != playerNum && !playerFound)
+			{
+				tempOrder.add(i);
+			}
+			else
+			{
+				displayOrder.add(i);
+				playerFound = true;
+			}
+		}
+		displayOrder.addAll(tempOrder);
+
+		tableView.setDisplayOrder(displayOrder);
 		// Set string to display and size texts for all player hands
-		String p0HandSize = gameState.fetchPlayerHand(0).size() + " Cards";
-		String p1HandSize = gameState.fetchPlayerHand(1).size() + " Cards";
-		String p2HandSize = gameState.fetchPlayerHand(2).size() + " Cards";
-		String p3HandSize = gameState.fetchPlayerHand(3).size() + " Cards";
+		String p0HandSize = gameState.fetchPlayerHand(displayOrder.get(0)).size() + " Cards";
+		String p1HandSize = gameState.fetchPlayerHand(displayOrder.get(1)).size() + " Cards";
+		String p2HandSize = gameState.fetchPlayerHand(displayOrder.get(2)).size() + " Cards";
+		String p3HandSize = gameState.fetchPlayerHand(displayOrder.get(3)).size() + " Cards";
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
-		tableView.setPlayerNameText(allPlayerNames[0], allPlayerNames[1], allPlayerNames[2], allPlayerNames[3]);
+		tableView.setPlayerNameText(allPlayerNames[displayOrder.get(0)], allPlayerNames[displayOrder.get(1)], allPlayerNames[displayOrder.get(2)], allPlayerNames[displayOrder.get(3)]);
 		tableView.setActionText(gameState.getLatestAction());
 
 
@@ -126,6 +147,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				handView.setSelectedIndex(0);
 				tableView.invalidate();
 				handView.invalidate();
+
 
 			// lastly, check if color wheel is tapped (black means out of bounds)
 			} else if (tableView.getTappedColor(
