@@ -78,7 +78,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 						colors.add(CardColor.GREEN);
 						colors.add(CardColor.YELLOW);
 
-						int randomIndex = (int) Math.random() * 4;
+						int randomIndex = (int) (Math.random() * 4) ;
 						CardColor randomColor = colors.get(randomIndex);
 
 						toPlace.setColor(randomColor);
