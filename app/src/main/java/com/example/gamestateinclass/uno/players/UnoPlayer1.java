@@ -100,7 +100,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 			// if the "fake" draw card was touched, send the drawCardAction
 			if (fakeDrawCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())
-				&& tableView.getWildCardSelection()) {
+				&& !tableView.getWildCardSelection()) {
 
 				action = new DrawCardAction(this);
 				game.sendAction(action);
