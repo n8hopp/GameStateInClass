@@ -35,6 +35,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	private SeekBar handSeekBar;
 	private int startingHandCard;
 
+	boolean moveMade = false;
+	boolean currentTurn = false;
 	private ArrayList<Card> myHand;
 	private Card topCard;
 
@@ -67,6 +69,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		// Send state info to the views
 		tableView.setState(gameState);
 		handView.setState(gameState);
+
+		if(gameState.getTurn() == playerNum)
+		{
+			moveMade = false;
+			currentTurn = true;
+		}
+
 
 
 		handView.setCurrentPlayerId(playerNum);
@@ -111,7 +120,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
 
-		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
+		if (motionEvent.getAction() == motionEvent.ACTION_UP || !currentTurn) {
 			return false;
 		}
 
@@ -132,19 +141,21 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				Card card = myHand.get(selectedIndex);
 
 				// don't place if wild: instead bring up color prompt
-				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
-					tableView.setTempWildFace(card.getFace());
-					tableView.setWildCardSelection(true);
-					handView.setWildCardSelection(true);
-					tableView.invalidate();
-					handView.invalidate();
-					return true;
+				if(!moveMade) {
+					if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+						tableView.setTempWildFace(card.getFace());
+						tableView.setWildCardSelection(true);
+						handView.setWildCardSelection(true);
+						tableView.invalidate();
+						handView.invalidate();
+						return true;
+					}
 				}
 
 				action = new PlaceCardAction(this, card, selectedIndex);
 				game.sendAction(action);
-				selectedIndex = 0;
-				handView.setSelectedIndex(0);
+				moveMade = true;
+				currentTurn = false;
 				tableView.invalidate();
 				handView.invalidate();
 
@@ -160,6 +171,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				action = new PlaceCardAction(this, card, selectedIndex);
 				game.sendAction(action);
+				currentTurn = false;
+				moveMade = true;
 				selectedIndex = 0;
 				handView.setSelectedIndex(0);
 
