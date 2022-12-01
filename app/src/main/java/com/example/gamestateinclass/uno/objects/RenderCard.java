@@ -1,8 +1,10 @@
 package com.example.gamestateinclass.uno.objects;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 
 public class RenderCard {
 	private float x,y;
@@ -12,6 +14,8 @@ public class RenderCard {
 	private Paint strokePaint;
 	private Paint mainLabelPaint;
 	private Paint miniLabelPaint;
+
+	private Drawable reverse, drawFour, drawTwo, skip;
 	private Face face;
 	private CardColor cardColor;
 
@@ -116,23 +120,51 @@ public class RenderCard {
 	public void drawCardNumber(Canvas canvas) {
 		float mainTextY = y - (mainLabelPaint.descent() + mainLabelPaint.ascent()) / 2;
 		float miniTextY = y - (miniLabelPaint.descent() + miniLabelPaint.ascent()) / 2;
+		int leftBound = (int)(x-80);
+		int topBound = (int)(y-80);
+		int rightBound = (int)(x+80);
+		int bottomBound = (int)(y+80);
+		int miniTopLeftBound = (int)(x-width*0.35-20);
+		int miniTopTopBound = (int)(y-length*0.35-20);
+		int miniTopRightBound = (int)(x-width*0.35+20);
+		int miniTopBottomBound = (int)(y-length*0.35+20);
 
+		int miniBottomLeftBound = (int)(x+width*0.35-20);
+		int miniBottomTopBound = (int)(y+length*0.35-20);
+		int miniBottomRightBound = (int)(x+width*0.35+20);
+		int miniBottomBottomBound = (int)(y+length*0.35+20);
 		switch(face) {
 
 			case SKIP:
-				canvas.drawText("SKIP", x, mainTextY, mainLabelPaint);
+				skip.setBounds(leftBound, topBound, rightBound, bottomBound);
+				skip.draw(canvas);
+				skip.setBounds(miniTopLeftBound, miniTopTopBound, miniTopRightBound, miniTopBottomBound);
+				skip.draw(canvas);
+				skip.setBounds(miniBottomLeftBound, miniBottomTopBound, miniBottomRightBound, miniBottomBottomBound);
+				skip.draw(canvas);
 				break;
 			case DRAWTWO:
-				canvas.drawText("+2", x, mainTextY, mainLabelPaint);
+				drawTwo.setBounds(leftBound, topBound, rightBound, bottomBound);
+				drawTwo.draw(canvas);
+				canvas.drawText("+2", (float)(x-width*0.35), (float)(miniTextY-length*0.35), miniLabelPaint);
+				canvas.drawText("+2", (float)(x+width*0.35), (float)(miniTextY+length*0.35), miniLabelPaint);
 				break;
 			case DRAWFOUR:
-				canvas.drawText("+4", x, mainTextY, mainLabelPaint);
+				drawFour.setBounds(leftBound, topBound, rightBound, bottomBound);
+				drawFour.draw(canvas);
+				canvas.drawText("+4", (float)(x-width*0.35), (float)(miniTextY-length*0.35), miniLabelPaint);
+				canvas.drawText("+4", (float)(x+width*0.35), (float)(miniTextY+length*0.35), miniLabelPaint);
 				break;
 			case WILD:
 				canvas.drawText("WILD", x, mainTextY, mainLabelPaint);
 				break;
 			case REVERSE:
-				canvas.drawText("REV", x, mainTextY, mainLabelPaint);
+				reverse.setBounds(leftBound, topBound, rightBound, bottomBound);
+				reverse.draw(canvas);
+				reverse.setBounds(miniTopLeftBound, miniTopTopBound, miniTopRightBound, miniTopBottomBound);
+				reverse.draw(canvas);
+				reverse.setBounds(miniBottomLeftBound, miniBottomTopBound, miniBottomRightBound, miniBottomBottomBound);
+				reverse.draw(canvas);
 				break;
 			case NONE:
 				break;
@@ -160,4 +192,11 @@ public class RenderCard {
 		return (clickX >= left) && (clickX <= right) && (clickY >= top) && (clickY <= bottom);
 	}
 
+	public void setFaceBitmaps(Drawable skip, Drawable reverse, Drawable drawTwo, Drawable drawFour)
+	{
+		this.skip = skip;
+		this.reverse = reverse;
+		this.drawTwo = drawTwo;
+		this.drawFour = drawFour;
+	}
 }

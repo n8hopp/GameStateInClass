@@ -1,15 +1,21 @@
 package com.example.gamestateinclass.uno.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import androidx.core.content.res.ResourcesCompat;
+
+import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
@@ -71,6 +77,11 @@ public class UnoTableView extends FlashSurfaceView {
 	public int colorWheelOffsetX;
 	public int colorWheelOffsetY; // these are the offsets from the screen's center
 
+	Drawable skip;
+	Drawable reverse;
+	Drawable drawTwo;
+	Drawable drawFour;
+
 	public int wheelCenterX;
 	public int wheelCenterY; // to be declared when canvas is accessible
 
@@ -118,6 +129,11 @@ public class UnoTableView extends FlashSurfaceView {
 		greenPaint.setColor(0xFF358716);
 		bluePaint.setColor(0xFF0849A3);
 		yellowPaint.setColor(0xFFE5D30C);
+
+		skip = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_skip, context.getTheme());
+		reverse = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_reverse, context.getTheme());
+		drawTwo = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawtwo, context.getTheme());
+		drawFour = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawfour, context.getTheme());
 
 		p0hand = "7 Cards";
 		p1hand = "7 Cards";
@@ -198,11 +214,13 @@ public class UnoTableView extends FlashSurfaceView {
 		if (state != null) {
 			if (!wildCardSelection) {
 				RenderCard topCardRender = state.getTopCard().getRender();
+				topCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
 				topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
 				topCardRender.draw(canvas);
 			} else {
 				Card wildTopCard = new Card(CardColor.BLACK, tempWildFace);
 				RenderCard wildTopCardRender = wildTopCard.getRender();
+				wildTopCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
 				wildTopCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
 				wildTopCardRender.draw(canvas);
 			}
@@ -212,6 +230,7 @@ public class UnoTableView extends FlashSurfaceView {
 		}
 
 		RenderCard fakeDrawCardRender = fakeDrawCard.getRender();
+		fakeDrawCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
 		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
 		fakeDrawCardRender.draw(canvas);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);

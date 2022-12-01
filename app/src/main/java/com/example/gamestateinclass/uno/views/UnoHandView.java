@@ -1,11 +1,17 @@
 package com.example.gamestateinclass.uno.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
+import androidx.core.content.res.ResourcesCompat;
+
+import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
@@ -40,6 +46,11 @@ public class UnoHandView extends FlashSurfaceView {
     Paint unoTextPaint = new Paint();
     Paint numberPaint = new Paint();
 
+    Drawable skip;
+    Drawable reverse;
+    Drawable drawTwo;
+    Drawable drawFour;
+
     private int selectedIndex = 0;
     private int startingCard = 0;
 
@@ -58,6 +69,11 @@ public class UnoHandView extends FlashSurfaceView {
         greenPaint.setStyle(Paint.Style.FILL);
         yellowPaint.setColor(0xFFE8C723);  //yellow
         yellowPaint.setStyle(Paint.Style.FILL);
+
+        skip = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_skip, context.getTheme());
+        reverse = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_reverse, context.getTheme());
+        drawTwo = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawtwo, context.getTheme());
+        drawFour = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawfour, context.getTheme());
 
         cardBorderPaint.setColor(0xFF000000);  //black
         cardBorderPaint.setStyle(Paint.Style.FILL);
@@ -105,6 +121,9 @@ public class UnoHandView extends FlashSurfaceView {
 
                 Card card = currentHand.get(i);
                 RenderCard renderCard = card.getRender();
+
+
+                renderCard.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
                 renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
 
                 if (i == selectedIndex) {
