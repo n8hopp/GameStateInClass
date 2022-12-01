@@ -18,12 +18,14 @@ public class UnoLocalGameTest extends TestCase {
     // is a red reverse. The human player's cards from 0-6 in order are:
     // red skip, red 8, blue 8, green 3, green reverse, blue 2, red +2
     @Test
-    public void testCheckCardValidity() {
+    public void testCheckCardValidity() { // Lukas
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
+        // This is a red skip
         ArrayList<Card> Hand = testState.fetchPlayerHand(0);
         Card wildTest = new Card(CardColor.BLACK, Face.WILD);
-
+        // checkCardValidity compares card to top of discard deck which
+        // is a red reverse
         assertTrue(testGame.checkCardValidity(Hand.get(0)));
         assertFalse(testGame.checkCardValidity(Hand.get(2)));
         assertTrue(testGame.checkCardValidity(Hand.get(4)));
@@ -32,7 +34,7 @@ public class UnoLocalGameTest extends TestCase {
 
 
     @Test
-    public void testDrawCard() {
+    public void testDrawCard() { // Lukas
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
@@ -41,26 +43,40 @@ public class UnoLocalGameTest extends TestCase {
         int handSizeBefore = hand.size();
         testGame.drawCard(1);
         int handSizeAfter = hand.size();
-
+        // Verify that the card was draw by hand size
         assertEquals(handSizeBefore + 1, handSizeAfter);
         assertNotEquals(handSizeBefore, handSizeAfter);
+        assertEquals(handSizeBefore,7);
+        assertNotEquals(handSizeBefore,8);
+
     }
 
     @Test
-    public void testPlaceCard() {
+    public void testPlaceCard() { // Lukas
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
         // Top card of the seeded discard deck is always red
         ArrayList<Card> Hand = testState.fetchPlayerHand(0);
         Card testCard = Hand.get(0);
-        testGame.placeCard(Hand.get(0));
+
         // Places it's red card on deck
+        testGame.placeCard(Hand.get(0));
+
         Card resultCard = testState.getTopCard();
+        // Ensure the card is no longer in the hand
+        for ( Card c : Hand ){
+            if ( c == testCard ){
+                assert false;
+            }
+            else assert true;
+        }
+        // Check that it made it to the top of the discard deck
         assertEquals(testCard, resultCard);
+
     }
 
     @Test
-    public void testReverseCard() {
+    public void testReverseCard() { // Henry
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
@@ -73,10 +89,12 @@ public class UnoLocalGameTest extends TestCase {
 
         assertEquals(playDirectionAfter, -playDirectionBefore);
         assertNotEquals(playDirectionAfter, playDirectionBefore);
+        assertEquals(1, playDirectionBefore);
+        assertEquals(-1, playDirectionAfter);
     }
 
     @Test
-    public void testSkipCard() {
+    public void testSkipCard() { // Henry
         UnoLocalGame testGame = new UnoLocalGame();
         UnoState testState = (UnoState) testGame.getGameState();
 
@@ -87,6 +105,8 @@ public class UnoLocalGameTest extends TestCase {
 
         int turnAfter = testState.getTurn();
 
+        assertEquals(0, turnBefore);
+        assertEquals(1, turnAfter);
         assertEquals(turnBefore + 1, turnAfter);
         assertNotEquals(turnBefore, turnAfter);
     }
