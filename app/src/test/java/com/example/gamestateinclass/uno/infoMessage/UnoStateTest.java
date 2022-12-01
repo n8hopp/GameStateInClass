@@ -59,12 +59,16 @@ public class UnoStateTest extends TestCase {
     }
 
     @Test
-    public void testGameStateNew() {
+    public void testCopyConstructor() {
         // 2 new tests states should be different
         UnoState testState = new UnoState();
-        UnoState newTestState = new UnoState();
+        UnoState newCopiedState = new UnoState(testState);
+        assertEquals(testState, newCopiedState);
 
-        assertNotEquals(testState, newTestState);
+        testState.setTurn(3);
+        assertNotEquals(testState, newCopiedState);
+
+
     }
 
 }
