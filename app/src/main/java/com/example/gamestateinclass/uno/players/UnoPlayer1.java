@@ -16,6 +16,7 @@ import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
@@ -85,7 +86,15 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
 
+		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
+			return false;
+		}
+
 		if (view instanceof UnoTableView) {
+
+			Log.i("color", tableView.getTappedColor(
+					motionEvent.getX(), motionEvent.getY()).name());
+
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			// if the "fake" draw card was touched, send the drawCardAction
@@ -98,6 +107,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 
 				Card card = myHand.get(selectedIndex);
+
+				if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
+					tableView.setWildCardSelection(true);
+					tableView.invalidate();
+					return true;
+				}
+
 				action = new PlaceCardAction(this, card);
 				game.sendAction(action);
 				selectedIndex = 0;

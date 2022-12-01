@@ -2,9 +2,12 @@ package com.example.gamestateinclass.uno.views;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
@@ -24,8 +27,14 @@ public class UnoTableView extends FlashSurfaceView {
 	private final Paint textPaint2;
 	private final Paint tableColor;
 	private final Paint arrowPaint;
+	private final Paint blackPaint;
+	private final Paint redPaint;
+	private final Paint bluePaint;
+	private final Paint greenPaint;
+	private final Paint yellowPaint;
 	private Paint faceUp;
 	private Path arrowPath;
+	private Path trianglePath;
 	private Card testCard;
 	private int arrowDirection;
 
@@ -43,6 +52,15 @@ public class UnoTableView extends FlashSurfaceView {
 
 	public int arrowPos; // 0: human player. Increases clockwise
 
+	public boolean wildCardSelection; // whether or not a wild card color is being selected
+	public int colorRadius; // radius of color selection wheel
+
+	public int colorWheelOffsetX;
+	public int colorWheelOffsetY; // these are the offsets from the screen's center
+
+	public int wheelCenterX;
+	public int wheelCenterY; // to be declared when canvas is accessible
+
 	public UnoTableView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
@@ -54,6 +72,11 @@ public class UnoTableView extends FlashSurfaceView {
 		faceUp = new Paint();
 		tableColor = new Paint();
 		textPaint2 = new Paint();
+		blackPaint = new Paint();
+		redPaint = new Paint();
+		bluePaint = new Paint();
+		greenPaint = new Paint();
+		yellowPaint = new Paint();
 		testCard = new Card();
 		arrowPos = 0;
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
@@ -76,6 +99,12 @@ public class UnoTableView extends FlashSurfaceView {
 		textPaint2.setFakeBoldText(true);
 		textPaint.setTextSize(45);
 
+		blackPaint.setColor(Color.BLACK);
+		redPaint.setColor(0xFFC40C00);
+		greenPaint.setColor(0xFF358716);
+		bluePaint.setColor(0xFF0849A3);
+		yellowPaint.setColor(0xFFE5D30C);
+
 		p0hand = "7 Cards";
 		p1hand = "7 Cards";
 		p2hand = "7 Cards";
@@ -83,6 +112,13 @@ public class UnoTableView extends FlashSurfaceView {
 
 		// a "fake" card that is acts as a button for drawing
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
+
+		wildCardSelection = false;
+		colorRadius = 100;
+		colorWheelOffsetX = 425;
+		colorWheelOffsetY = 300;
+
+		trianglePath = new Path(); //for wild card selection
 	}
 
 
@@ -98,6 +134,9 @@ public class UnoTableView extends FlashSurfaceView {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
+
+		wheelCenterX = canvas.getWidth() / 2 + colorWheelOffsetX;
+		wheelCenterY = canvas.getHeight() / 2 + colorWheelOffsetY;
 
 		//Background
 		canvas.drawRect(0, 0, (getWidth()), (getHeight()), tableColor);
@@ -138,7 +177,9 @@ public class UnoTableView extends FlashSurfaceView {
 		canvas.drawPath(arrowPath, arrowPaint);
 		arrowPath.reset();
 
-
+		if (wildCardSelection) {
+			drawWildCardGUI(canvas);
+		}
 	}
 
 	// Dummied up
@@ -267,5 +308,62 @@ public class UnoTableView extends FlashSurfaceView {
 		p1hand = _p1hand;
 		p2hand = _p2hand;
 		p3hand = _p3hand;
+	}
+
+	public void drawWildCardGUI(Canvas canvas) {
+		canvas.drawCircle(wheelCenterX, wheelCenterY, 140, blackPaint);
+
+		trianglePath.moveTo(wheelCenterX, wheelCenterY-140);
+		trianglePath.lineTo(wheelCenterX-140, wheelCenterY);
+		trianglePath.lineTo(getWidth()/2+150, getHeight()/2+50);
+		canvas.drawPath(trianglePath, blackPaint);
+
+		RectF rectF = new RectF();
+		rectF.set(wheelCenterX - colorRadius,
+				wheelCenterY - colorRadius,
+				wheelCenterX + colorRadius,
+				wheelCenterY + colorRadius);
+
+		canvas.drawArc(rectF, 0, 90, true, greenPaint);
+		canvas.drawArc(rectF, 90, 90, true, yellowPaint);
+		canvas.drawArc(rectF, 180, 90, true, redPaint);
+		canvas.drawArc(rectF, 270, 90, true, bluePaint);
+
+		Log.i("x", ""+wheelCenterX);
+		Log.i("y", ""+wheelCenterY);
+
+	}
+
+	public CardColor getTappedColor(float mouse_x, float mouse_y) {
+
+		double a = mouse_x - wheelCenterX;
+		double b = mouse_y - wheelCenterY;
+		double distance = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+
+		// checks if mouse is within circle, return black if not
+		if (distance > colorRadius) {
+			return CardColor.BLACK;
+		}
+
+		// if mouse is within circle, figure out which quadrant
+		boolean x = mouse_x > wheelCenterX;
+		boolean y = mouse_y > wheelCenterY;
+
+		switch (x + "-" + y) {
+			case "true-true":
+				return CardColor.GREEN;
+			case "true-false":
+				return CardColor.BLUE;
+			case "false-true":
+				return CardColor.YELLOW;
+			case "false-false":
+				return CardColor.RED;
+			default:
+				return CardColor.BLACK;
+		}
+	}
+
+	public void setWildCardSelection(boolean bool) {
+		wildCardSelection = bool;
 	}
 }
