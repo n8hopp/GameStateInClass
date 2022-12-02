@@ -86,6 +86,7 @@ public class UnoMainActivity extends GameMainActivity {
     @Override
     public LocalGame createLocalGame(GameState gameState){
         MediaPlayer ring= MediaPlayer.create(this,R.raw.three01);
+        ring.setLooping(true);
         ring.start();
         if(gameState == null)
             return new UnoLocalGame();
