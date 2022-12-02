@@ -112,7 +112,7 @@ public class UnoHandView extends FlashSurfaceView {
             // The loop iterates through based on the scroll bar, however the visual card offset
             // still needs to always be zero when drawing
             int offset = 0;
-            // Only draw from a different card if hand > 4
+            // Only draw from a different card if hand > 4 (Disappearing Card Bug Fix I Think)
             if (currentHand.size() <= 4){
                 startingCard = 0;
             }
