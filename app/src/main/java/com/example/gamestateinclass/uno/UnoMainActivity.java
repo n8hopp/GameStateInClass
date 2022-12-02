@@ -1,5 +1,7 @@
 package com.example.gamestateinclass.uno;
 
+import android.media.MediaPlayer;
+
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
@@ -66,6 +68,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 2", 2); // smart computer player
         defaultConfig.addPlayer("Computer 3", 3); // dumb computer player
 
+
         game = defaultConfig;
         return game;
     }
@@ -82,6 +85,8 @@ public class UnoMainActivity extends GameMainActivity {
      */
     @Override
     public LocalGame createLocalGame(GameState gameState){
+        MediaPlayer ring= MediaPlayer.create(this,R.raw.three01);
+        ring.start();
         if(gameState == null)
             return new UnoLocalGame();
         return new UnoLocalGame((UnoState) gameState);
