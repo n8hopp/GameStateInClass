@@ -16,5 +16,11 @@
 unique (and descriptive!) and the title to be new text
 Once you've done this update your game-specific MainActivity to set a listener for this new
 item.-->
+    <item android:id="@+id/new_game"
+        android:title="New Game"
+        android:orderInCategory="100" />
+    <item android:id="@+id/quit_game"
+        android:title="Quit Game"
+        android:orderInCategory="100"/>
 
 </menu>
