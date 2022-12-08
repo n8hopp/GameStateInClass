@@ -31,6 +31,7 @@ public class UnoState extends GameState implements Serializable {
     private int turn; //index of player whose turn it is
     private PlayDirection direction;
     private String latestAction;
+    private String introMsg;
 
     private ArrayList<ArrayList<Card>> playerHands;
     private ArrayList<Card> discardDeck;
@@ -55,6 +56,7 @@ public class UnoState extends GameState implements Serializable {
         initializePlayerHands();
         discardDeck = creatediscardDeckDeck(drawDeck);
         latestAction = "Welcome! Place or draw a card to begin.";
+        introMsg = "The blue arrow indicates current turn and direction of play.";
     }
 
     // Copy Constructor makes a deep copy of each individual card in our draw and discard deck, as well as
@@ -64,6 +66,7 @@ public class UnoState extends GameState implements Serializable {
         turn = previous.turn;
         direction = previous.direction;
         latestAction = previous.latestAction;
+        introMsg = previous.introMsg;;
         drawDeck = new ArrayList<Card>();
         for (Card c : previous.drawDeck) // for each card in the drawDeck we're copying
         {
@@ -304,8 +307,16 @@ public class UnoState extends GameState implements Serializable {
         latestAction = _latestAction;
     }
 
+    public void setIntroMsg(String _introMsg) {
+        introMsg = _introMsg;
+    }
+
     public String getLatestAction() {
         return latestAction;
+    }
+
+    public  String getIntroMsg() {
+        return introMsg;
     }
 
     // This function shuffles the discardDeck if the drawDeck is empty, and fills the drawDeck
