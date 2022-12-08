@@ -182,11 +182,7 @@ public class UnoLocalGame extends LocalGame {
 
 		Face face = card.getFace();
 
-		if (card.getFace().equals(Face.WILD) || card.getFace().equals(Face.DRAWFOUR)) {
-			state.takeCardFromHandByIndex(turn, cardIndex);
-		} else {
-			state.takeCardFromHand(turn, card);
-		}
+		state.takeCardFromHandByIndex(turn, cardIndex);
 
 		// change direction, turn and card color according to card's face
 		switch (face) {
