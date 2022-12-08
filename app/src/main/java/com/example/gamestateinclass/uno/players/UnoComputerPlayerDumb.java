@@ -43,13 +43,16 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 	@Override
 	protected void receiveInfo(GameInfo info) {
+		if (!(info instanceof UnoState)) {
+			return;
+		}
 		UnoState state = ((UnoState) info);
 
 		if (state.getTurn() == playerNum) {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(1.5);
+			sleep(0.5);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);

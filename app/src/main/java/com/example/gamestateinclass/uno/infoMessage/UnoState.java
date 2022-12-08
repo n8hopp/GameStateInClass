@@ -68,11 +68,13 @@ public class UnoState extends GameState implements Serializable {
         latestAction = previous.latestAction;
         introMsg = previous.introMsg;;
         drawDeck = new ArrayList<Card>();
-        for (Card c : previous.drawDeck) // for each card in the drawDeck we're copying
-        {
-            Face face = c.getFace();
-            CardColor color = c.getCardColor();
-            drawDeck.add(new Card(color, face)); // deep copy
+        synchronized (drawDeck) {
+            for (Card c : previous.drawDeck) // for each card in the drawDeck we're copying
+            {
+                Face face = c.getFace();
+                CardColor color = c.getCardColor();
+                drawDeck.add(new Card(color, face)); // deep copy
+            }
         }
         discardDeck = new ArrayList<Card>();
         for (Card c : previous.discardDeck) {
