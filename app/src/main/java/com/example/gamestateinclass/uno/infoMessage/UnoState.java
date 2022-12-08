@@ -323,15 +323,15 @@ public class UnoState extends GameState implements Serializable {
 
         for (int i = 0; i < drawDeck.size(); i++) {
             if ((drawDeck.get(i).getFace().equals(Face.WILD)) ||
-                    (drawDeck.get(i).getFace().equals(Face.DRAWFOUR))) {
+                (drawDeck.get(i).getFace().equals(Face.DRAWFOUR))) {
                 drawDeck.get(i).setColor(CardColor.BLACK);
             }
-            shuffleDeck(drawDeck);
-
-            // make it so only the top card remains in discard deck
-            discardDeck.clear();
-            discardDeck.add(topCard);
-
         }
+
+        shuffleDeck(drawDeck);
+
+        // make it so only the top card remains in discard deck
+        discardDeck.clear();
+        discardDeck.add(topCard);
     }
 }

@@ -16,6 +16,8 @@ import com.example.gamestateinclass.uno.objects.Face;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Random;
 
 /**
@@ -47,7 +49,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(3);
+			sleep(1.5);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
