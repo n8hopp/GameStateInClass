@@ -206,6 +206,16 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 					return true;
 				}
 			}
+
+			float unoButtonX = handView.getWidth();
+			float unoButtonY = handView.getHeight();
+			float distanceX = unoButtonX - motionEvent.getX();
+			float distanceY = unoButtonY - motionEvent.getY();
+			double distanceXY = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+			if(distanceXY <= (handView.unoButtonRadius))
+			{
+				//call "uno!"
+			}
 			return true;
 		}
 
