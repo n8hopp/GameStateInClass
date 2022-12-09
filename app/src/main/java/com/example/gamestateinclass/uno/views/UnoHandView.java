@@ -28,7 +28,7 @@ public class UnoHandView extends FlashSurfaceView {
     public static final int cardSpacing = 240;
     public static final int xOffset = 150;
     public static final int yOffset = 160;
-    public int unoButtonRadius = 30;
+    public int unoButtonRadius = 10;
     protected UnoState state;
 
     int currentPlayerId;
