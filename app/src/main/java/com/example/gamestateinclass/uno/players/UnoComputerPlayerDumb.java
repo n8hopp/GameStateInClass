@@ -16,6 +16,8 @@ import com.example.gamestateinclass.uno.objects.Face;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.Random;
 
 /**
@@ -41,13 +43,16 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 	@Override
 	protected void receiveInfo(GameInfo info) {
+		if (!(info instanceof UnoState)) {
+			return;
+		}
 		UnoState state = ((UnoState) info);
 
 		if (state.getTurn() == playerNum) {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(3);
+			sleep(0.1);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -61,13 +66,15 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				// Try to find a viable card in computer hand
 				ArrayList<Card> hand = state.fetchPlayerHand(playerNum);
 				Card toPlace = null;
+				int currentIndex = 0;
 				int toPlaceIndex = 0;
 				for ( Card c : hand) {
 					if ( checkCardValidity(c, state)){
 						toPlace = c;
-						toPlaceIndex++;
+						toPlaceIndex = currentIndex;
 						break;
 					}
+					currentIndex++;
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){

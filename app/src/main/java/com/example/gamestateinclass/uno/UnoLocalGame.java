@@ -108,6 +108,7 @@ public class UnoLocalGame extends LocalGame {
 		UnoState state = (UnoState) super.state;
 		String actingPlayer = playerNames[state.fetchCurrentPlayer()];
 		String actionPlayed = "";
+		state.setIntroMsg("");
 
 		// if its a draw action, draw 1 card and increment the turn
 		if (action instanceof DrawCardAction) {
@@ -157,7 +158,6 @@ public class UnoLocalGame extends LocalGame {
 
 		ArrayList<Card> cardsDrawn = state.drawCardsFromDeck(n);
 		state.addCardsToPlayerHand(turn, cardsDrawn);
-		// state.setLatestAction(playerNames[state.fetchCurrentPlayer()]);
 
 		return true;
 	}
@@ -182,11 +182,7 @@ public class UnoLocalGame extends LocalGame {
 
 		Face face = card.getFace();
 
-		if (card.getFace().equals(Face.WILD) || card.getFace().equals(Face.DRAWFOUR)) {
-			state.takeCardFromHandByIndex(turn, cardIndex);
-		} else {
-			state.takeCardFromHand(turn, card);
-		}
+		state.takeCardFromHandByIndex(turn, cardIndex);
 
 		// change direction, turn and card color according to card's face
 		switch (face) {

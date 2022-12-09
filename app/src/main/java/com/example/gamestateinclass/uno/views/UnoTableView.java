@@ -66,6 +66,10 @@ public class UnoTableView extends FlashSurfaceView {
 	private final Paint actionPaint;
 	private final Paint actionTextPaint;
 
+	private String introText;
+	private Paint introTextPaint;
+	private final Paint introPaint;
+
 	private Card fakeDrawCard;
 
 	public int arrowPos; // 0: human player. Increases clockwise
@@ -104,6 +108,8 @@ public class UnoTableView extends FlashSurfaceView {
 		testCard = new Card();
 		actionPaint = new Paint();
 		actionTextPaint = new Paint();
+		introTextPaint = new Paint();
+		introPaint = new Paint();
 		arrowPos = 0;
 		cardPaint.setARGB(255, 0, 0, 0); // Set default color of black face down uno card
 		textPaint.setARGB(255, 255, 255, 255); // Text color white
@@ -151,6 +157,15 @@ public class UnoTableView extends FlashSurfaceView {
 		actionTextPaint.setFakeBoldText(true);
 		actionTextPaint.setARGB(255, 255, 255, 255); // Text color white
 		actionTextPaint.setTextAlign(Paint.Align.CENTER);
+
+		introText = "test";
+		introPaint.setARGB(255,0,255,255);
+		introTextPaint.setARGB(255, 0, 0, 0);
+		introTextPaint.setFakeBoldText(true);
+		introTextPaint.setTextSize(25);
+		introTextPaint.setTextAlign(Paint.Align.CENTER);
+
+
 
 		// a "fake" card that is acts as a button for drawing
 		fakeDrawCard = new Card(CardColor.BLACK, Face.NONE);
@@ -210,6 +225,12 @@ public class UnoTableView extends FlashSurfaceView {
 		// Draw a small "canvas" for action text to be drawn on
 		canvas.drawRect(40, (getHeight()/4)*3-50, (getWidth()-40), (getHeight()/4)*3+30, actionPaint);
 		canvas.drawText(actionText, getWidth()/2,  (getHeight()/4)*3+10, actionTextPaint);
+
+        if ( !introText.equals("")) {
+			canvas.drawRect(getWidth()/5, (getHeight()/4)*3+80, (getWidth()/5)*4, (getHeight()/4)*3+120, introPaint);
+			canvas.drawText(introText, getWidth() / 2, (getHeight() / 4) * 3 + 110, introTextPaint);
+		}
+
 
 		if (state != null) {
 			if (!wildCardSelection) {
@@ -447,6 +468,7 @@ public class UnoTableView extends FlashSurfaceView {
 	public void setActionText(String _actionText){
 		actionText = _actionText;
 	}
+	public void setIntroText(String _introText) { introText = _introText; }
 
 	public UnoState getState(){
 		return state;

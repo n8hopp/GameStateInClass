@@ -28,7 +28,7 @@ public class UnoHandView extends FlashSurfaceView {
     public static final int cardSpacing = 240;
     public static final int xOffset = 150;
     public static final int yOffset = 160;
-
+    public int unoButtonRadius = 10;
     protected UnoState state;
 
     int currentPlayerId;
@@ -142,11 +142,11 @@ public class UnoHandView extends FlashSurfaceView {
         }
 
         // Big UNO Button
-//        int radius = getHeight();
-//        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
-//        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
-//
-//        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+        int radius = getHeight();
+        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
+        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
+
+        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
     }
 
     public void setStartingCard(int startingHandCard) {
@@ -154,6 +154,7 @@ public class UnoHandView extends FlashSurfaceView {
     }
 
 
+    public void setUnoButtonRadius(int radius) { unoButtonRadius = radius; }
     public void setWildCardSelection(boolean bool) {
         wildCardSelection = bool;
     }

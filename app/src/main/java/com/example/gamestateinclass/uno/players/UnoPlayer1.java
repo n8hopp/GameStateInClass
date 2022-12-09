@@ -109,6 +109,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setPlayerHandText(p0HandSize, p1HandSize, p2HandSize, p3HandSize);
 		tableView.setPlayerNameText(allPlayerNames[displayOrder.get(0)], allPlayerNames[displayOrder.get(1)], allPlayerNames[displayOrder.get(2)], allPlayerNames[displayOrder.get(3)]);
 		tableView.setActionText(gameState.getLatestAction());
+		tableView.setIntroText(gameState.getIntroMsg());
 
 
 		tableView.invalidate();
@@ -205,6 +206,16 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 					handView.invalidate();
 					return true;
 				}
+			}
+
+			float unoButtonX = handView.getWidth();
+			float unoButtonY = handView.getHeight();
+			float distanceX = unoButtonX - motionEvent.getX();
+			float distanceY = unoButtonY - motionEvent.getY();
+			double distanceXY = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+			if(distanceXY <= (handView.unoButtonRadius))
+			{
+				//call "uno!"
 			}
 			return true;
 		}
