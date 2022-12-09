@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
+import com.example.gamestateinclass.uno.actionMessage.UnoShoutAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
@@ -144,6 +145,31 @@ public class UnoLocalGame extends LocalGame {
 			state.setTurn(turn);
 
 			return true;
+		}
+
+		if (action instanceof UnoShoutAction)
+		{
+			UnoShoutAction shoutAction = (UnoShoutAction)action;
+
+			int origTurn = state.getTurn();
+			int turn = origTurn;
+			turn -= state.getDirection().value; // Get the previous player
+			turn = Math.floorMod(turn, state.getHandsSize());
+			state.setTurn(turn); // set player's turn so we can make them draw cards
+
+			ArrayList<Card> lastPlayerHand = state.fetchPlayerHand(turn);
+
+			if(lastPlayerHand.size() == 1)
+			{
+				state.setLatestAction( actingPlayer + " missed the chance to say Uno! +2");
+				drawCard(2);
+				// don't return true if uno, you still have your turn and can still make more actions
+			}
+			else
+			{
+				state.setLatestAction("Player was a dummy and called Uno! when no one had Uno!");
+				state.setTurn(origTurn);
+			}
 		}
 
 		return false;
