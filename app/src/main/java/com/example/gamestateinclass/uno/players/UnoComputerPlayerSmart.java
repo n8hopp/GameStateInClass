@@ -15,6 +15,7 @@ import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * This is Clei and friends attempt at trying to implement a competent computer player.
@@ -44,25 +45,7 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 	public UnoComputerPlayerSmart(String name) {
 		super(name);
 	}
-/*
-	@Override
-	protected void receiveInfo(GameInfo info) {
-		UnoState gameInfo = ((UnoState) info);
 
-		if (info instanceof NotYourTurnInfo) {
-			Logger.log("UnoComputer1 aka Smart", "My turn!");
-			// hmm i don't really know what i should add here
-
-			// Tests hand deck to place deck for possible playable plays
-			// While hand deck != NULL (going through the hand deck)
-
-			// Does 1st hand card deck "match" the top deck of the place deck?
-			// Match -> same color, same number, same type
-
-			// If it goes through the whole hand deck and there are no playable plays -> draw card
-
-		}
-	} // receiveInfo*/
 
 	@Override
 	protected void receiveInfo(GameInfo info) {
@@ -89,23 +72,62 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
-					// Smart AI: set black to the color it has the most of
+					// Smart AI: set black cards to the color it has the most of to maximize
+					// opportunity to play next turn
 					if (toPlace.getCardColor().equals(CardColor.BLACK)) {
-						ArrayList<CardColor> colors = new ArrayList<>();
-						colors.add(CardColor.RED);
-						colors.add(CardColor.BLUE);
-						colors.add(CardColor.GREEN);
-						colors.add(CardColor.YELLOW);
+						int redCt = 0;
+						int blueCt = 0;
+						int greenCt = 0;
+						int yellowCt = 0;
+						for ( Card c : hand ) {
+                        	switch (c.getCardColor().colorID ){
+								case 0: redCt++;
+										break;
+								case 1: blueCt++;
+										break;
+								case 2: greenCt++;
+										break;
+								case 3: yellowCt++;
+										break;
+							}
+						}
 
-						int randomIndex = (int) (Math.random() * 4) ;
-						CardColor randomColor = colors.get(randomIndex);
+						// https://www.geeksforgeeks.org/how-to-find-the-minimum-and-maximum-value-from-java-hashset/
+						HashSet<Integer> cardCts = new HashSet<>();
+						cardCts.add(redCt);
+						cardCts.add(blueCt);
+						cardCts.add(greenCt);
+						cardCts.add(yellowCt);
+						int max = 0;
+						for (int val : cardCts ) {
+							if (val > max){
+								max = val;
+							}
+						}
 
-						toPlace.setColor(randomColor);
+						CardColor maxColor = null;
+						if (max == redCt){
+							maxColor = CardColor.RED;
+						}
+						else if ( max == blueCt ){
+							maxColor = CardColor.BLUE;
+						}
+						else if ( max == greenCt ){
+							maxColor = CardColor.GREEN;
+						}
+						else if ( max == yellowCt ){
+							maxColor = CardColor.YELLOW;
+						}
+
+
+						toPlace.setColor(maxColor);
+
 					}
 
 					action = new PlaceCardAction(this, toPlace, toPlaceIndex);
 					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
+				// No valid card was found, draw
 				else {
 					action = new DrawCardAction(this);
 					Log.i("No valid, now drawing", "");

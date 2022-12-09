@@ -2,11 +2,12 @@ package com.example.gamestateinclass.uno.objects;
 
 public enum CardColor
 {
-	BLACK(4),
+
+	RED(0),
 	BLUE(1),
 	GREEN(2),
-	RED(0),
-	YELLOW(3);
+	YELLOW(3),
+	BLACK(4);
 
 	public int colorID;
 
