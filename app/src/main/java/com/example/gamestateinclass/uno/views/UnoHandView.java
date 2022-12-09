@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -28,7 +29,7 @@ public class UnoHandView extends FlashSurfaceView {
     public static final int cardSpacing = 240;
     public static final int xOffset = 150;
     public static final int yOffset = 160;
-    public int unoButtonRadius = 10;
+    public int unoButtonRadius = 200;
     protected UnoState state;
 
     int currentPlayerId;
@@ -82,7 +83,7 @@ public class UnoHandView extends FlashSurfaceView {
 
         unoTextPaint.setColor(Color.BLACK);
         unoTextPaint.setTextAlign(Paint.Align.CENTER);
-        unoTextPaint.setTextSize(120);
+        unoTextPaint.setTextSize(40);
         unoTextPaint.setFakeBoldText(true);
 
         numberPaint.setColor(Color.WHITE);
@@ -116,6 +117,8 @@ public class UnoHandView extends FlashSurfaceView {
             if (currentHand.size() <= 4){
                 startingCard = 0;
             }
+
+
             for (int i = startingCard; i < currentHand.size(); i++) {
 
                 if (i == selectedIndex && wildCardSelection) {
@@ -143,14 +146,18 @@ public class UnoHandView extends FlashSurfaceView {
 
         // Big UNO Button
         int radius = getHeight();
-        canvas.drawCircle(getWidth(), getHeight(), radius, cardBorderPaint);
-        canvas.drawCircle(getWidth(), getHeight(), radius - 50, redPaint);
+        canvas.drawCircle(getWidth(), getHeight(), unoButtonRadius, cardBorderPaint);
+        canvas.drawCircle(getWidth(), getHeight(), unoButtonRadius - 25, redPaint);
 
-        canvas.drawText("UNO", getWidth() - radius * 2 / 5, getHeight() - radius * 1 / 7, unoTextPaint);
+        canvas.drawText("UNO", getWidth() - unoButtonRadius * 2 / 6, getHeight() - unoButtonRadius * 1 / 6, unoTextPaint);
     }
 
     public void setStartingCard(int startingHandCard) {
         startingCard = startingHandCard;
+    }
+
+    public int getStartingCard() {
+        return startingCard;
     }
 
 

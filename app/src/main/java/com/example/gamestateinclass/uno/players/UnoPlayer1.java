@@ -23,6 +23,7 @@ import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
 import com.example.gamestateinclass.game.GameFramework.utilities.Saving;
 import com.example.gamestateinclass.uno.DrawCardAction;
 import com.example.gamestateinclass.uno.PlaceCardAction;
+import com.example.gamestateinclass.uno.actionMessage.UnoShoutAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
@@ -71,6 +72,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public void receiveInfo(GameInfo info) {
 		// Ensures inability for a player to do actions when it isn't it's turn
 		if (!(info instanceof UnoState)) {
+			currentTurn = false;
 			return;
 		}
 
@@ -124,6 +126,10 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
+		if(testIfUnoPressed(view, motionEvent))
+		{
+			return true;
+		}
 
 		if (motionEvent.getAction() == motionEvent.ACTION_UP || !currentTurn) {
 			return false;
@@ -198,25 +204,21 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 			// check each card in hand to see if it was tapped.
 			// if so, set it as selected
-			for (int i = 0; i < myHand.size(); i++) {
+
+			int startingCard = handView.getStartingCard();
+
+			for (int i = startingCard; i < myHand.size(); i++) {
 				Card c = myHand.get(i);
 				if (c.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 					selectedIndex = i;
 					handView.setSelectedIndex(i);
 					handView.invalidate();
+					Log.i("index", selectedIndex+"");
 					return true;
 				}
 			}
 
-			float unoButtonX = handView.getWidth();
-			float unoButtonY = handView.getHeight();
-			float distanceX = unoButtonX - motionEvent.getX();
-			float distanceY = unoButtonY - motionEvent.getY();
-			double distanceXY = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
-			if(distanceXY <= (handView.unoButtonRadius))
-			{
-				//call "uno!"
-			}
+
 			return true;
 		}
 
@@ -366,6 +368,32 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			}
 		});
 		popupMenu.show();
+	}
+
+	public boolean testIfUnoPressed(View view, MotionEvent motionEvent)
+	{
+		GameAction action = null;
+
+		if (motionEvent.getAction() == motionEvent.ACTION_UP) {
+			return false;
+		}
+
+		if(view instanceof UnoHandView) {
+			float unoButtonX = handView.getWidth();
+			float unoButtonY = handView.getHeight();
+			float distanceX = unoButtonX - motionEvent.getX();
+			float distanceY = unoButtonY - motionEvent.getY();
+			double distanceXY = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+
+			if (distanceXY <= (handView.unoButtonRadius)) {
+				action = new UnoShoutAction(this);
+				game.sendAction(action);
+				tableView.invalidate();
+				handView.invalidate();
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

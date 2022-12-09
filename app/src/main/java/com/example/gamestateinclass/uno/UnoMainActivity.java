@@ -21,12 +21,16 @@ public class UnoMainActivity extends GameMainActivity {
     public static final int PORT_NUMBER = 5213;
 
     private GameConfig game = null;
+    private MediaPlayer song;
 
     /**
      * Default configuration for our game is 1 human vs 3 computers
      */
     @Override
     public GameConfig createDefaultConfig() {
+        song = new MediaPlayer();
+        song = MediaPlayer.create(this,R.raw.three01);
+
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
         // Human Player
@@ -40,22 +44,15 @@ public class UnoMainActivity extends GameMainActivity {
 
         // Ability to have and choose to play against a smart AI will be implemented soon
 
-        // Dumb computer player 1
-        playerTypes.add(new GamePlayerType("Computer Player 1 (dumb)") {
+        // Computer player 1, dump
+        playerTypes.add(new GamePlayerType("Dumb Computer") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
         });
 
-        // Dumb computer player 2
-        playerTypes.add(new GamePlayerType("Computer Player 2 (dumb)") {
-            public GamePlayer createPlayer(String name) {
-                return new UnoComputerPlayerDumb(name);
-            }
-        });
-
-        // Dumb computer player 3
-        playerTypes.add(new GamePlayerType("Computer Player 3 (dumb)") {
+        // Computer player 2, smart
+        playerTypes.add(new GamePlayerType("Smart Computer") {
             public GamePlayer createPlayer(String name) {
                 return new UnoComputerPlayerDumb(name);
             }
@@ -66,8 +63,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Human", 0); // human player
         defaultConfig.addPlayer("Computer 1", 1); // dumb computer player
         defaultConfig.addPlayer("Computer 2", 2); // smart computer player
-        defaultConfig.addPlayer("Computer 3", 3); // dumb computer player
-
+        defaultConfig.addPlayer("Computer 3", 1); // dumb computer player
 
         game = defaultConfig;
         return game;
@@ -85,9 +81,11 @@ public class UnoMainActivity extends GameMainActivity {
      */
     @Override
     public LocalGame createLocalGame(GameState gameState){
-        MediaPlayer ring= MediaPlayer.create(this,R.raw.three01);
-        ring.setLooping(true);
-        ring.start();
+        // https://stackoverflow.com/questions/16515455/mediaplayer-is-not-looping
+        
+        song.start();
+        song.setLooping(true);
+
         if(gameState == null)
             return new UnoLocalGame();
         return new UnoLocalGame((UnoState) gameState);
