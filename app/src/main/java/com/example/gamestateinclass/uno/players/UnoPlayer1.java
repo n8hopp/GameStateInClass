@@ -204,12 +204,16 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 			// check each card in hand to see if it was tapped.
 			// if so, set it as selected
-			for (int i = 0; i < myHand.size(); i++) {
+
+			int startingCard = handView.getStartingCard();
+
+			for (int i = startingCard; i < myHand.size(); i++) {
 				Card c = myHand.get(i);
 				if (c.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 					selectedIndex = i;
 					handView.setSelectedIndex(i);
 					handView.invalidate();
+					Log.i("index", selectedIndex+"");
 					return true;
 				}
 			}
@@ -326,8 +330,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 								myActivity.restartGame();
 							}
 						});
-						AlertDialog alertDialog2 = builder2.create();
-						alertDialog2.show();
+						AlertDialog alertDialog3 = builder2.create();
+						alertDialog3.show();
 						return true;
 
 					case R.id.quit_game:
@@ -346,8 +350,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 								myActivity.finish();
 							}
 						});
-						AlertDialog alertDialog3 = builder3.create();
-						alertDialog3.show();
+						AlertDialog alertDialog4 = builder3.create();
+						alertDialog4.show();
 						return true;
 
 					default:

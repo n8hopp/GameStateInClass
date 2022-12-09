@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -116,6 +117,8 @@ public class UnoHandView extends FlashSurfaceView {
             if (currentHand.size() <= 4){
                 startingCard = 0;
             }
+
+
             for (int i = startingCard; i < currentHand.size(); i++) {
 
                 if (i == selectedIndex && wildCardSelection) {
@@ -151,6 +154,10 @@ public class UnoHandView extends FlashSurfaceView {
 
     public void setStartingCard(int startingHandCard) {
         startingCard = startingHandCard;
+    }
+
+    public int getStartingCard() {
+        return startingCard;
     }
 
 
