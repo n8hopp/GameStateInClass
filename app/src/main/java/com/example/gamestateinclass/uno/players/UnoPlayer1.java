@@ -286,21 +286,29 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 								("How To Play Uno By Three-Oh-Uno \n\n" +
 										"Rules of the Game: Setup \n\n" +
 										"Each Player receives seven cards at random. \n" +
-										"The remaining cards are the Draw Pile, which is placed in the center face down. \n" +
-										"The top card of the Draw Pile is turned over to create the Discard Pile. \n" +
-										"A player is randomly selected to go first, and the flow of play begins clockwise. \n\n" +
+										"The remaining cards are the Draw Pile, which is placed " +
+										"in the center face down. \n" +
+										"The top card of the Draw Pile is turned over to create the " +
+										"Discard Pile. \n" +
+										"A player is randomly selected to go first, and the flow " +
+										"of play begins clockwise. \n\n" +
 										"Rules of the Game: Core Gameplay \n\n" +
-										"The objective is to be the first person to empty your hands of cards. \n" +
-										"Each turn, the current player will attempt to discard one of their cards into the Discard Pile. \n" +
-										"Only cards whose color or number matches the face card of the Discard Pile can be placed atop it. (Exceptions occur with special cards)\n" +
-										"If a player has no viable cards to place, they must draw one card from the draw deck. \n" +
+										"The objective is to be the first person to empty your " +
+										"hands of cards. \n" +
+										"Each turn, the current player will attempt to discard one " +
+										"of their cards into the Discard Pile. \n" +
+										"Only cards whose color or number matches the face card of " +
+										"the Discard Pile can be placed atop it. (Exceptions occur with special cards)\n" +
+										"If a player has no viable cards to place, they must draw " +
+										"one card from the draw deck. \n" +
 										"Drawing or discarding ends the players turn. \n\n" +
 										"Rules of the Game: Special Cards \n\n" +
 										"Reverse: The flow of play is reversed. \n" +
 										"Skip: The next person to play has their turn skipped. \n" +
 										"Draw 2: The next player must draw two cards and forfeit their turn. \n" +
 										"Wildcard: The player who placed this card can select what color it is. \n" +
-										"Wildcard Draw 4: The next player must draw four cards and forfeit their turn, player who placed this card can select what color it is. \n\n" +
+										"Wildcard Draw 4: The next player must draw four cards and " +
+										"forfeit their turn, player who placed this card can select what color it is. \n\n" +
 										"Have Fun!");
 						builder.setPositiveButton("Return to game", new DialogInterface.OnClickListener() {
 							@Override
