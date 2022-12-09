@@ -332,8 +332,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 								myActivity.restartGame();
 							}
 						});
-						AlertDialog alertDialog2 = builder2.create();
-						alertDialog2.show();
+						AlertDialog alertDialog3 = builder2.create();
+						alertDialog3.show();
 						return true;
 
 					case R.id.quit_game:
@@ -352,8 +352,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 								myActivity.finish();
 							}
 						});
-						AlertDialog alertDialog3 = builder3.create();
-						alertDialog3.show();
+						AlertDialog alertDialog4 = builder3.create();
+						alertDialog4.show();
 						return true;
 
 					default:
