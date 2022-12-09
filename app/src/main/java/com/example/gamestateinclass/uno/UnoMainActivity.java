@@ -26,6 +26,17 @@ public class UnoMainActivity extends GameMainActivity {
     /**
      * Default configuration for our game is 1 human vs 3 computers
      */
+
+    /**
+     External Citation, Lukas
+     Date: 7 December 2022
+     Problem: Media player was not looping and formatted correctly
+     Resource:
+     https://stackoverflow.com/questions/16515455/mediaplayer-is-not-looping
+     Solution: I used the example code from this post to see that I needed to
+     set looping after I started the song
+     */
+
     @Override
     public GameConfig createDefaultConfig() {
         song = new MediaPlayer();
@@ -67,6 +78,8 @@ public class UnoMainActivity extends GameMainActivity {
 
         game = defaultConfig;
         return game;
+
+
     }
 
     /**
@@ -81,8 +94,7 @@ public class UnoMainActivity extends GameMainActivity {
      */
     @Override
     public LocalGame createLocalGame(GameState gameState){
-        // https://stackoverflow.com/questions/16515455/mediaplayer-is-not-looping
-        
+
         song.start();
         song.setLooping(true);
 

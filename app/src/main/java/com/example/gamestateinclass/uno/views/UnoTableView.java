@@ -266,62 +266,66 @@ public class UnoTableView extends FlashSurfaceView {
 		}
 	}
 
+
+	/**
+	 External Citation, Lukas
+	 Date: 25 September 2022
+	 Problem: Needed to view syntax for drawing polygons based on path
+	 Resource:
+	 https://stackoverflow.com/questions/2047573/how-to-draw-filled-polygon
+	 Solution: I used the example code from this post as a guide
+	 */
 	private void drawArrowPath(Paint _arrowPaint, Path _arrowPath, int _arrowPos, int _arrowDirection) {
 
 		// First switch statement is for clockwise direction
 		if (_arrowDirection == 1) {
 			switch (arrowPos) {
-				case 0:
-					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 7); // Beginning location center of just over 3/4 down the view
-					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 7); // Tip of arrow pointing left
+				case 0: // Arrow in front of user, CW
+					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 7);
+					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 7);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 7 + 20);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 7 + 10);
 					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 7 + 10);
 					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 7 - 10);
-
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 7 - 10);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 7 - 20);
-					arrowPath.lineTo(getWidth() / 2 - 60, getHeight() / 8 * 7); // Tip of arrow pointing left
-
+					arrowPath.lineTo(getWidth() / 2 - 60, getHeight() / 8 * 7);
 					break;
 
-				case 1:
-					arrowPath.moveTo(getWidth() / 4, (getHeight() / 2)); // Beginning location center of ~1/4 in from left of view
-					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) - 60); // Tip of arrow pointing up
+				case 1: // Arrow to left of user, CW
+					arrowPath.moveTo(getWidth() / 4, (getHeight() / 2));
+					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) - 60);
 					arrowPath.lineTo(getWidth() / 4 + 20, (getHeight() / 2) - 20);
 					arrowPath.lineTo(getWidth() / 4 + 10, (getHeight() / 2) - 20);
 					arrowPath.lineTo(getWidth() / 4 + 10, (getHeight() / 2) + 60);
 					arrowPath.lineTo(getWidth() / 4 - 10, (getHeight() / 2) + 60);
-
 					arrowPath.lineTo(getWidth() / 4 - 10, (getHeight() / 2) - 20);
 					arrowPath.lineTo(getWidth() / 4 - 20, (getHeight() / 2) - 20);
-					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) - 60); // Tip of arrow pointing up
+					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) - 60);
 					break;
-				case 2:
-					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 3); // Beginning location center of just over 1/4 down the view
-					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3); // Tip of arrow pointing right
+
+				case 2: // Arrow above user, CW
+					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 3);
+					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 3 + 20);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 3 + 10);
 					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3 + 10);
 					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3 - 10);
-
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 3 - 10);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 3 - 20);
-					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3); // Tip of arrow pointing right
-
+					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3);
 					break;
-				case 3:
-					arrowPath.moveTo((getWidth() / 4) * 3, (getHeight() / 2)); // Beginning location center of ~3/4 in from left of view
-					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) + 60); // Tip of arrow pointing down
+
+				case 3: // Arrow to right of user, CW
+					arrowPath.moveTo((getWidth() / 4) * 3, (getHeight() / 2));
+					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) + 60);
 					arrowPath.lineTo((getWidth() / 4) * 3 - 20, (getHeight() / 2) + 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 - 10, (getHeight() / 2) + 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 - 10, (getHeight() / 2) - 60);
 					arrowPath.lineTo((getWidth() / 4) * 3 + 10, (getHeight() / 2) - 60);
-
 					arrowPath.lineTo((getWidth() / 4) * 3 + 10, (getHeight() / 2) + 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 + 20, (getHeight() / 2) + 20);
-					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) + 60); // Tip of arrow pointing down
-
+					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) + 60);
 					break;
 			}
 		}
@@ -329,57 +333,52 @@ public class UnoTableView extends FlashSurfaceView {
 		// Second switch statement is for CCW direction
 		else if (_arrowDirection == -1) {
 			switch (arrowPos) {
-				case 0:
-					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 7); // Beginning location center of just over 3/4 down the view
-					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 7); // Tip of arrow pointing left
+				case 0: // Arrow in front of user, CCW
+					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 7);
+					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 7);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 7 - 20);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 7 - 10);
 					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 7 - 10);
 					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 7 + 10);
-
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 7 + 10);
 					arrowPath.lineTo(getWidth() / 2 + 20, (getHeight() / 8) * 7 + 20);
-					arrowPath.lineTo(getWidth() / 2 + 60, getHeight() / 8 * 7); // Tip of arrow pointing left
-
+					arrowPath.lineTo(getWidth() / 2 + 60, getHeight() / 8 * 7);
 					break;
 
-				case 1:
-					arrowPath.moveTo(getWidth() / 4, (getHeight() / 2)); // Beginning location center of ~1/4 in from left of view
-					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) + 60); // Tip of arrow pointing up
+				case 1: // Arrow left of user, CCW
+					arrowPath.moveTo(getWidth() / 4, (getHeight() / 2));
+					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) + 60);
 					arrowPath.lineTo(getWidth() / 4 - 20, (getHeight() / 2) + 20);
 					arrowPath.lineTo(getWidth() / 4 - 10, (getHeight() / 2) + 20);
 					arrowPath.lineTo(getWidth() / 4 - 10, (getHeight() / 2) - 60);
 					arrowPath.lineTo(getWidth() / 4 + 10, (getHeight() / 2) - 60);
-
 					arrowPath.lineTo(getWidth() / 4 + 10, (getHeight() / 2) + 20);
 					arrowPath.lineTo(getWidth() / 4 + 20, (getHeight() / 2) + 20);
-					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) + 60); // Tip of arrow pointing up
+					arrowPath.lineTo(getWidth() / 4, (getHeight() / 2) + 60); //
 					break;
-				case 2:
-					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 3); // Beginning location center of just over 1/4 down the view
-					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3); // Tip of arrow pointing right
+
+				case 2: // Arrow above user, CW
+					arrowPath.moveTo(getWidth() / 2, (getHeight() / 8) * 3);
+					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 3 - 20);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 3 - 10);
 					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3 - 10);
 					arrowPath.lineTo(getWidth() / 2 + 60, (getHeight() / 8) * 3 + 10);
-
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 3 + 10);
 					arrowPath.lineTo(getWidth() / 2 - 20, (getHeight() / 8) * 3 + 20);
-					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3); // Tip of arrow pointing right
-
+					arrowPath.lineTo(getWidth() / 2 - 60, (getHeight() / 8) * 3);
 					break;
-				case 3:
-					arrowPath.moveTo((getWidth() / 4) * 3, (getHeight() / 2)); // Beginning location center of ~3/4 in from left of view
-					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) - 60); // Tip of arrow pointing down
+
+				case 3: // Arrow to right of user, CCW
+					arrowPath.moveTo((getWidth() / 4) * 3, (getHeight() / 2));
+					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) - 60);
 					arrowPath.lineTo((getWidth() / 4) * 3 + 20, (getHeight() / 2) - 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 + 10, (getHeight() / 2) - 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 + 10, (getHeight() / 2) + 60);
 					arrowPath.lineTo((getWidth() / 4) * 3 - 10, (getHeight() / 2) + 60);
-
 					arrowPath.lineTo((getWidth() / 4) * 3 - 10, (getHeight() / 2) - 20);
 					arrowPath.lineTo((getWidth() / 4) * 3 - 20, (getHeight() / 2) - 20);
-					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) - 60); // Tip of arrow pointing down
-
+					arrowPath.lineTo((getWidth() / 4) * 3, (getHeight() / 2) - 60);
 					break;
 			}
 		}
