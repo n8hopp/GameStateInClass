@@ -42,6 +42,7 @@ public class UnoState extends GameState implements Serializable {
     // shuffles the drawdeck, and plays the first card from the top onto the discard deck.
     public UnoState() {
         // Initialize
+
         turn = 0;
         direction = PlayDirection.CW;
 

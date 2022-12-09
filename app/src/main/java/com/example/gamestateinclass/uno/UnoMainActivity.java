@@ -21,12 +21,16 @@ public class UnoMainActivity extends GameMainActivity {
     public static final int PORT_NUMBER = 5213;
 
     private GameConfig game = null;
+    private MediaPlayer song;
 
     /**
      * Default configuration for our game is 1 human vs 3 computers
      */
     @Override
     public GameConfig createDefaultConfig() {
+        song = new MediaPlayer();
+        song = MediaPlayer.create(this,R.raw.three01);
+
         ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 
         // Human Player
@@ -61,7 +65,6 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 2", 2); // smart computer player
         defaultConfig.addPlayer("Computer 3", 1); // dumb computer player
 
-
         game = defaultConfig;
         return game;
     }
@@ -78,9 +81,11 @@ public class UnoMainActivity extends GameMainActivity {
      */
     @Override
     public LocalGame createLocalGame(GameState gameState){
-        MediaPlayer ring= MediaPlayer.create(this,R.raw.three01);
-        ring.setLooping(true);
-        ring.start();
+        // https://stackoverflow.com/questions/16515455/mediaplayer-is-not-looping
+        
+        song.start();
+        song.setLooping(true);
+
         if(gameState == null)
             return new UnoLocalGame();
         return new UnoLocalGame((UnoState) gameState);
