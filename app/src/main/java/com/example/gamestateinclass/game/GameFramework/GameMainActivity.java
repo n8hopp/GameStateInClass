@@ -511,8 +511,8 @@ public abstract class GameMainActivity extends Activity implements
 
 
         String ipCode = IPCoder.encodeLocalIP();
-//        String ipAddress = IPCoder.getLocalIpAddress();
-        String ipAddress = "127.0.0.1";
+        String ipAddress = IPCoder.getLocalIpAddress();
+//        String ipAddress = "127.0.0.1";
         TextView ipText = (TextView)findViewById(R.id.ipCodeLabel);
         ipText.setText(ipText.getText()+ipCode+" ("+ipAddress+") ");
 
