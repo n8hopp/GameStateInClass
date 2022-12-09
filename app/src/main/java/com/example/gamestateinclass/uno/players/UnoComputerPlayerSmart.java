@@ -92,7 +92,6 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 							}
 						}
 
-						// https://www.geeksforgeeks.org/how-to-find-the-minimum-and-maximum-value-from-java-hashset/
 						HashSet<Integer> cardCts = new HashSet<>();
 						cardCts.add(redCt);
 						cardCts.add(blueCt);
@@ -118,8 +117,6 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 						else if ( max == yellowCt ){
 							maxColor = CardColor.YELLOW;
 						}
-
-
 						toPlace.setColor(maxColor);
 
 					}
