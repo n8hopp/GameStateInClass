@@ -198,12 +198,16 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 			// check each card in hand to see if it was tapped.
 			// if so, set it as selected
-			for (int i = 0; i < myHand.size(); i++) {
+
+			int startingCard = handView.getStartingCard();
+
+			for (int i = startingCard; i < myHand.size(); i++) {
 				Card c = myHand.get(i);
 				if (c.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
 					selectedIndex = i;
 					handView.setSelectedIndex(i);
 					handView.invalidate();
+					Log.i("index", selectedIndex+"");
 					return true;
 				}
 			}
