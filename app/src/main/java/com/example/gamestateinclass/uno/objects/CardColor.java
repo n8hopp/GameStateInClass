@@ -1,8 +1,10 @@
 package com.example.gamestateinclass.uno.objects;
 
-public enum CardColor
-{
+import java.io.Serializable;
 
+public enum CardColor implements Serializable
+{
+	
 	RED(0),
 	BLUE(1),
 	GREEN(2),

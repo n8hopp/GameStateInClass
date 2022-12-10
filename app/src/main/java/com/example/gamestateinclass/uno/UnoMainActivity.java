@@ -75,7 +75,7 @@ public class UnoMainActivity extends GameMainActivity {
         defaultConfig.addPlayer("Computer 1", 1); // dumb computer player
         defaultConfig.addPlayer("Computer 2", 2); // smart computer player
         defaultConfig.addPlayer("Computer 3", 1); // dumb computer player
-
+        defaultConfig.setRemoteData("Wi-Fi Player", "", 1);
         game = defaultConfig;
         return game;
 

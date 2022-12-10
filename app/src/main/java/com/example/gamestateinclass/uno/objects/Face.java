@@ -1,6 +1,8 @@
 package com.example.gamestateinclass.uno.objects;
 
-public enum Face {
+import java.io.Serializable;
+
+public enum Face implements Serializable {
 	ZERO(0),
 	ONE(1),
 	TWO(2),

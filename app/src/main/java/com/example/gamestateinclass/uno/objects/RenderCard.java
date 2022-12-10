@@ -7,16 +7,18 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-public class RenderCard {
+import java.io.Serializable;
+
+public class RenderCard implements Serializable {
 	private float x,y;
 	private float width;
 	private float length;
-	private Paint paint;
-	private Paint strokePaint;
-	private Paint mainLabelPaint;
-	private Paint miniLabelPaint;
+	private transient Paint paint;
+	private transient Paint strokePaint;
+	private transient Paint mainLabelPaint;
+	private transient Paint miniLabelPaint;
 
-	private Drawable reverse, drawFour, drawTwo, skip;
+	private transient Drawable reverse, drawFour, drawTwo, skip;
 	private Face face;
 	private CardColor cardColor;
 
@@ -89,6 +91,7 @@ public class RenderCard {
 	}
 
 	public void setHighlight(int _color) {
+		if (strokePaint == null) strokePaint = new Paint();
 		strokePaint.setColor(_color);
 	}
 
@@ -99,7 +102,23 @@ public class RenderCard {
 		float right = x+width/2;
 		float top = y-length/2;
 		float bottom = y+length/2;
+		if (paint == null)
+		{
+			paint = new Paint();
+			strokePaint = new Paint();
+			mainLabelPaint = new Paint();
+			miniLabelPaint = new Paint();
+			strokePaint.setColor(Color.WHITE);
+			strokePaint.setStyle(Paint.Style.STROKE);
+			mainLabelPaint.setColor(Color.WHITE);
+			mainLabelPaint.setTextSize(width/2);
+			miniLabelPaint.setColor(Color.WHITE);
+			miniLabelPaint.setTextSize(width/4);
+			mainLabelPaint.setTextAlign(Paint.Align.CENTER);
+			miniLabelPaint.setTextAlign(Paint.Align.CENTER);
+			setPaintfromEnum(cardColor);
 
+		}
 		strokePaint.setStrokeWidth(width/10);
 		canvas.drawRect(left, top, right, bottom, paint);
 		canvas.drawRect(left, top, right, bottom, strokePaint);

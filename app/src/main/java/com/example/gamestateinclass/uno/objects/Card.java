@@ -4,7 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable {
+
+	// to satisfy the Serializable interface
+	private static final long serialVersionUID = 893542931190030342L;
 
 	private CardColor color;
 	private Face face;
