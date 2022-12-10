@@ -16,7 +16,7 @@ public class RenderCard {
 	private Paint mainLabelPaint;
 	private Paint miniLabelPaint;
 
-	private Drawable reverse, drawFour, drawTwo, skip;
+	private Drawable reverse, drawFour, drawTwo, skip, wild;
 	private Face face;
 	private CardColor cardColor;
 
@@ -112,7 +112,10 @@ public class RenderCard {
 		float ovalTop = (float)(y-length*(0.4));
 		float ovalBottom = (float)(y+length*(0.4));
 
-		canvas.drawOval(ovalLeft, ovalTop, ovalRight, ovalBottom, strokePaint);
+		if (!face.equals(Face.WILD)) {
+			canvas.drawOval(ovalLeft, ovalTop, ovalRight, ovalBottom, strokePaint);
+		}
+
 		canvas.restore();
 		drawCardNumber(canvas);
 
@@ -134,6 +137,7 @@ public class RenderCard {
 		int miniBottomTopBound = (int)(y+length*0.35-20);
 		int miniBottomRightBound = (int)(x+width*0.35+20);
 		int miniBottomBottomBound = (int)(y+length*0.35+20);
+
 		switch(face) {
 
 			case SKIP:
@@ -157,7 +161,11 @@ public class RenderCard {
 				canvas.drawText("+4", (float)(x+width*0.35), (float)(miniTextY+length*0.35), miniLabelPaint);
 				break;
 			case WILD:
-				canvas.drawText("WILD", x, mainTextY, mainLabelPaint);
+//				canvas.drawText("WILD", x, mainTextY, mainLabelPaint);
+				int wildBound = 35;
+				wild.setBounds(leftBound-wildBound, topBound-wildBound, rightBound+wildBound, bottomBound+wildBound);
+				wild.draw(canvas);
+
 				break;
 			case REVERSE:
 				reverse.setBounds(leftBound, topBound, rightBound, bottomBound);
@@ -193,11 +201,12 @@ public class RenderCard {
 		return (clickX >= left) && (clickX <= right) && (clickY >= top) && (clickY <= bottom);
 	}
 
-	public void setFaceBitmaps(Drawable skip, Drawable reverse, Drawable drawTwo, Drawable drawFour)
+	public void setFaceBitmaps(Drawable skip, Drawable reverse, Drawable drawTwo, Drawable drawFour, Drawable wild)
 	{
 		this.skip = skip;
 		this.reverse = reverse;
 		this.drawTwo = drawTwo;
 		this.drawFour = drawFour;
+		this.wild = wild;
 	}
 }

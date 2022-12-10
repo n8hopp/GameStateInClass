@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.utilities.FlashSurfaceView;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
+import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.objects.RenderCard;
 
 import java.util.ArrayList;
@@ -51,6 +54,7 @@ public class UnoHandView extends FlashSurfaceView {
     Drawable reverse;
     Drawable drawTwo;
     Drawable drawFour;
+    Drawable wild;
 
     private int selectedIndex = 0;
     private int startingCard = 0;
@@ -75,6 +79,7 @@ public class UnoHandView extends FlashSurfaceView {
         reverse = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_reverse, context.getTheme());
         drawTwo = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawtwo, context.getTheme());
         drawFour = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawfour, context.getTheme());
+        wild = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_wild, context.getTheme());
 
         cardBorderPaint.setColor(0xFF000000);  //black
         cardBorderPaint.setStyle(Paint.Style.FILL);
@@ -83,8 +88,10 @@ public class UnoHandView extends FlashSurfaceView {
 
         unoTextPaint.setColor(Color.BLACK);
         unoTextPaint.setTextAlign(Paint.Align.CENTER);
-        unoTextPaint.setTextSize(40);
+        unoTextPaint.setTextSize(70);
         unoTextPaint.setFakeBoldText(true);
+        unoTextPaint.setStyle(Paint.Style.FILL);
+//        unoTextPaint.setTypeface(Typeface.);
 
         numberPaint.setColor(Color.WHITE);
         numberPaint.setTextAlign(Paint.Align.CENTER);
@@ -131,7 +138,7 @@ public class UnoHandView extends FlashSurfaceView {
                 RenderCard renderCard = card.getRender();
 
 
-                renderCard.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
+                renderCard.setFaceBitmaps(skip, reverse, drawTwo, drawFour, wild);
                 renderCard.setCenter(xOffset + (offset * cardSpacing), yOffset);
 
                 if (i == selectedIndex) {
@@ -150,7 +157,13 @@ public class UnoHandView extends FlashSurfaceView {
         canvas.drawCircle(getWidth(), getHeight(), unoButtonRadius, cardBorderPaint);
         canvas.drawCircle(getWidth(), getHeight(), unoButtonRadius - 25, redPaint);
 
-        canvas.drawText("UNO", getWidth() - unoButtonRadius * 2 / 6, getHeight() - unoButtonRadius * 1 / 6, unoTextPaint);
+//        canvas.drawText("UNO", getWidth() - unoButtonRadius * 2 / 6, getHeight() - unoButtonRadius * 1 / 6, unoTextPaint);
+
+        int x = getWidth() - unoButtonRadius * 2 / 7;
+        int y = getHeight() - unoButtonRadius * 2 / 7;
+
+        canvas.rotate(-35, x, y);
+        canvas.drawText("UNO", x, y, unoTextPaint);
     }
 
     public void setStartingCard(int startingHandCard) {

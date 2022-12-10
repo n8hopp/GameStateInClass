@@ -85,6 +85,7 @@ public class UnoTableView extends FlashSurfaceView {
 	Drawable reverse;
 	Drawable drawTwo;
 	Drawable drawFour;
+	Drawable wild;
 
 	public int wheelCenterX;
 	public int wheelCenterY; // to be declared when canvas is accessible
@@ -140,6 +141,7 @@ public class UnoTableView extends FlashSurfaceView {
 		reverse = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_reverse, context.getTheme());
 		drawTwo = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawtwo, context.getTheme());
 		drawFour = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_drawfour, context.getTheme());
+		wild = ResourcesCompat.getDrawable(getResources(),R.drawable.uno_wild, context.getTheme());
 
 		p0hand = "7 Cards";
 		p1hand = "7 Cards";
@@ -235,13 +237,13 @@ public class UnoTableView extends FlashSurfaceView {
 		if (state != null) {
 			if (!wildCardSelection) {
 				RenderCard topCardRender = state.getTopCard().getRender();
-				topCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
+				topCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour, wild);
 				topCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
 				topCardRender.draw(canvas);
 			} else {
 				Card wildTopCard = new Card(CardColor.BLACK, tempWildFace);
 				RenderCard wildTopCardRender = wildTopCard.getRender();
-				wildTopCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
+				wildTopCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour, wild);
 				wildTopCardRender.setCenter(getWidth()/2+125,  getHeight()/2);
 				wildTopCardRender.draw(canvas);
 			}
@@ -251,7 +253,7 @@ public class UnoTableView extends FlashSurfaceView {
 		}
 
 		RenderCard fakeDrawCardRender = fakeDrawCard.getRender();
-		fakeDrawCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour);
+		fakeDrawCardRender.setFaceBitmaps(skip, reverse, drawTwo, drawFour, wild);
 		fakeDrawCardRender.setCenter(getWidth()/2-125,  getHeight()/2);
 		fakeDrawCardRender.draw(canvas);
 		canvas.drawText("DRAW", getWidth()/2-125,  (getHeight()/2)+200, textPaint);
