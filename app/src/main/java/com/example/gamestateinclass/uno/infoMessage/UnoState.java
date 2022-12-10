@@ -237,11 +237,9 @@ public class UnoState extends GameState implements Serializable {
         return playerHands.size();
     }
 
-
     public void addCardsToPlayerHand(int playerIndex, ArrayList<Card> cards) {
         playerHands.get(playerIndex).addAll(cards);
     }
-
 
     // this function REMOVES and RETURNS "n" amount of cards from the top of drawDeck
     public ArrayList<Card> drawCardsFromDeck(int n) {
@@ -290,7 +288,6 @@ public class UnoState extends GameState implements Serializable {
 
     }
 
-
     public Card takeCardFromHandByIndex(int playerIndex, int index) {
 
         ArrayList<Card> playerHand = playerHands.get(playerIndex);
@@ -300,7 +297,6 @@ public class UnoState extends GameState implements Serializable {
 
         return cardTaken;
     }
-
 
     public void addCardToDiscardDeck(Card card) {
         discardDeck.add(0, card);

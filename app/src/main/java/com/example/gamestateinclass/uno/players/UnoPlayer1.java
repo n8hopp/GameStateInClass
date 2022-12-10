@@ -113,7 +113,6 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		tableView.setActionText(gameState.getLatestAction());
 		tableView.setIntroText(gameState.getIntroMsg());
 
-
 		tableView.invalidate();
 		handView.invalidate();
 
@@ -273,6 +272,13 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	public void onStopTrackingTouch(SeekBar seekBar) {
 
 	}
+
+	//External Citation
+	//  Date:     01 December 2022
+	//  Problem:  Could not implement a menu button with our current taskbar
+	//  Resource:
+	//     https://www.youtube.com/watch?v=MCeWm8qu0sw
+	//  Solution: I followed along with this video
 
 	@Override
 	public void onClick(View v) {
