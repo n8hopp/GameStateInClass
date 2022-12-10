@@ -163,6 +163,7 @@ public class UnoLocalGame extends LocalGame {
 			{
 				state.setLatestAction( actingPlayer + " missed the chance to say Uno! +2");
 				drawCard(2);
+				state.setTurn(origTurn);
 				// don't return true if uno, you still have your turn and can still make more actions
 			}
 			else
@@ -170,6 +171,7 @@ public class UnoLocalGame extends LocalGame {
 				state.setLatestAction("Player was a dummy and called Uno! when no one had Uno!");
 				state.setTurn(origTurn);
 			}
+			return true;
 		}
 
 		return false;
