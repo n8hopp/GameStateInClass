@@ -366,6 +366,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 						});
 						AlertDialog alertDialog4 = builder3.create();
 						alertDialog4.show();
+
 						return true;
 
 					default:
