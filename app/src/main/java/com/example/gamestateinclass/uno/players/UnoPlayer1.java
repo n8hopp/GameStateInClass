@@ -130,7 +130,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			return true;
 		}
 
-		if (motionEvent.getAction() == motionEvent.ACTION_UP || !currentTurn) {
+		if ((motionEvent.getAction() == motionEvent.ACTION_UP) || !currentTurn) {
 			return false;
 		}
 
@@ -147,6 +147,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				// otherwise, see if topCard was touched, if so place the currently selected card in hand
 			} else if (topCard.getRender().isClicked(motionEvent.getX(), motionEvent.getY())) {
+
+				if (selectedIndex >= myHand.size()) {
+					Log.i("selectedIndex"+selectedIndex, "myHand.size"+myHand.size());
+					return false;
+				}
 
 				Card card = myHand.get(selectedIndex);
 

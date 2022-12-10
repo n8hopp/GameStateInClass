@@ -69,7 +69,7 @@ public class UnoState extends GameState implements Serializable {
         latestAction = previous.latestAction;
         introMsg = previous.introMsg;;
         drawDeck = new ArrayList<Card>();
-        synchronized (drawDeck) {
+        synchronized (previous.drawDeck) {
             for (Card c : previous.drawDeck) // for each card in the drawDeck we're copying
             {
                 Face face = c.getFace();
@@ -89,14 +89,18 @@ public class UnoState extends GameState implements Serializable {
             playerHands.add(i, new ArrayList<Card>());
         }
 
-        for (int i = 0; i < previous.playerHands.size(); i++) {
-            ArrayList<Card> newHand = previous.playerHands.get(i);
+        synchronized (previous.playerHands) {
+            for (int i = 0; i < previous.playerHands.size(); i++) {
+                ArrayList<Card> newHand = previous.playerHands.get(i);
 
-            for (Card c : newHand) {
-                Face face = c.getFace();
-                CardColor color = c.getCardColor();
+                ArrayList<Card> newHandCopy = (ArrayList<Card>) newHand.clone();
 
-                playerHands.get(i).add(new Card(color, face));
+                for (Card c : newHandCopy) {
+                    Face face = c.getFace();
+                    CardColor color = c.getCardColor();
+
+                    playerHands.get(i).add(new Card(color, face));
+                }
             }
         }
     }
@@ -238,16 +242,25 @@ public class UnoState extends GameState implements Serializable {
     }
 
     public void addCardsToPlayerHand(int playerIndex, ArrayList<Card> cards) {
-        playerHands.get(playerIndex).addAll(cards);
+
+        ArrayList<Card> hand = playerHands.get(playerIndex);
+
+        synchronized (hand) {
+            hand.addAll(cards);
+        }
     }
 
     // this function REMOVES and RETURNS "n" amount of cards from the top of drawDeck
     public ArrayList<Card> drawCardsFromDeck(int n) {
 
-        List<Card> subList = drawDeck.subList(0, n);
-        ArrayList<Card> cardsTaken = new ArrayList<>(subList);
+        ArrayList<Card> cardsTaken;
 
-        drawDeck.subList(0, n).clear();
+        synchronized (drawDeck) {
+            List<Card> subList = drawDeck.subList(0, n);
+            cardsTaken = new ArrayList<>(subList);
+
+            drawDeck.subList(0, n).clear();
+        }
 
         if (drawDeck.size() <= 5) {
             refillDrawDeck();
@@ -292,8 +305,12 @@ public class UnoState extends GameState implements Serializable {
 
         ArrayList<Card> playerHand = playerHands.get(playerIndex);
 
-        Card cardTaken = playerHand.get(index);
-        playerHand.remove(index);
+        Card cardTaken;
+
+        synchronized (playerHand) {
+            cardTaken = playerHand.get(index);
+            playerHand.remove(index);
+        }
 
         return cardTaken;
     }
@@ -322,27 +339,29 @@ public class UnoState extends GameState implements Serializable {
     // back up with the shuffled discardDeck.
     public void refillDrawDeck() {
 
-        // make temps
-        List<Card> subList = discardDeck.subList(1, discardDeck.size());
-        ArrayList<Card> allButTop = new ArrayList<>(subList);
-        Card topCard = discardDeck.get(0);
+        synchronized (drawDeck) {
+            // make temps
+            List<Card> subList = discardDeck.subList(1, discardDeck.size());
+            ArrayList<Card> allButTop = new ArrayList<>(subList);
+            Card topCard = discardDeck.get(0);
 
-        // add all but top card to discard deck, shuffle after
-        drawDeck.addAll(0, allButTop);
+            // add all but top card to discard deck, shuffle after
+            drawDeck.addAll(0, allButTop);
 
 
-        for (int i = 0; i < drawDeck.size(); i++) {
-            Card c = drawDeck.get(i);
-            Face cFace = c.getFace();
-            if ((cFace.equals(Face.WILD)) ||
-                    (cFace.equals(Face.DRAWFOUR))) {
-                c.setColor(CardColor.BLACK);
+            for (int i = 0; i < drawDeck.size(); i++) {
+                Card c = drawDeck.get(i);
+                Face cFace = c.getFace();
+                if ((cFace.equals(Face.WILD)) ||
+                        (cFace.equals(Face.DRAWFOUR))) {
+                    c.setColor(CardColor.BLACK);
+                }
             }
-        }
-        shuffleDeck(drawDeck);
+            shuffleDeck(drawDeck);
 
-        // make it so only the top card remains in discard deck
-        discardDeck.clear();
-        discardDeck.add(topCard);
+            // make it so only the top card remains in discard deck
+            discardDeck.clear();
+            discardDeck.add(topCard);
+        }
     }
 }
