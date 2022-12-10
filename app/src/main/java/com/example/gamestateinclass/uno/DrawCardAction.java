@@ -6,7 +6,6 @@ import com.example.gamestateinclass.uno.objects.Card;
 
 public class DrawCardAction extends GameAction {
     // Tag for logging
-
     private static final String TAG = "DrawCardAction";
 
     public DrawCardAction(GamePlayer player) {
