@@ -52,7 +52,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(0.1);
+			sleep(2);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -92,7 +92,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 					}
 
 					action = new PlaceCardAction(this, toPlace, toPlaceIndex);
-					Log.i("I am placing a "+toPlace.getCardColor().name()+toPlace.getFace(), "");
+					Log.i("I am placing a "+ toPlace.getCardColor().name()+toPlace.getFace(), "");
 				}
 				else {
 					action = new DrawCardAction(this);
