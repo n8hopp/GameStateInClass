@@ -9,6 +9,18 @@ import android.util.Log;
 
 import java.io.Serializable;
 
+/**
+ * class RenderCard
+ *
+ * RenderCard is a utility class that calculates where and how a card should be
+ * rendered to the screen.
+ *
+ * @author Nate Hopper
+ * @author Lukas Miller
+ * @author Clei Paguirigan
+ * @author Henry Schiff
+ */
+
 public class RenderCard implements Serializable {
 	private float x,y;
 	private float width;

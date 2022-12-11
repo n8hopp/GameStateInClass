@@ -15,6 +15,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * class UnoState
+ *
+ * Inherits GameState and implements variables and methods that are specific to UNO.
+ * Stores and manipulates all information about the game, ie the draw and discard
+ * decks, player hands, direction of play, etc.
+ *
+ * @author Nate Hopper
+ * @author Lukas Miller
+ * @author Clei Paguirigan
+ * @author Henry Schiff
+ */
+
 public class UnoState extends GameState implements Serializable {
 
     private static final String TAG = "UnoState";
@@ -35,21 +48,20 @@ public class UnoState extends GameState implements Serializable {
      * @return a new UnoState object
      */
     public UnoState() {
-        // Initialize
-
         turn = 0;
         direction = PlayDirection.CW;
 
         drawDeck = generateDeck();
-        playerHands = new ArrayList<ArrayList<Card>>();
+        playerHands = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            playerHands.add(i, new ArrayList<Card>());
+            playerHands.add(i, new ArrayList<>());
         }
 
         shuffleDeck(drawDeck);
         initializePlayerHands();
         discardDeck = createDiscardDeckDeck(drawDeck);
+
         latestAction = "Welcome! Place or draw a card to begin.";
         introMsg = "The blue arrow indicates current turn and direction of play.";
     }
@@ -70,7 +82,7 @@ public class UnoState extends GameState implements Serializable {
         direction = previous.direction;
         latestAction = previous.latestAction;
         introMsg = previous.introMsg;;
-        drawDeck = new ArrayList<Card>();
+        drawDeck = new ArrayList<>();
         synchronized (previous.drawDeck) {
             for (Card c : previous.drawDeck) // for each card in the drawDeck we're copying
             {
