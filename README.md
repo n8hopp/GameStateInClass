@@ -1,6 +1,5 @@
 # GameStateInClass
 ##Welcome to 3-0-Uno!
-
 ###Things to note:
     - Personally, we believe the project is worth 2* instead of 1*. This is because we have 4 players rather than 2, a complexity that only one other team has. Along with this, we have a lot more aspects of complex rendering than the other teams, and we had to work around a lot of the limitations of the game framework with our project.
     - Uno button is not fully implemented. The game framework has a lot of issue with attempting to edit 
