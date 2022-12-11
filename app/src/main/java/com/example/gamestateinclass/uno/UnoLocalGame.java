@@ -40,7 +40,7 @@ public class UnoLocalGame extends LocalGame {
 
 	/**
 	 * Constructor for the UnoLocalGame with loaded UnoState
-	 * @param unoState
+	 * @param unoState State to copy
 	 */
 	public UnoLocalGame(UnoState unoState){
 		super();
@@ -60,7 +60,10 @@ public class UnoLocalGame extends LocalGame {
 		return playerIdx == ((UnoState)state).fetchCurrentPlayer();
 	}
 
-	// Helper method to compare card to top of discard deck
+	/** Helper method to compare card to top of discard deck
+	 *
+	 * @param card Card to check
+	 */
 	public boolean checkCardValidity(Card card) {
 
 		if (card.getFace() == Face.WILD || card.getFace() == Face.DRAWFOUR) {
@@ -147,30 +150,45 @@ public class UnoLocalGame extends LocalGame {
 			return true;
 		}
 
+		/* Test function to see if we could grab Uno button when it wasn't your turn. Ultimately,
+		 * it's a huge limitation of the game framework to make out-of-move turns and it only
+		 * works fully properly if its currently your turn. */
 		if (action instanceof UnoShoutAction)
 		{
 			UnoShoutAction shoutAction = (UnoShoutAction)action;
 
-			int origTurn = state.getTurn();
-			int turn = origTurn;
-			turn -= state.getDirection().value; // Get the previous player
-			turn = Math.floorMod(turn, state.getHandsSize());
-			state.setTurn(turn); // set player's turn so we can make them draw cards
+			int origTurn = state.getTurn(); // (note, will not work during Computer's thread sleep.
+			int currTurn = origTurn;		//  How many syncs do we have to add to get this to work?
+											// Prob not worth the performance tank.)
+			currTurn -= state.getDirection().value; // Get the previous player
+			currTurn = Math.floorMod(currTurn, state.getHandsSize());
+			Log.i("TURN:", String.valueOf(origTurn));
+			Log.i("PREVTURN:", String.valueOf(currTurn));
+			state.setTurn(currTurn); // set player's turn so we can make them draw cards
 
-			ArrayList<Card> lastPlayerHand = state.fetchPlayerHand(turn);
+			ArrayList<Card> lastPlayerHand = state.fetchPlayerHand(currTurn);
 
-			if(lastPlayerHand.size() == 1)
-			{
-				state.setLatestAction( actingPlayer + " missed the chance to say Uno! +2");
-				drawCard(2);
-				state.setTurn(origTurn);
-				// don't return true if uno, you still have your turn and can still make more actions
+			// if it's not the player who has 1 card that called it, we want to give that player cards
+			if(shoutAction.getId() != currTurn) {
+
+				if (lastPlayerHand.size() == 1) {
+					state.setLatestAction(actingPlayer + "Uno! +2");
+					drawCard(2);
+				} else {
+					state.setLatestAction("Uno?? No Uno!");
+				}
 			}
-			else
+			else // if it is the player who has 1 card that called it, we do not want to give them cards
+			// note, does not work, see above.
 			{
-				state.setLatestAction("Player was a dummy and called Uno! when no one had Uno!");
-				state.setTurn(origTurn);
+				if(lastPlayerHand.size() == 1)
+				{
+					state.setLatestAction(actingPlayer + " called Uno!");
+				} else {
+					state.setLatestAction(actingPlayer + " was a dummy and called Uno! when no one had Uno!");
+				}
 			}
+			state.setTurn(origTurn);
 			return true;
 		}
 
@@ -178,7 +196,9 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
-	// draws "n" amount of cards into current player's hand
+	/** draws "n" amount of cards into current player's hand
+	 *
+	 * @param n number of cards to draw */
 	protected boolean drawCard(int n) {
 
 		UnoState state = (UnoState) super.state;
@@ -191,7 +211,10 @@ public class UnoLocalGame extends LocalGame {
 	}
 
 
-	// checks card validity and also deals with logic of special faces
+	/** checks card validity and also deals with logic of special faces
+	 * @param card card to place
+	 * @param cardIndex index of card in hand (workaround for weird wildcard/+4 logic)
+	 * */
 	protected boolean placeCard(Card card, int cardIndex) {
 
 		UnoState state = (UnoState) super.state;

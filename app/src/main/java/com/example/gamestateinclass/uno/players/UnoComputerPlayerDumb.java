@@ -52,7 +52,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(0.1);
+			sleep(1.5);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -78,6 +78,8 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
+					// Initialize an arraylist of colors so we can randomize the index to select
+					// a random wildcard
 					if (toPlace.getCardColor().equals(CardColor.BLACK)) {
 						ArrayList<CardColor> colors = new ArrayList<>();
 						colors.add(CardColor.RED);
@@ -114,13 +116,15 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 		Card discardDeckTop = state.getTopCard();
 
+		// little edgecase for if there's no top discard. Ideally, there should never be,
+		// but you never know what might happen. This stops a crash given that were the case.
 		if (discardDeckTop == null)
 		{
 			return false;
 		}
 
 		// This accounts for the instance that the first card of the game turned
-		// over is black. Allows the player to play anything
+		// over is black (not the case anymore). Allows the player to play anything
 		if (discardDeckTop.getCardColor() == CardColor.BLACK){
 			return true;
 		}
@@ -131,5 +135,10 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		}
 
 		return false;
+	}
+
+	public int getPlayerNum()
+	{
+		return playerNum;
 	}
 }

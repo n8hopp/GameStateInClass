@@ -103,6 +103,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		displayOrder.addAll(tempOrder);
 
 		tableView.setDisplayOrder(displayOrder);
+
 		// Set string to display and size texts for all player hands
 		String p0HandSize = gameState.fetchPlayerHand(displayOrder.get(0)).size() + " Cards";
 		String p1HandSize = gameState.fetchPlayerHand(displayOrder.get(1)).size() + " Cards";
@@ -125,17 +126,23 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 	@Override
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		GameAction action = null;
+
+		/* Test call to see if we could grab Uno button when it wasn't your turn. Ultimately,
+		* it's a huge limitation of the game framework to make out-of-move turns and it only
+		* works fully properly if its currently your turn. */
 		if(testIfUnoPressed(view, motionEvent))
 		{
 			return true;
 		}
 
+		// if it's a motion event up or not the players current turn, return false & exit
 		if ((motionEvent.getAction() == motionEvent.ACTION_UP) || !currentTurn) {
 			return false;
 		}
 
 		if (view instanceof UnoTableView) {
 
+			// initialize a "fake" card so we can have a draw pile / discard pile
 			Card fakeDrawCard = tableView.getFakeDrawCard();
 
 			// if the "fake" draw card was touched, send the drawCardAction
@@ -155,7 +162,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				Card card = myHand.get(selectedIndex);
 
-				// don't place if wild: instead bring up color prompt
+				// don't place yet if wild: instead bring up color prompt
 				if (!moveMade) {
 					if (card.getFace() == Face.DRAWFOUR || card.getFace() == Face.WILD) {
 						tableView.setTempWildFace(card.getFace());
@@ -169,8 +176,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 
 				action = new PlaceCardAction(this, card, selectedIndex);
 				game.sendAction(action);
-				moveMade = true;
-				currentTurn = false;
+				moveMade = true; // boolean to check if action was made on clientside
+				currentTurn = false; // possibly redundant, but didn't want to mess w/ teammates functionality
 				tableView.invalidate();
 				handView.invalidate();
 
@@ -295,6 +302,8 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 				switch (item.getItemId()) {
 					case R.id.menu_help:
 						final AlertDialog.Builder builder = new AlertDialog.Builder(myActivity);
+						/* possibly excessive. Don't know if we could write this as a saved string
+						* in the resources? Either way, this works for the time being. */
 						builder.setMessage
 								("How To Play Uno By Three-Oh-Uno \n\n" +
 										"Rules of the Game: Setup \n\n" +
@@ -398,7 +407,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			double distanceXY = Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
 
 			if (distanceXY <= (handView.unoButtonRadius)) {
-				action = new UnoShoutAction(this);
+				action = new UnoShoutAction(this, playerNum);
 				game.sendAction(action);
 				tableView.invalidate();
 				handView.invalidate();
@@ -407,5 +416,11 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		}
 		return false;
 	}
+
+	public int getPlayerNum()
+	{
+		return playerNum;
+	}
+
 }
 
