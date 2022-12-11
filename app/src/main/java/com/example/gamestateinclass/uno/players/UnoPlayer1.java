@@ -407,6 +407,5 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 		}
 		return false;
 	}
-
 }
 
