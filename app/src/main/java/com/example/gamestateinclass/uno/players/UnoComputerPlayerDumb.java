@@ -79,7 +79,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
 					// Initialize an arraylist of colors so we can randomize the index to select
-					// A random wildcard
+					// a random wildcard
 					if (toPlace.getCardColor().equals(CardColor.BLACK)) {
 						ArrayList<CardColor> colors = new ArrayList<>();
 						colors.add(CardColor.RED);
@@ -116,13 +116,15 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 		Card discardDeckTop = state.getTopCard();
 
+		// little edgecase for if there's no top discard. Ideally, there should never be,
+		// but you never know what might happen. This stops a crash given that were the case.
 		if (discardDeckTop == null)
 		{
 			return false;
 		}
 
 		// This accounts for the instance that the first card of the game turned
-		// over is black. Allows the player to play anything
+		// over is black (not the case anymore). Allows the player to play anything
 		if (discardDeckTop.getCardColor() == CardColor.BLACK){
 			return true;
 		}
