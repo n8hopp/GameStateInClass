@@ -5,6 +5,8 @@ import android.util.Log;
 import com.example.gamestateinclass.game.GameFramework.LocalGame;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.players.GamePlayer;
+import com.example.gamestateinclass.uno.actionMessage.DrawCardAction;
+import com.example.gamestateinclass.uno.actionMessage.PlaceCardAction;
 import com.example.gamestateinclass.uno.actionMessage.UnoShoutAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
@@ -14,18 +16,7 @@ import com.example.gamestateinclass.uno.objects.Face;
 import java.util.ArrayList;
 
 public class UnoLocalGame extends LocalGame {
-	/*
-		In TTTLocal Game there is:
-		array of possibly played pieces
-		a move count variable
 
-		2 constructors
-		start
-		checkIfGameOver
-		sendStateTo
-		canMove and makeMove
-		whoWon
-*/
 	/**
 	 * Constructor for the UnoLocalGame.
 	 */
@@ -34,7 +25,7 @@ public class UnoLocalGame extends LocalGame {
 		// perform superclass initialization
 		super();
 
-		// create a new, unfilled-in TTTState object
+		// create a new, unfilled-in UnoState object
 		super.state = new UnoState();
 	}
 
@@ -59,6 +50,7 @@ public class UnoLocalGame extends LocalGame {
 	protected boolean canMove(int playerIdx) {
 		return playerIdx == ((UnoState)state).fetchCurrentPlayer();
 	}
+
 
 	/** Helper method to compare card to top of discard deck
 	 *

@@ -4,20 +4,16 @@ import android.util.Log;
 
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
-import com.example.gamestateinclass.game.GameFramework.infoMessage.NotYourTurnInfo;
 import com.example.gamestateinclass.game.GameFramework.players.GameComputerPlayer;
 import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
-import com.example.gamestateinclass.uno.DrawCardAction;
-import com.example.gamestateinclass.uno.PlaceCardAction;
+import com.example.gamestateinclass.uno.actionMessage.DrawCardAction;
+import com.example.gamestateinclass.uno.actionMessage.PlaceCardAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
 import com.example.gamestateinclass.uno.objects.CardColor;
 import com.example.gamestateinclass.uno.objects.Face;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Random;
 
 /**

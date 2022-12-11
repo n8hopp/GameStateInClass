@@ -2,7 +2,6 @@ package com.example.gamestateinclass.uno.players;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -15,14 +14,10 @@ import android.widget.TextView;
 import com.example.gamestateinclass.R;
 import com.example.gamestateinclass.game.GameFramework.GameMainActivity;
 import com.example.gamestateinclass.game.GameFramework.actionMessage.GameAction;
-import com.example.gamestateinclass.game.GameFramework.gameConfiguration.GameConfig;
 import com.example.gamestateinclass.game.GameFramework.infoMessage.GameInfo;
-import com.example.gamestateinclass.game.GameFramework.infoMessage.GameState;
 import com.example.gamestateinclass.game.GameFramework.players.GameHumanPlayer;
-import com.example.gamestateinclass.game.GameFramework.utilities.Logger;
-import com.example.gamestateinclass.game.GameFramework.utilities.Saving;
-import com.example.gamestateinclass.uno.DrawCardAction;
-import com.example.gamestateinclass.uno.PlaceCardAction;
+import com.example.gamestateinclass.uno.actionMessage.DrawCardAction;
+import com.example.gamestateinclass.uno.actionMessage.PlaceCardAction;
 import com.example.gamestateinclass.uno.actionMessage.UnoShoutAction;
 import com.example.gamestateinclass.uno.infoMessage.UnoState;
 import com.example.gamestateinclass.uno.objects.Card;
@@ -31,7 +26,6 @@ import com.example.gamestateinclass.uno.objects.Face;
 import com.example.gamestateinclass.uno.views.UnoHandView;
 import com.example.gamestateinclass.uno.views.UnoTableView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener, SeekBar.OnSeekBarChangeListener, View.OnClickListener {

@@ -12,8 +12,9 @@ import java.io.Serializable;
 /**
  * class RenderCard
  *
- * RenderCard is a utility class that calculates where and how a card should be
- * rendered to the screen.
+ * An instance of RenderCard is created for each regular Card object. RenderCard
+ * can be called to be drawn to the screen and supports utility functions to change
+ * its position and attributes.
  *
  * @author Nate Hopper
  * @author Lukas Miller
