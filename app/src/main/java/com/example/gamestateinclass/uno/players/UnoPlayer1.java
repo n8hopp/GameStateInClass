@@ -135,6 +135,7 @@ public class UnoPlayer1 extends GameHumanPlayer implements View.OnTouchListener,
 			return true;
 		}
 
+		// if it's a motion event up or not the players current turn, return false & exit
 		if ((motionEvent.getAction() == motionEvent.ACTION_UP) || !currentTurn) {
 			return false;
 		}

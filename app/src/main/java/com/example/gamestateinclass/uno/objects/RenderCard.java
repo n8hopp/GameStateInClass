@@ -90,6 +90,7 @@ public class RenderCard implements Serializable {
 		}
 	}
 
+	// same initialization bug as line 106.
 	public void setHighlight(int _color) {
 		if (strokePaint == null) strokePaint = new Paint();
 		strokePaint.setColor(_color);
@@ -102,6 +103,9 @@ public class RenderCard implements Serializable {
 		float right = x+width/2;
 		float top = y-length/2;
 		float bottom = y+length/2;
+		/* for whatever reason, with online multiplayer, you can run the "draw" function
+		*  before running the constructor. This makes it so the paints (a nonserializable type)
+		*  don't get initialized, so, we initialize them here. */
 		if (paint == null)
 		{
 			paint = new Paint();
