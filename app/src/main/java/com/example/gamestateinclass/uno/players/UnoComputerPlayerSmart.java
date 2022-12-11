@@ -55,7 +55,7 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(1.5);
+			sleep(0.1);
 
 				// Try to find a viable card in computer hand
 				ArrayList<Card> hand = state.fetchPlayerHand(playerNum);
