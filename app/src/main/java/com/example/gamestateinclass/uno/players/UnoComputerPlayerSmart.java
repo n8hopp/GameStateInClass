@@ -165,4 +165,8 @@ public class UnoComputerPlayerSmart extends GameComputerPlayer {
 	}
 
 
+	public int getPlayerNum()
+	{
+		return playerNum;
+	}
 }

@@ -52,7 +52,7 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 
 			Logger.log("A Dumb Computer", "My turn!");
 			// Allows a delay between actions so actions are visible to player
-			sleep(1.5);
+			sleep(2);
 
 			// 20% chance to draw a card without even trying to play one
 			int autoDraw = rand.nextInt(10);
@@ -78,6 +78,8 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 				}
 				// If a valid card was found, place it. otherwise draw
 				if (toPlace != null){
+					// Initialize an arraylist of colors so we can randomize the index to select
+					// A random wildcard
 					if (toPlace.getCardColor().equals(CardColor.BLACK)) {
 						ArrayList<CardColor> colors = new ArrayList<>();
 						colors.add(CardColor.RED);
@@ -131,5 +133,10 @@ public class UnoComputerPlayerDumb extends GameComputerPlayer {
 		}
 
 		return false;
+	}
+
+	public int getPlayerNum()
+	{
+		return playerNum;
 	}
 }
